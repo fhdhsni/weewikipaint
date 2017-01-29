@@ -1,0 +1,10 @@
+body {
+    background-color: yellowgreen;
+    display: flex;
+}
+:local(.box) {
+    background-color: deeppink;
+}
+.foo {
+    color: lightblue;
+}

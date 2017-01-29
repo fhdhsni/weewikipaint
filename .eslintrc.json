@@ -1,0 +1,23 @@
+{
+  "extends": "airbnb-base",
+  "plugins": [
+    "import"
+  ],
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true,
+    "mocha": true
+  },
+  "rules": {
+    "quotes": ["error", "single"],
+    "newline-after-var": "error",
+    "no-bitwise": "error",
+    "no-native-reassign": "error",
+    "newline-before-return": "error",
+    "global-require": "off",
+    "func-names": "off",
+    "no-console": "off",
+    "no-underscore-dangle": "off"
+  }
+}
