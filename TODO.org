@@ -16,7 +16,7 @@
 ** Engineering Tasks:
 - [X] automated build
 - [X] static code analysis (Lint)
-- server side testing
+- [X] server side testing
 - client side testing
 
 

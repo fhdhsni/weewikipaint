@@ -7,7 +7,7 @@
   "scripts": {
     "eslint": "eslint ./test/",
     "rm": "rm -rf ./dist",
-    "build": "webpack --config webpack.prod.config.js -p",
+    "build": "yarn run mocha && webpack --config webpack.prod.config.js -p",
     "ws": "webpack-dev-server  --config webpack.dev.config.js --host $(ifconfig wlp3s0 | grep 'inet ' | awk '{ print $2 }')",
     "wsl": "webpack-dev-server --config webpack.dev.config.js",
     "tsc": "tsc ./src/server/*.ts --sourceMap -m 'CommonJS' -t 'ES6'",

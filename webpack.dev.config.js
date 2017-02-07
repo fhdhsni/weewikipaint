@@ -11,7 +11,7 @@ module.exports = {
     extensions: ['*', '.ts', '.json', '.js'],
   },
   entry: {
-    app: path.join(__dirname, 'src', 'ts', 'app.ts'),
+    app: path.join(__dirname, 'src', 'scripts', 'app.ts'),
   },
   output: {
     path: path.join(__dirname, 'dist'),
