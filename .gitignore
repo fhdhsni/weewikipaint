@@ -1,6 +1,6 @@
 /node_modules
 /dist
-/test/src
-/test/test
+/test/src/
+/test/test/
 *.min.js
 *.log
