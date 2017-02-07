@@ -1,1 +1,3 @@
-console.log('Hi, I\'m server');
+const log = 'Hi, I\'m server';
+
+console.log(log);

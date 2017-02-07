@@ -7,7 +7,9 @@
     "removeComments": false,
     "noEmitOnError": true,
     "types": [
-      "node"
+      "node",
+      "mocha",
+      "chai"
     ],
     "lib": ["es6", "dom"]
   },

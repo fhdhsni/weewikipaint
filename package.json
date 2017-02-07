@@ -10,11 +10,16 @@
     "build": "webpack --config webpack.prod.config.js -p",
     "ws": "webpack-dev-server  --config webpack.dev.config.js --host $(ifconfig wlp3s0 | grep 'inet ' | awk '{ print $2 }')",
     "wsl": "webpack-dev-server --config webpack.dev.config.js",
-    "tsc": "tsc -m 'CommonJS' -t 'ES6'"
+    "tsc": "tsc ./src/server/*.ts --sourceMap -m 'CommonJS' -t 'ES6'",
+    "premocha": "tsc ./test/*.ts --outDir ./test/ -m 'CommonJS' -t 'ES5'",
+    "mocha": "mocha"
   },
   "devDependencies": {
+    "@types/chai": "^3.4.34",
+    "@types/mocha": "^2.2.39",
     "@types/node": "^7.0.4",
     "awesome-typescript-loader": "^3.0.0-beta.18",
+    "chai": "^3.5.0",
     "css-loader": "^0.26.1",
     "eslint": "^3.14.1",
     "eslint-config-airbnb-base": "^11.0.1",
