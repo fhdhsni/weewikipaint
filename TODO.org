@@ -1,5 +1,5 @@
 * WeeWikiPaint
-
+  
 ** Minimum Marketing Feature:
 - [ ] marketing home page
 - collaborative painting page (basic)
@@ -14,9 +14,8 @@
 - marketing copy
 
 ** Engineering Tasks:
-- [ ] automated build
-- static code analysis (Lint)
-- continuous intergration
+- [X] automated build
+- [X] static code analysis (Lint)
 - server side testing
 - client side testing
 

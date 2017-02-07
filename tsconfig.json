@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "module": "ES2015",
-    "target": "ES2015",
+    "target": "ES5",
     "noImplicitAny": true,
     "sourceMap": true,
     "removeComments": false,
@@ -12,7 +12,7 @@
     "lib": ["es6", "dom"]
   },
   "include": [
-    "src/ts/**/*"
+    "src/**/*"
   ],
   "exclude": [
     "node_modules"
