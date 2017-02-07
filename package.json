@@ -10,7 +10,7 @@
     "build": "yarn run mocha && webpack --config webpack.prod.config.js -p",
     "ws": "webpack-dev-server  --config webpack.dev.config.js --host $(ifconfig wlp3s0 | grep 'inet ' | awk '{ print $2 }')",
     "wsl": "webpack-dev-server --config webpack.dev.config.js",
-    "tsc": "tsc ./src/server/*.ts --sourceMap -m 'CommonJS' -t 'ES6'",
+    "tsc": "tsc ./src/server/*.ts -m 'CommonJS' -t 'ES6'",
     "premocha": "yarn run tsc && tsc ./test/*.ts --outDir ./test/ -m 'CommonJS' -t 'ES5'",
     "mocha": "mocha"
   },
