@@ -5,11 +5,17 @@ let server;
 function start(htmlFileToSever, portNumber) {
     server = http.createServer();
     server.on('request', (req, res) => {
-        fs.readFile(htmlFileToSever, 'utf8', (error, data) => {
-            res.statusCode = 200;
-            res.write(data);
+        if (req.url === '/' || req.url === '/index.html') {
+            fs.readFile(htmlFileToSever, 'utf8', (error, data) => {
+                res.statusCode = 200;
+                res.write(data);
+                res.end();
+            });
+        }
+        else {
+            res.statusCode = 404;
             res.end();
-        });
+        }
     });
     server.listen(portNumber);
 }

@@ -1,22 +1,23 @@
 {
-  "compilerOptions": {
-    "module": "ES2015",
-    "target": "ES5",
-    "noImplicitAny": true,
-    "sourceMap": true,
-    "removeComments": false,
-    "noEmitOnError": true,
-    "types": [
-      "node",
-      "mocha",
-      "chai"
+    "compilerOptions": {
+        "module": "ES2015",
+        "target": "ES5",
+        "noImplicitAny": true,
+        "sourceMap": true,
+        "removeComments": false,
+        "noEmitOnError": true,
+        "lib": ["es6", "dom"],
+        "types": [
+            "node",
+            "mocha",
+            "chai"
+        ]
+    },
+    "include": [
+        "src/**/*",
+        "test/**/*"
     ],
-    "lib": ["es6", "dom"]
-  },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+    "exclude": [
+        "node_modules"
+    ]
 }
