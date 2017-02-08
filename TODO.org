@@ -8,7 +8,7 @@
 - More collaborative features?
 
 ** User Stories:
-- Serve a one-file homepage
+- [X] Serve a one-file homepage
 - Serve 404 for everything else
 - Marketing copy
 - Deploy
