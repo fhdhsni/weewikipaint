@@ -7,8 +7,10 @@ import * as server from '../src/server/server';
 
 const portNumber = 8080;
 const tempDir = 'generated';
-const tempFile = `${tempDir}/generatedFile.html`; // TODO: maybe use path module?
-const sampleData = 'This is a sample data';
+const generatedIndexHtml = `${tempDir}/testIndex.html`; // TODO: maybe use path module?
+const generated404Html = `${tempDir}/test404.html`;
+const sampleDataForIndexHtml = 'This is a sample data';
+const sampleDataFor404Html = 'Server responded with 404, page doesn\'t exest';
 const URL = 'http://localhost';
 
 interface ResolveArg {
@@ -43,14 +45,16 @@ function httpGet(url: string): Promise<ResolveArg> {
 
 beforeEach(() => {
     fs.mkdirSync(tempDir);
-    fs.writeFileSync(tempFile, sampleData);
-    server.start(tempFile, portNumber);
+    fs.writeFileSync(generatedIndexHtml, sampleDataForIndexHtml);
+    fs.writeFileSync(generated404Html, sampleDataFor404Html);
+    server.start(generatedIndexHtml, generated404Html, portNumber);
 });
 
 afterEach(() => {
     server.stop();
     if (fs.existsSync(tempDir)) {
-        fs.unlinkSync(tempFile);
+        fs.unlinkSync(generatedIndexHtml);
+        fs.unlinkSync(generated404Html);
         fs.rmdirSync(tempDir);
     }
 });
@@ -60,7 +64,7 @@ describe('serving files', function () {
         httpGet(`${URL}:${portNumber}`)
             .then(data => {
                 assert.equal(data.response.statusCode, 200, 'server didn\'t responed with 200');
-                assert.equal(data.responseData, sampleData, 'server response doesn\'t match');
+                assert.equal(data.responseData, sampleDataForIndexHtml, 'server response doesn\'t match');
                 done();
             }).catch(e => {
                 assert.Throw(e);
@@ -73,6 +77,8 @@ describe('404 page', function () {
         httpGet(`${URL}:${portNumber}/foobar`)
             .then(data => {
                 assert.equal(data.response.statusCode, 404, 'server didn\'t responed with 404');
+                assert.equal(data.responseData, sampleDataFor404Html,
+                    'For 404 pages server doesn\'t respond as expected');
                 done();
             }).catch(e => assert.throw(e));
     });
@@ -83,7 +89,7 @@ describe('asking for index.html ', function () {
         httpGet(`${URL}:${portNumber}/index.html`)
             .then(data => {
                 assert.equal(data.response.statusCode, 200, 'server didn\'t responed with 200');
-                assert.equal(data.responseData, sampleData, 'server response doesn\'t match');
+                assert.equal(data.responseData, sampleDataForIndexHtml, 'server response doesn\'t match');
                 done();
             }).catch(e => assert.throw(e));
     });

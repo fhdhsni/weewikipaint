@@ -2,19 +2,25 @@
 const fs = require("fs");
 const http = require("http");
 let server;
-function start(htmlFileToSever, portNumber) {
+function serveFile(res, file) {
+    fs.readFile(file, 'utf8', (error, data) => {
+        if (error) {
+            throw error;
+        }
+        res.write(data);
+        res.end();
+    });
+}
+function start(htmlFileToSever, for404page, portNumber) {
     server = http.createServer();
     server.on('request', (req, res) => {
         if (req.url === '/' || req.url === '/index.html') {
-            fs.readFile(htmlFileToSever, 'utf8', (error, data) => {
-                res.statusCode = 200;
-                res.write(data);
-                res.end();
-            });
+            res.statusCode = 200;
+            serveFile(res, htmlFileToSever);
         }
         else {
             res.statusCode = 404;
-            res.end();
+            serveFile(res, for404page);
         }
     });
     server.listen(portNumber);
