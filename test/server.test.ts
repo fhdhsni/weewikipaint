@@ -1,5 +1,3 @@
-/* tslint:disable only-arrow-functions arrow-parens */
-
 import { assert } from 'chai';
 import * as fs from 'fs';
 import * as http from 'http';
@@ -22,9 +20,12 @@ interface HttpResolveInterface {
     (arg: ResolveArg): void;
 }
 
-function httpGet(url: string): Promise<ResolveArg> {
+/**
+ * makes a get request to a given url and returns a promise
+ */
+export function httpGet(url: string): Promise<ResolveArg> {
     return new Promise((resolve: HttpResolveInterface, reject: (e: Error) => void) => {
-        http.get(`${url}`, response => {
+        http.get(url, response => {
             let responseData = '';
 
             response.setEncoding('utf8');

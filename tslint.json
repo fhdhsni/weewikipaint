@@ -2,10 +2,12 @@
   "extends": "tslint:recommended",
   "format": "json",
   "rules": {
-    "curly": true,
-    "no-console": true,
-    "quotemark": [true, "single", "avoid-escape"],
-    "interface-name": [false],
-    "max-classes-per-file": [false]
+      "curly": true,
+      "only-arrow-functions": false,
+      "arrow-parens": false,
+      "no-console": true,
+      "quotemark": [true, "single", "avoid-escape"],
+      "interface-name": [false],
+      "max-classes-per-file": [false]
   }
 }

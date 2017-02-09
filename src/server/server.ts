@@ -12,7 +12,7 @@ function serveFile(res: http.ServerResponse, file: string): void {
     });
 }
 
-export function start(htmlFileToSever: string, for404page: string, portNumber: number) {
+export function start(htmlFileToSever: string, notFoundpage: string, portNumber: number) {
     server = http.createServer();
     server.on('request', (req: http.ServerRequest, res: http.ServerResponse): void => {
         if (req.url === '/' || req.url === '/index.html') {
@@ -20,7 +20,7 @@ export function start(htmlFileToSever: string, for404page: string, portNumber: n
             serveFile(res, htmlFileToSever);
         } else {
             res.statusCode = 404;
-            serveFile(res, for404page);
+            serveFile(res, notFoundpage);
         }
     });
     server.listen(portNumber);

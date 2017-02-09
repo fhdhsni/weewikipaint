@@ -11,7 +11,7 @@ function serveFile(res, file) {
         res.end();
     });
 }
-function start(htmlFileToSever, for404page, portNumber) {
+function start(htmlFileToSever, notFoundpage, portNumber) {
     server = http.createServer();
     server.on('request', (req, res) => {
         if (req.url === '/' || req.url === '/index.html') {
@@ -20,7 +20,7 @@ function start(htmlFileToSever, for404page, portNumber) {
         }
         else {
             res.statusCode = 404;
-            serveFile(res, for404page);
+            serveFile(res, notFoundpage);
         }
     });
     server.listen(portNumber);

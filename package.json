@@ -7,14 +7,13 @@
     "scripts": {
         "eslint": "eslint ./test/",
         "rm": "rm -rf ./dist",
-        "build": "yarn run mocha && webpack --config webpack.prod.config.js -p",
-        "ws": "webpack-dev-server  --config webpack.dev.config.js --host $(ifconfig wlp3s0 | grep 'inet ' | awk '{ print $2 }')",
-        "wsl": "webpack-dev-server --config webpack.dev.config.js",
+        "build": "yarn run mocha && webpack --config ./webpack.production.js -p",
+        "ws": "webpack-dev-server  --config ./webpack.development.js --host $(ifconfig wlp3s0 | grep 'inet ' | awk '{ print $2 }')",
+        "wsl": "webpack-dev-server --config ./webpack.development.js",
         "tsc:server": "tsc --watch ./src/server/*.ts -m 'CommonJS' -t 'ES6'",
         "tsc:test": "tsc --watch ./test/*.ts --outDir ./test/ -m 'CommonJS' -t 'ES5' --lib es6 ",
         "tsc": "run-p tsc:*",
-        "mocha": "mocha",
-        "postmocha": "rm -rf ./test/test ./test/src/"
+        "mocha": "mocha"
     },
     "devDependencies": {
         "@types/chai": "^3.4.34",
@@ -35,6 +34,7 @@
         "postcss-loader": "^1.2.2",
         "sass-loader": "^4.1.1",
         "style-loader": "^0.13.1",
+        "ts-node": "^2.1.0",
         "tslint": "^4.4.2",
         "tslint-loader": "^3.3.0",
         "typescript": "^2.1.5",
