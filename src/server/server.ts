@@ -12,7 +12,7 @@ function serveFile(res: http.ServerResponse, file: string): void {
     });
 }
 
-export function start(htmlFileToSever: string, notFoundpage: string, portNumber: number, cb?: () => void) {
+export function start(htmlFileToSever: string, notFoundpage: string, port: number, cb?: () => void) {
     server = http.createServer();
     server.on('request', (req: http.ServerRequest, res: http.ServerResponse): void => {
         if (req.url === '/' || req.url === '/index.html') {
@@ -23,7 +23,7 @@ export function start(htmlFileToSever: string, notFoundpage: string, portNumber:
             serveFile(res, notFoundpage);
         }
     });
-    server.listen(portNumber, cb);
+    server.listen(port, cb);
 }
 
 export function stop(cb?: () => void) {

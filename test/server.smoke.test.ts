@@ -5,29 +5,10 @@ import { assert } from 'chai';
 import * as process from 'child_process';
 import * as http from 'http';
 import { httpGet } from './server.test';
-
-describe('smoke test', function () {
-    it('should test the server end to end', function (done) {
-        const command = {
-            args: ['./src/server/weewikipaint.js'],
-            command: 'node',
-        };
-
-        runServer(command)
-            .then(serverProcess => {
-                httpGet('http://localhost:8081')
-                    .then(data => {
-                        serverProcess.kill();
-                        done();
-                    }).catch(e => {
-                        serverProcess.kill();
-                        throw e;
-                    });
-            }).catch(e => {
-                throw e;
-            });
-    });
-});
+const command = {
+    args: ['./src/server/weewikipaint.js', '8081'],
+    command: 'node',
+};
 
 function runServer(task: { command: string, args: string[] }): Promise<process.ChildProcess> {
     return new Promise((resolve, reject) => {
@@ -42,3 +23,41 @@ function runServer(task: { command: string, args: string[] }): Promise<process.C
         });
     });
 }
+
+describe('smoke testing server', function () {
+    it('should get homepage', function (done) {
+        runServer(command)
+            .then(serverProcess => {
+                httpGet('http://localhost:8081')
+                    .then(data => {
+                        serverProcess.kill();
+                        assert.notEqual(data.responseData.indexOf('WeeWikiPaint home page'), -1,
+                                        'home page should contain WeeWikiPaint home page');
+                        done();
+                    }).catch(e => {
+                        serverProcess.kill();
+                        throw e;
+                    });
+            }).catch(e => {
+                throw e;
+            });
+    });
+
+    it('should get 404 page', function (done) {
+        runServer(command)
+            .then(serverProcess => {
+                httpGet('http://localhost:8081/foobar')
+                    .then(data => {
+                        serverProcess.kill();
+                        assert.notEqual(data.responseData.indexOf('WeeWikiPaint 404 page'), -1,
+                                        '404 page should contain WeeWikiPaint 404 page');
+                        done();
+                    }).catch(e => {
+                        serverProcess.kill();
+                        throw e;
+                    });
+            }).catch(e => {
+                throw e;
+            });
+    });
+});
