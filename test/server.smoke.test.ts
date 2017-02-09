@@ -8,32 +8,37 @@ import { httpGet } from './server.test';
 
 describe('smoke test', function () {
     it('should test the server end to end', function (done) {
-        this.timeout(5000);
-        const command = `node ./src/server/weewikipaint.js`;
-        runCommand(command)
-            .then(pid => {
-                setTimeout(function () {
-                    httpGet('http://localhost:8081')
-                        .then(data => {
-                            runCommand(`kill -15 ${pid}`);
-                            done();
-                        }).catch(e => {
-                            runCommand(`kill -15 ${pid}`);
-                            throw e;
-                        });
-                }, 1000);
-            }).catch(pid => {
-                throw new Error('run command throwed an error');
+        const command = {
+            args: ['./src/server/weewikipaint.js'],
+            command: 'node',
+        };
+
+        runServer(command)
+            .then(serverProcess => {
+                httpGet('http://localhost:8081')
+                    .then(data => {
+                        serverProcess.kill();
+                        done();
+                    }).catch(e => {
+                        serverProcess.kill();
+                        throw e;
+                    });
+            }).catch(e => {
+                throw e;
             });
     });
 });
 
-/**
- * run a given shell command, returns a promise resolved by pid of the process
- */
-function runCommand(command: string): Promise<number> {
+function runServer(task: { command: string, args: string[] }): Promise<process.ChildProcess> {
     return new Promise((resolve, reject) => {
-        const procObject = process.exec(command);
-        resolve(procObject.pid);
+        const proc = process.spawn(task.command, task.args);
+        proc.stdout.setEncoding('utf8');
+        proc.stdout.on('data', (data) => {
+            if (data.toString().trim() === 'Server started') {
+                resolve(proc);
+            } else {
+                console.log('no match');
+            }
+        });
     });
 }

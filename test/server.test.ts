@@ -48,11 +48,9 @@ beforeEach(() => {
     fs.mkdirSync(tempDir);
     fs.writeFileSync(generatedIndexHtml, sampleDataForIndexHtml);
     fs.writeFileSync(generated404Html, sampleDataFor404Html);
-    server.start(generatedIndexHtml, generated404Html, portNumber);
 });
 
 afterEach(() => {
-    server.stop();
     if (fs.existsSync(tempDir)) {
         fs.unlinkSync(generatedIndexHtml);
         fs.unlinkSync(generated404Html);
@@ -62,36 +60,45 @@ afterEach(() => {
 
 describe('serving files', function () {
     it('should serve a file', function (done) {
-        httpGet(`${URL}:${portNumber}`)
-            .then(data => {
-                assert.equal(data.response.statusCode, 200, 'server didn\'t responed with 200');
-                assert.equal(data.responseData, sampleDataForIndexHtml, 'server response doesn\'t match');
-                done();
-            }).catch(e => {
-                assert.Throw(e);
-            });
+        server.start(generatedIndexHtml, generated404Html, portNumber, function () {
+            httpGet(`${URL}:${portNumber}`)
+                .then(data => {
+                    assert.equal(data.response.statusCode, 200, 'server didn\'t responed with 200');
+                    assert.equal(data.responseData, sampleDataForIndexHtml, 'server response doesn\'t match');
+                    server.stop();
+                    done();
+                }).catch(e => {
+                    assert.Throw(e);
+                });
+        });
     });
 });
 
 describe('404 page', function () {
     it('should return 404 for everything except homepage', function (done) {
-        httpGet(`${URL}:${portNumber}/foobar`)
-            .then(data => {
-                assert.equal(data.response.statusCode, 404, 'server didn\'t responed with 404');
-                assert.equal(data.responseData, sampleDataFor404Html,
-                    'For 404 pages server doesn\'t respond as expected');
-                done();
-            }).catch(e => assert.throw(e));
+        server.start(generatedIndexHtml, generated404Html, portNumber, function () {
+            httpGet(`${URL}:${portNumber}/foobar`)
+                .then(data => {
+                    assert.equal(data.response.statusCode, 404, 'server didn\'t responed with 404');
+                    assert.equal(data.responseData, sampleDataFor404Html,
+                        'For 404 pages server doesn\'t respond as expected');
+                    server.stop();
+                    done();
+                }).catch(e => assert.throw(e));
+        });
     });
 });
 
 describe('asking for index.html ', function () {
     it('should server index.html', function (done) {
-        httpGet(`${URL}:${portNumber}/index.html`)
-            .then(data => {
-                assert.equal(data.response.statusCode, 200, 'server didn\'t responed with 200');
-                assert.equal(data.responseData, sampleDataForIndexHtml, 'server response doesn\'t match');
-                done();
-            }).catch(e => assert.throw(e));
+        server.start(generatedIndexHtml, generated404Html, portNumber, function () {
+            httpGet(`${URL}:${portNumber}/index.html`)
+                .then(data => {
+                    assert.equal(data.response.statusCode, 200, 'server didn\'t responed with 200');
+                    assert.equal(data.responseData, sampleDataForIndexHtml, 'server response doesn\'t match');
+                    server.stop();
+                    done();
+                }).catch(e => assert.throw(e));
+        });
     });
 });

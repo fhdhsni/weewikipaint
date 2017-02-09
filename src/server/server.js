@@ -11,7 +11,7 @@ function serveFile(res, file) {
         res.end();
     });
 }
-function start(htmlFileToSever, notFoundpage, portNumber) {
+function start(htmlFileToSever, notFoundpage, portNumber, cb) {
     server = http.createServer();
     server.on('request', (req, res) => {
         if (req.url === '/' || req.url === '/index.html') {
@@ -23,7 +23,7 @@ function start(htmlFileToSever, notFoundpage, portNumber) {
             serveFile(res, notFoundpage);
         }
     });
-    server.listen(portNumber);
+    server.listen(portNumber, cb);
 }
 exports.start = start;
 function stop(cb) {
