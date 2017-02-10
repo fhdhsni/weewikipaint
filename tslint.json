@@ -1,13 +1,16 @@
 {
-  "extends": "tslint:recommended",
+  "extends": [
+    "tslint-eslint-rules"
+  ],
+  "rulesDirectory": "./node_modules/tslint-microsoft-contrib",
   "format": "json",
   "rules": {
-      "curly": true,
-      "only-arrow-functions": false,
-      "arrow-parens": false,
-      "no-console": true,
-      "quotemark": [true, "single", "avoid-escape"],
-      "interface-name": [false],
-      "max-classes-per-file": [false]
+    "curly": true,
+    "only-arrow-functions": false,
+    "arrow-parens": false,
+    "no-console": true,
+    "quotemark": [true, "single", "avoid-escape"],
+    "interface-name": [false],
+    "max-classes-per-file": [false]
   }
 }
