@@ -2,13 +2,15 @@
 // get a page
 // confirm we got something
 
+declare var require: (moduleId: string) => any;
+
 import { assert } from 'chai';
 import * as ps from 'child_process';
 import * as http from 'http';
 import * as fs from 'fs';
 import { httpGet } from './server.test';
-declare var require: (moduleId: string) => any
 const procfile = require('procfile');
+
 let PORT = '';
 
 function readProcfile() {
@@ -22,7 +24,7 @@ function readProcfile() {
     if (!process.env.PORT) {
         web.options = web.options.map((element) => {
             if (element === '$PORT') {
-                PORT = '5000'
+                PORT = '5000';
                 return PORT;
             }
             return element;
