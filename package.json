@@ -1,27 +1,28 @@
 {
-  "name": "weeWikiPaint",
-  "version": "0.0.1",
-  "engines": {
-    "node": "7.4.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/fhdhsni/weewikipaint"
-  },
-  "description": "just following along James Shore from Let's Code: Test-Driven JavaScript",
-  "author": "Farhad hsni <farhad.hsni@gmail.com>",
-  "license": "MIT",
-  "scripts": {
-    "eslint": "eslint ./test/ # probably I don't need this",
-    "rm": "rm -rf ./dist",
-    "build": "yarn run mocha && webpack --config ./webpack.production.js -p",
-    "ws": "webpack-dev-server  --config ./webpack.development.js --host $(ifconfig wlp3s0 | grep 'inet ' | awk '{ print $2 }')",
-    "wsl": "webpack-dev-server --config ./webpack.development.js",
-    "tsc:server": "tsc --watch ./src/server/*.ts -m 'CommonJS' -t 'ES6'",
-    "tsc:test": "tsc --watch ./test/*.ts --outDir ./test/ -m 'CommonJS' -t 'ES5' --lib es6 ",
-    "tsc": "run-p tsc:*",
-    "mocha": "mocha"
-  },
+    "name": "weeWikiPaint",
+    "version": "0.0.1",
+    "engines": {
+        "node": "7.4.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/fhdhsni/weewikipaint"
+    },
+    "description": "just following along James Shore from Let's Code: Test-Driven JavaScript",
+    "author": "Farhad hsni <farhad.hsni@gmail.com>",
+    "license": "MIT",
+    "scripts": {
+        "eslint": "eslint ./test/ # probably I don't need this",
+        "start": "PORT=5000 && node ./src/server/weewikipaint.js $PORT",
+        "rm": "rm -rf ./dist",
+        "build": "yarn run mocha && webpack --config ./webpack.production.js -p",
+        "ws": "webpack-dev-server  --config ./webpack.development.js --host $(ifconfig wlp3s0 | grep 'inet ' | awk '{ print $2 }')",
+        "wsl": "webpack-dev-server --config ./webpack.development.js",
+        "tsc:server": "tsc --watch ./src/server/*.ts -m 'CommonJS' -t 'ES6'",
+      "tsc:test": "tsc --watch ./test/*.ts --outDir ./test/ -m 'CommonJS' -t 'ES5' --lib es6 ",
+      "tsc": "run-p tsc:*",
+      "mocha": "mocha"
+    },
   "devDependencies": {
     "@types/chai": "^3.4.34",
     "@types/mocha": "^2.2.39",
@@ -39,6 +40,7 @@
     "node-sass": "^4.4.0",
     "npm-run-all": "^4.0.1",
     "postcss-loader": "^1.2.2",
+    "procfile": "^0.1.1",
     "sass-loader": "^4.1.1",
     "style-loader": "^0.13.1",
     "ts-node": "^2.1.0",

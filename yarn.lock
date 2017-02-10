@@ -3305,6 +3305,10 @@ process@^0.11.0:
   version "0.11.9"
   resolved "https://registry.yarnpkg.com/process/-/process-0.11.9.tgz#7bd5ad21aa6253e7da8682264f1e11d11c0318c1"
 
+procfile@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/procfile/-/procfile-0.1.1.tgz#7393f5ac171b13213143b355373cc690b058b22f"
+
 progress@^1.1.8:
   version "1.1.8"
   resolved "https://registry.yarnpkg.com/progress/-/progress-1.1.8.tgz#e260c78f6161cdd9b0e56cc3e0a85de17c7a57be"
