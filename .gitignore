@@ -2,7 +2,6 @@
 /dist
 /test/src/
 /test/test/
-*.min.js
 *.log
 /spikes/node_http_server.js
 /spikes/node_http_get.js

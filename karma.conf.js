@@ -1,9 +1,6 @@
-const webpackConf = require('./webpack.development.js');
-
-webpackConf.entry = {};
-
 const configuration = {
   basePath: '',
+  hostname: '127.0.0.1',
   customLaunchers: {
     Chrome_travis_ci: {
       base: 'Chrome',
@@ -12,28 +9,29 @@ const configuration = {
   },
   frameworks: ['mocha'],
   files: [
-    'test/**/*.test.ts',
+    'test/test/client/*.js',
   ],
-  // exclude: [
-  //   '**/*.ts'
-  // ],
   preprocessors: {
-    'test/*test.ts': ['webpack', 'sourcemap'],
-    'test/**/*test.ts': ['webpack', 'sourcemap'],
+    'test/**/*test.js': ['webpack', 'sourcemap'],
   },
-  webpack: webpackConf,
+  webpack: {
+    resolve: {
+      extensions: ['.js'],
+    },
+    devtool: 'inline-source-map',
+  },
   webpackMiddleware: {
     stats: 'errors-only',
   },
   reporters: ['dots'],
   port: 9876,
   colors: true,
-  // logLevel: config.LOG_INFO,
   autoWatch: false,
   browsers: ['Chrome'],
   singleRun: false,
   concurrency: Infinity,
   plugins: [
+    require('karma-sourcemap-loader'),
     require('karma-webpack'),
     require('karma-mocha'),
     require('karma-mocha-reporter'),
