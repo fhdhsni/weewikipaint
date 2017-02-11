@@ -1,3 +1,7 @@
 ** WeeWikiPaint
 
 [[https://tdd-wwp.herokuapp.com][WeeWikiPaint]] on heroku
+
+#+CAPTION: travis build status
+#+NAME: build status
+[[file:https://travis-ci.org/fhdhsni/weewikipaint.svg?branch=master]]

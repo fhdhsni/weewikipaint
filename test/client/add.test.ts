@@ -7,6 +7,6 @@ describe('add', function () {
         assert.deepEqual(add(2, 5), 7, '2+7 should be 7');
     });
     it('should add two numbers', function () {
-        assert.deepEqual(add(3, 5), 8, '2+7 should be 7');
+        assert.deepEqual(add(5, 5), 10, '2+7 should be 7');
     });
 });
