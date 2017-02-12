@@ -1,7 +1,7 @@
 import { assert } from 'chai';
 import * as fs from 'fs';
 import * as http from 'http';
-import * as server from '../src/server/server';
+import * as server from '../../src/server/server';
 
 const portNumber = 8080;
 const tempDir = 'generated';
@@ -42,7 +42,7 @@ export function httpGet(url: string): Promise<ResolveArg> {
             reject(e);
         });
     });
-};
+}
 
 beforeEach(() => {
     fs.mkdirSync(tempDir);

@@ -30,18 +30,6 @@
     "no-regex-spaces": true,
     "no-sparse-arrays": true,
     "no-unexpected-multiline": true,
-    "valid-jsdoc": [
-      true,
-      {
-        "prefer": {
-          "return": "returns"
-        },
-        "requireReturn": false,
-        "requireParamDescription": true,
-        "requireReturnDescription": true,
-        "matchDescription": "^[A-Z][A-Za-z0-9\\s]*[.]$"
-      }
-    ],
     "valid-typeof": true,
     "ordered-imports": false,
     "no-var-requires": false

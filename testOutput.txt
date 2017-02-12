@@ -1,0 +1,11 @@
+..
+Chrome 56.0.2924 (Linux 0.0.0): Executed 2 of 2[32m SUCCESS[39m (0.008 secs / 0 secs)
+..
+PhantomJS 2.1.1 (Linux 0.0.0): Executed 2 of 2[32m SUCCESS[39m (0.031 secs / 0.002 secs)
+..
+IE 11.0.0 (Windows 7 0.0.0): Executed 2 of 2[32m SUCCESS[39m (0.041 secs / 0 secs)
+..
+IE 10.0.0 (Windows 7 0.0.0): Executed 2 of 2[32m SUCCESS[39m (0.043 secs / 0 secs)
+..
+Firefox 51.0.0 (Windows 7 0.0.0): Executed 2 of 2[32m SUCCESS[39m (0.037 secs / 0.01 secs)
+[32mTOTAL: 10 SUCCESS[39m
