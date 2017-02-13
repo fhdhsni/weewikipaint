@@ -23,7 +23,7 @@ const configuration = {
   webpackMiddleware: {
     stats: 'errors-only',
   },
-  reporters: ['dots'],
+  reporters: ['progress'],
   port: 9876,
   colors: true,
   autoWatch: false,

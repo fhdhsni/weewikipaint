@@ -1,166 +1,52 @@
-.
-DUMP: [36m<body>
-  <!-- The scripts need to be in the body DOM element, as some test running frameworks need the body
-       to have already been created so they can insert their magic into it. For example, if loaded
-       before body, Angular Scenario test framework fails to find the body and crashes and burns in
-       an epic manner. -->
-  <script src="context.js"></script>
-  <script type="text/javascript">
-    // Configure our Karma and set up bindings
-    window.__karma__.config = {"args":[],"useIframe":true,"captureConsole":true,"clearContext":true,"mocha":{}};
+PhantomJS 2.1.1 (Linux 0.0.0): Executed 0 of 1[32m SUCCESS[39m (0 secs / 0 secs)
+[1A[2KPhantomJS 2.1.1 (Linux 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0 secs / 0.004 secs)
+[1A[2KPhantomJS 2.1.1 (Linux 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0.011 secs / 0.004 secs)
 
-    window.__karma__.setupContext(window);
+[1A[2K[1A[2KPhantomJS 2.1.1 (Linux 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0.011 secs / 0.004 secs)
+IE 11.0.0 (Windows 7 0.0.0): Executed 0 of 1[32m SUCCESS[39m (0 secs / 0 secs)
 
-    // All served files with the latest timestamps
-    window.__karma__.files = {
-  '/base/node_modules/mocha/mocha.js': '0491afff0b566ea45cd04c9164a355dba705689e',
-  '/base/node_modules/karma-mocha/lib/adapter.js': 'e8826109cf50b958ee4bd667517729ffdd4de363',
-  '/base/test/test/client/add.test.js': '196d5929876bab81c687b2c398102cb0cdb5aa50'
-};
+[1A[2K[1A[2K[1A[2KPhantomJS 2.1.1 (Linux 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0.011 secs / 0.004 secs)
+IE 11.0.0 (Windows 7 0.0.0): Executed 0 of 1[32m SUCCESS[39m (0 secs / 0 secs)
+Chrome 56.0.2924 (Linux 0.0.0): Executed 0 of 1[32m SUCCESS[39m (0 secs / 0 secs)
+[1A[2K[1A[2K[1A[2KPhantomJS 2.1.1 (Linux 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0.011 secs / 0.004 secs)
+IE 11.0.0 (Windows 7 0.0.0): Executed 0 of 1[32m SUCCESS[39m (0 secs / 0 secs)
+Chrome 56.0.2924 (Linux 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0 secs / 0.005 secs)
+[1A[2K[1A[2K[1A[2KPhantomJS 2.1.1 (Linux 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0.011 secs / 0.004 secs)
+IE 11.0.0 (Windows 7 0.0.0): Executed 0 of 1[32m SUCCESS[39m (0 secs / 0 secs)
+Chrome 56.0.2924 (Linux 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0.021 secs / 0.005 secs)
+[1A[2K[1A[2K[1A[2KPhantomJS 2.1.1 (Linux 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0.011 secs / 0.004 secs)
+IE 11.0.0 (Windows 7 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0 secs / 0.005 secs)
+Chrome 56.0.2924 (Linux 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0.021 secs / 0.005 secs)
+[1A[2K[1A[2K[1A[2KPhantomJS 2.1.1 (Linux 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0.011 secs / 0.004 secs)
+IE 11.0.0 (Windows 7 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0.041 secs / 0.005 secs)
+Chrome 56.0.2924 (Linux 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0.021 secs / 0.005 secs)
 
-  </script>
-  <!-- Dynamically replaced with <script> tags -->
-  <script type="text/javascript" src="/base/node_modules/mocha/mocha.js?0491afff0b566ea45cd04c9164a355dba705689e" crossorigin="anonymous"></script>
-<script type="text/javascript" src="/base/node_modules/karma-mocha/lib/adapter.js?e8826109cf50b958ee4bd667517729ffdd4de363" crossorigin="anonymous"></script>
-<script type="text/javascript" src="/base/test/test/client/add.test.js?196d5929876bab81c687b2c398102cb0cdb5aa50" crossorigin="anonymous"></script>
-  <script type="text/javascript">
-    window.__karma__.loaded();
-  </script>
+[1A[2K[1A[2K[1A[2K[1A[2KPhantomJS 2.1.1 (Linux 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0.011 secs / 0.004 secs)
+IE 11.0.0 (Windows 7 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0.041 secs / 0.005 secs)
+Chrome 56.0.2924 (Linux 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0.021 secs / 0.005 secs)
+IE 10.0.0 (Windows 7 0.0.0): Executed 0 of 1[32m SUCCESS[39m (0 secs / 0 secs)
+[1A[2K[1A[2K[1A[2K[1A[2KPhantomJS 2.1.1 (Linux 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0.011 secs / 0.004 secs)
+IE 11.0.0 (Windows 7 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0.041 secs / 0.005 secs)
+Chrome 56.0.2924 (Linux 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0.021 secs / 0.005 secs)
+IE 10.0.0 (Windows 7 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0 secs / 0.004 secs)
+[1A[2K[1A[2K[1A[2K[1A[2KPhantomJS 2.1.1 (Linux 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0.011 secs / 0.004 secs)
+IE 11.0.0 (Windows 7 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0.041 secs / 0.005 secs)
+Chrome 56.0.2924 (Linux 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0.021 secs / 0.005 secs)
+IE 10.0.0 (Windows 7 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0.001 secs / 0.004 secs)
 
-
-<div class="baby"></div></body>[39m
-.
-PhantomJS 2.1.1 (Linux 0.0.0): Executed 2 of 2[32m SUCCESS[39m (0.034 secs / 0.001 secs)
-.
-IE 11.0.0 (Windows 7 0.0.0) DUMP: [36m<body>
-  <!-- The scripts need to be in the body DOM element, as some test running frameworks need the body
-       to have already been created so they can insert their magic into it. For example, if loaded
-       before body, Angular Scenario test framework fails to find the body and crashes and burns in
-       an epic manner. -->
-  <script src="context.js"></script>
-  <script type="text/javascript">
-    // Configure our Karma and set up bindings
-    window.__karma__.config = {"args":[],"useIframe":true,"captureConsole":true,"clearContext":true,"mocha":{}};
-
-    window.__karma__.setupContext(window);
-
-    // All served files with the latest timestamps
-    window.__karma__.files = {
-  '/base/node_modules/mocha/mocha.js': '0491afff0b566ea45cd04c9164a355dba705689e',
-  '/base/node_modules/karma-mocha/lib/adapter.js': 'e8826109cf50b958ee4bd667517729ffdd4de363',
-  '/base/test/test/client/add.test.js': '196d5929876bab81c687b2c398102cb0cdb5aa50'
-};
-
-  </script>
-  <!-- Dynamically replaced with <script> tags -->
-  <script src="/base/node_modules/mocha/mocha.js?0491afff0b566ea45cd04c9164a355dba705689e" type="text/javascript" crossorigin="anonymous"></script>
-<script src="/base/node_modules/karma-mocha/lib/adapter.js?e8826109cf50b958ee4bd667517729ffdd4de363" type="text/javascript" crossorigin="anonymous"></script>
-<script src="/base/test/test/client/add.test.js?196d5929876bab81c687b2c398102cb0cdb5aa50" type="text/javascript" crossorigin="anonymous"></script>
-  <script type="text/javascript">
-    window.__karma__.loaded();
-  </script>
-
-
-<div class="baby"></div></body>[39m
-.
-IE 11.0.0 (Windows 7 0.0.0): Executed 2 of 2[32m SUCCESS[39m (0.04 secs / 0.002 secs)
-.
-IE 10.0.0 (Windows 7 0.0.0) DUMP: [36m<body>
-  <!-- The scripts need to be in the body DOM element, as some test running frameworks need the body
-       to have already been created so they can insert their magic into it. For example, if loaded
-       before body, Angular Scenario test framework fails to find the body and crashes and burns in
-       an epic manner. -->
-  <script src="context.js"></script>
-  <script type="text/javascript">
-    // Configure our Karma and set up bindings
-    window.__karma__.config = {"args":[],"useIframe":true,"captureConsole":true,"clearContext":true,"mocha":{}};
-
-    window.__karma__.setupContext(window);
-
-    // All served files with the latest timestamps
-    window.__karma__.files = {
-  '/base/node_modules/mocha/mocha.js': '0491afff0b566ea45cd04c9164a355dba705689e',
-  '/base/node_modules/karma-mocha/lib/adapter.js': 'e8826109cf50b958ee4bd667517729ffdd4de363',
-  '/base/test/test/client/add.test.js': '196d5929876bab81c687b2c398102cb0cdb5aa50'
-};
-
-  </script>
-  <!-- Dynamically replaced with <script> tags -->
-  <script src="/base/node_modules/mocha/mocha.js?0491afff0b566ea45cd04c9164a355dba705689e" type="text/javascript" crossorigin="anonymous"></script>
-<script src="/base/node_modules/karma-mocha/lib/adapter.js?e8826109cf50b958ee4bd667517729ffdd4de363" type="text/javascript" crossorigin="anonymous"></script>
-<script src="/base/test/test/client/add.test.js?196d5929876bab81c687b2c398102cb0cdb5aa50" type="text/javascript" crossorigin="anonymous"></script>
-  <script type="text/javascript">
-    window.__karma__.loaded();
-  </script>
-
-
-<div class="baby"></div></body>[39m
-.
-IE 10.0.0 (Windows 7 0.0.0): Executed 2 of 2[32m SUCCESS[39m (0.022 secs / 0.002 secs)
-.
-Chrome 56.0.2924 (Linux 0.0.0) DUMP: [36m<body>
-  <!-- The scripts need to be in the body DOM element, as some test running frameworks need the body
-       to have already been created so they can insert their magic into it. For example, if loaded
-       before body, Angular Scenario test framework fails to find the body and crashes and burns in
-       an epic manner. -->
-  <script src="context.js"></script>
-  <script type="text/javascript">
-    // Configure our Karma and set up bindings
-    window.__karma__.config = {"args":[],"useIframe":true,"captureConsole":true,"clearContext":true,"mocha":{}};
-
-    window.__karma__.setupContext(window);
-
-    // All served files with the latest timestamps
-    window.__karma__.files = {
-  '/base/node_modules/mocha/mocha.js': '0491afff0b566ea45cd04c9164a355dba705689e',
-  '/base/node_modules/karma-mocha/lib/adapter.js': 'e8826109cf50b958ee4bd667517729ffdd4de363',
-  '/base/test/test/client/add.test.js': '196d5929876bab81c687b2c398102cb0cdb5aa50'
-};
-
-  </script>
-  <!-- Dynamically replaced with <script> tags -->
-  <script type="text/javascript" src="/base/node_modules/mocha/mocha.js?0491afff0b566ea45cd04c9164a355dba705689e" crossorigin="anonymous"></script>
-<script type="text/javascript" src="/base/node_modules/karma-mocha/lib/adapter.js?e8826109cf50b958ee4bd667517729ffdd4de363" crossorigin="anonymous"></script>
-<script type="text/javascript" src="/base/test/test/client/add.test.js?196d5929876bab81c687b2c398102cb0cdb5aa50" crossorigin="anonymous"></script>
-  <script type="text/javascript">
-    window.__karma__.loaded();
-  </script>
-
-
-<div class="baby"></div></body>[39m
-.
-Chrome 56.0.2924 (Linux 0.0.0): Executed 2 of 2[32m SUCCESS[39m (0.112 secs / 0.003 secs)
-.
-Firefox 51.0.0 (Windows 7 0.0.0) DUMP: [36m<body>
-  <!-- The scripts need to be in the body DOM element, as some test running frameworks need the body
-       to have already been created so they can insert their magic into it. For example, if loaded
-       before body, Angular Scenario test framework fails to find the body and crashes and burns in
-       an epic manner. -->
-  <script src="context.js"></script>
-  <script type="text/javascript">
-    // Configure our Karma and set up bindings
-    window.__karma__.config = {"args":[],"useIframe":true,"captureConsole":true,"clearContext":true,"mocha":{}};
-
-    window.__karma__.setupContext(window);
-
-    // All served files with the latest timestamps
-    window.__karma__.files = {
-  '/base/node_modules/mocha/mocha.js': '0491afff0b566ea45cd04c9164a355dba705689e',
-  '/base/node_modules/karma-mocha/lib/adapter.js': 'e8826109cf50b958ee4bd667517729ffdd4de363',
-  '/base/test/test/client/add.test.js': '196d5929876bab81c687b2c398102cb0cdb5aa50'
-};
-
-  </script>
-  <!-- Dynamically replaced with <script> tags -->
-  <script type="text/javascript" src="/base/node_modules/mocha/mocha.js?0491afff0b566ea45cd04c9164a355dba705689e" crossorigin="anonymous"></script>
-<script type="text/javascript" src="/base/node_modules/karma-mocha/lib/adapter.js?e8826109cf50b958ee4bd667517729ffdd4de363" crossorigin="anonymous"></script>
-<script type="text/javascript" src="/base/test/test/client/add.test.js?196d5929876bab81c687b2c398102cb0cdb5aa50" crossorigin="anonymous"></script>
-  <script type="text/javascript">
-    window.__karma__.loaded();
-  </script>
-
-
-<div class="baby"></div></body>[39m
-.
-Firefox 51.0.0 (Windows 7 0.0.0): Executed 2 of 2[32m SUCCESS[39m (0.114 secs / 0.011 secs)
-[32mTOTAL: 10 SUCCESS[39m
+[1A[2K[1A[2K[1A[2K[1A[2K[1A[2KPhantomJS 2.1.1 (Linux 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0.011 secs / 0.004 secs)
+IE 11.0.0 (Windows 7 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0.041 secs / 0.005 secs)
+Chrome 56.0.2924 (Linux 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0.021 secs / 0.005 secs)
+IE 10.0.0 (Windows 7 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0.001 secs / 0.004 secs)
+Firefox 51.0.0 (Windows 7 0.0.0): Executed 0 of 1[32m SUCCESS[39m (0 secs / 0 secs)
+[1A[2K[1A[2K[1A[2K[1A[2K[1A[2KPhantomJS 2.1.1 (Linux 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0.011 secs / 0.004 secs)
+IE 11.0.0 (Windows 7 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0.041 secs / 0.005 secs)
+Chrome 56.0.2924 (Linux 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0.021 secs / 0.005 secs)
+IE 10.0.0 (Windows 7 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0.001 secs / 0.004 secs)
+Firefox 51.0.0 (Windows 7 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0 secs / 0.017 secs)
+[1A[2K[1A[2K[1A[2K[1A[2K[1A[2KPhantomJS 2.1.1 (Linux 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0.011 secs / 0.004 secs)
+IE 11.0.0 (Windows 7 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0.041 secs / 0.005 secs)
+Chrome 56.0.2924 (Linux 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0.021 secs / 0.005 secs)
+IE 10.0.0 (Windows 7 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0.001 secs / 0.004 secs)
+Firefox 51.0.0 (Windows 7 0.0.0): Executed 1 of 1[32m SUCCESS[39m (0.031 secs / 0.017 secs)
+[32mTOTAL: 5 SUCCESS[39m
