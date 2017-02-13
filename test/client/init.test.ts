@@ -12,7 +12,7 @@ describe('Drawing area', function () {
         it('should be initialized with Raphael', function () {
             drawingArea.setAttribute('id', 'wwp-drawingArea');
             document.body.appendChild(drawingArea);
-            initializeDrawingArea(drawingArea, 500, 500);
+            initializeDrawingArea(drawingArea);
             const extractedDiv = document.getElementById('wwp-drawingArea');
             const tagName = extractedDiv.children[0].tagName.toLowerCase();
 
@@ -21,10 +21,15 @@ describe('Drawing area', function () {
     });
 
     it('should have the same dimension as the given width and height', function () {
-        const drawingArea = document.createElement('div');
         const width = 400;
         const height = 200;
-        const paper = initializeDrawingArea(drawingArea, width, height);
+        const drawingArea = document.createElement('div');
+
+        drawingArea.style.width = `${width}px`;
+        drawingArea.style.height = `${height}px`;
+        document.body.appendChild(drawingArea);
+
+        const paper = initializeDrawingArea(drawingArea);
 
         assert.equal(paper.width, width, 'Drawing area doesn\'t have the expected width');
         assert.equal(paper.height, height, 'Drawing area doesn\'t have the expected height');
