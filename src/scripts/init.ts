@@ -12,3 +12,7 @@ export function initializeDrawingArea(drawingAreaElement: HTMLDivElement): Rapha
 
     return paper;
 }
+
+export function drawLine(startX: number, startY: number, endX: number, endY: number) {
+    // paper.path('M100,10L300,20');
+}
