@@ -23,7 +23,7 @@ module.exports = {
     mocha: 'mocha ./test/test/server/*.js',
     k: {
       start: 'karma start',
-      run: './tscwatch.sh && karma run | tee ./testOutput.txt && ./checkBrowsers.sh',
+      run: 'nps mocha && ./tscwatch.sh && karma run | tee ./testOutput.txt && ./checkBrowsers.sh',
       stop: 'karma stop',
     },
   },

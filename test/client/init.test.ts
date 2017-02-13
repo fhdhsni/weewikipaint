@@ -1,14 +1,32 @@
 import { initializeDrawingArea } from '../../src/scripts/init';
 import { assert } from 'chai';
-describe('drawing Area', function () {
-    it('should assert that drawing area exist', function () {
-        const div = document.createElement('div') as HTMLDivElement;
-        div.setAttribute('id', 'wwp-drawingArea');
-        document.body.appendChild(div);
 
-        initializeDrawingArea('wwp-drawingArea');
+describe('Drawing area', function () {
+    describe('', function () {
+        const drawingArea = document.createElement('div');
 
-        const extractedDiv = document.getElementById('wwp-drawingArea');
-        assert.equal(extractedDiv.children[0].tagName.toLowerCase(), 'svg', '#wwp-drawingArea should have a SVG child');
+        after('cleaning the DOM after assertion', function () {
+            drawingArea.parentNode.removeChild(drawingArea);
+        });
+
+        it('should be initialized with Raphael', function () {
+            drawingArea.setAttribute('id', 'wwp-drawingArea');
+            document.body.appendChild(drawingArea);
+            initializeDrawingArea(drawingArea, 500, 500);
+            const extractedDiv = document.getElementById('wwp-drawingArea');
+            const tagName = extractedDiv.children[0].tagName.toLowerCase();
+
+            assert.equal(tagName, 'svg', '#wwp-drawingArea should have a SVG child');
+        });
+    });
+
+    it('should have the same dimension as the given width and height', function () {
+        const drawingArea = document.createElement('div');
+        const width = 400;
+        const height = 200;
+        const paper = initializeDrawingArea(drawingArea, width, height);
+
+        assert.equal(paper.width, width, 'Drawing area doesn\'t have the expected width');
+        assert.equal(paper.height, height, 'Drawing area doesn\'t have the expected height');
     });
 });
