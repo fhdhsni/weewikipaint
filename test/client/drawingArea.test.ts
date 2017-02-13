@@ -1,8 +1,4 @@
-<<<<<<< Updated upstream:test/client/init.test.ts
-import { initializeDrawingArea } from '../../src/scripts/init';
-=======
 import { initializeDrawingArea, drawLine } from '../../src/scripts/drawingArea';
->>>>>>> Stashed changes:test/client/drawingArea.test.ts
 import { assert } from 'chai';
 
 describe('Drawing area', function () {
