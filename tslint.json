@@ -32,6 +32,7 @@
     "no-unexpected-multiline": true,
     "valid-typeof": true,
     "ordered-imports": false,
-    "no-var-requires": false
+    "no-var-requires": false,
+    "no-use-before-declare": true
   }
 }

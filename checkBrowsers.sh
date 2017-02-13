@@ -11,5 +11,5 @@ checkForBrowser() {
 
 checkForBrowser 'IE 10'
 checkForBrowser 'IE 11'
-checkForBrowser 'chrome'
-checkForBrowser 'firefox'
+checkForBrowser 'Chrome'
+checkForBrowser 'Firefox'
