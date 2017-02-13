@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import * as http from 'http';
 import * as server from '../../src/server/server';
 
-const portNumber = 8080;
+const portNumber = 1337;
 const tempDir = 'generated';
 const generatedIndexHtml = `${tempDir}/testIndex.html`; // TODO: maybe use path module?
 const generated404Html = `${tempDir}/test404.html`;
@@ -81,7 +81,7 @@ describe('404 page', function () {
                 .then(data => {
                     assert.equal(data.response.statusCode, 404, 'server didn\'t responed with 404');
                     assert.equal(data.responseData, sampleDataFor404Html,
-                                 'For 404 pages server doesn\'t respond as expected');
+                        'For 404 pages server doesn\'t respond as expected');
                     server.stop();
                     done();
                 }).catch(e => assert.throw(e));
