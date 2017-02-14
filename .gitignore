@@ -1,7 +1,7 @@
 /node_modules
 /dist
-/test/src/
-/test/test/
 *.log
 /spikes/node_http_server.js
 /spikes/node_http_get.js
+/src/server/server.js.map
+/test/compiled
