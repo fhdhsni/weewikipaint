@@ -36,6 +36,27 @@ describe('Drawing area', function () {
     });
 
     it('should draw a line', function () {
-        drawLine(20, 20, 100, 100);
+        const fetchedDrawingArea = document.getElementById('wwp-drawingArea') as HTMLDivElement;
+        const paper = initializeDrawingArea(fetchedDrawingArea);
+        let elements: RaphaelElement[] = [];
+        const coordinate = {
+            endX: 300,
+            endY: 300,
+            startX: 100,
+            startY: 100,
+            paper,
+        };
+
+        drawLine(coordinate);
+        paper.forEach(function (el) {
+            elements.push(el);
+
+            return true;
+        });
+        assert.equal(elements.length, 1, 'should be one');
+        const path = elements[0].node;
+
+        assert.equal(path.getAttribute('d'),
+            `M${coordinate.startX},${coordinate.startY}L${coordinate.endX},${coordinate.endY}`);
     });
 });
