@@ -55,8 +55,16 @@ describe('Drawing area', function () {
         });
         assert.equal(elements.length, 1, 'should be one');
         const path = elements[0].node;
+        const d = path.getAttribute('d');
 
-        assert.equal(path.getAttribute('d'),
-            `M${coordinate.startX},${coordinate.startY}L${coordinate.endX},${coordinate.endY}`);
+        if (d.indexOf(',') !== -1) {
+            assert.equal(d,
+                `M${coordinate.startX},${coordinate.startY}L${coordinate.endX},${coordinate.endY}`);
+        } else {
+            // We are in IE which uses different formating for its d attribute in paths
+            assert.equal(d,
+                `M ${coordinate.startX} ${coordinate.startY} L ${coordinate.endX} ${coordinate.endY}`);
+        }
+
     });
 });
