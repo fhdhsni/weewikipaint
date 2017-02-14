@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "ES5",
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "removeComments": false,
+    "noEmitOnError": true,
+    "outDir": "./compiled",
+    "lib": ["es6", "dom"],
+    "types": [
+      "node",
+      "mocha",
+      "chai"
+    ]
+  },
+  "files": [
+    "../src/scripts/globals.d.ts"
+  ],
+  "include": [
+    "./**/*.ts"
+  ]
+}

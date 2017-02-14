@@ -9,7 +9,7 @@ const configuration = {
   },
   frameworks: ['mocha'],
   files: [
-    'test/test/client/*.js',
+    'test/compiled/test/client/*.js',
   ],
   preprocessors: {
     'test/**/*test.js': ['webpack', 'sourcemap'],

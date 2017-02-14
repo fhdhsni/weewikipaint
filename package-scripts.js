@@ -12,7 +12,7 @@ module.exports = {
     tsc: {
       default: 'nps tsc.server,tsc.test',
       server: 'tsc ./src/server/*.ts -m \'CommonJS\' -t \'ES6\'',
-      test: 'tsc ./test/client/*.ts ./test/**/*.ts --outDir ./test/ -m \'CommonJS\' -t \'ES5\' --lib \'es6,dom\'',
+      test: 'tsc -p ./test/tsconfig.json',
       watch: {
         server: 'nps tsc.server --watch',
         test: 'nps tsc.test --watch',
@@ -20,7 +20,7 @@ module.exports = {
     },
     tswatch: 'nps -p tsc.watch.server,tsc.watch.test',
     test: 'nps tsc,mocha && karma start --single-run # | tee ./testOutput.txt && ./checkBrowsers.sh',
-    mocha: 'mocha ./test/test/server/*.js',
+    mocha: 'mocha ./test/compiled/test/server/*.js',
     k: {
       start: 'karma start',
       run: 'nps mocha && ./tscwatch.sh && karma run | tee ./testOutput.txt && ./checkBrowsers.sh',

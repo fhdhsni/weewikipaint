@@ -10,14 +10,17 @@
         "types": [
             "node",
             "mocha",
-            "chai"
+          "chai"
         ]
     },
-    "include": [
-        "src/**/*",
-        "test/**/*"
-    ],
-    "exclude": [
-        "node_modules"
-    ]
+  "files": [
+    "./src/scripts/globals.d.ts"
+  ],
+  "include": [
+    "src/**/*",
+    "test/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
