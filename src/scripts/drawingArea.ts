@@ -1,4 +1,3 @@
-/* tslint:disable */
 import * as raphael from 'raphael';
 
 export function initializeDrawingArea(drawingAreaElement: HTMLDivElement): RaphaelPaper {
@@ -13,14 +12,6 @@ export function initializeDrawingArea(drawingAreaElement: HTMLDivElement): Rapha
     return paper;
 }
 
-export function drawLine(coordinate: drawLineArgumentObject) {
+export function drawLine(coordinate: DrawLineArgumentObject) {
     coordinate.paper.path(`M${coordinate.startX},${coordinate.startY}L${coordinate.endX},${coordinate.endY}`);
-}
-
-interface drawLineArgumentObject {
-    startX: number;
-    startY: number;
-    endX: number;
-    endY: number;
-    paper: RaphaelPaper;
 }

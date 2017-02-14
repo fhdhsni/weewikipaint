@@ -5,10 +5,11 @@ describe('Drawing area', function () {
     const width = 600;
     const height = 400;
     const drawingArea = document.createElement('div');
+    let paper: RaphaelPaper;
+
     drawingArea.setAttribute('id', 'wwp-drawingArea');
     drawingArea.style.width = `${width}px`;
     drawingArea.style.height = `${height}px`;
-    let paper: RaphaelPaper;
 
     beforeEach(function () {
         const clonedDrawingArea = drawingArea.cloneNode(true) as HTMLDivElement;
@@ -22,16 +23,7 @@ describe('Drawing area', function () {
         extractedDiv.parentNode.removeChild(extractedDiv);
     });
 
-    it('should be initialized with Raphael', function () {
-        const fetchedDrawingArea = document.getElementById('wwp-drawingArea') as HTMLDivElement;
-        const tagName = fetchedDrawingArea.children[0].tagName.toLowerCase();
-
-        assert.equal(tagName, 'svg', '#wwp-drawingArea should have a SVG child');
-    });
-
     it('should have the same dimension as the width and height of its parent', function () {
-        // tslint:disable-next-line
-        debugger;
         assert.equal(paper.width, width, 'Drawing area doesn\'t have the expected width');
         assert.equal(paper.height, height, 'Drawing area doesn\'t have the expected height');
     });
@@ -64,6 +56,5 @@ describe('Drawing area', function () {
             assert.equal(d,
                 `M ${coordinate.startX} ${coordinate.startY} L ${coordinate.endX} ${coordinate.endY}`);
         }
-
     });
 });
