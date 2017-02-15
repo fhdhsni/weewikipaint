@@ -11,6 +11,9 @@ const configuration = {
   files: [
     'test/compiled/test/client/*.js',
   ],
+  exclude: [
+    'test/compiled/test/client/*.selenium.test.js',
+  ],
   preprocessors: {
     'test/**/*test.js': ['webpack', 'sourcemap'],
   },
