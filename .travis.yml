@@ -1,14 +1,18 @@
 sudo: required
-dist: trusty  
+dist: trusty
 language: node_js
 node_js:
-  - "node"
-
-before_install:  
- - export CHROME_BIN=/usr/bin/google-chrome
- - export DISPLAY=:99.0
- - sh -e /etc/init.d/xvfb start
- - sudo apt-get update
- - sudo apt-get install -y libappindicator1 fonts-liberation
- - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
- - sudo dpkg -i google-chrome*.deb
+- node
+before_install:
+- export CHROME_BIN=/usr/bin/google-chrome
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
+- sudo apt-get update
+- sudo apt-get install -y libappindicator1 fonts-liberation
+- wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+- sudo dpkg -i google-chrome*.deb
+addons:
+  sauce_connect:
+    username: "fhdhsni"
+  jwt:
+    secure: L6lWpiUIp0mG/fqPBmunVD6XOPIRJEx0WwOk58PjzaoG3a7XmsffrlXifkBthdmjqu47Fx3c3P1Q1Yzh/u8kmRvCSZfHk7dmbdODZ08vVlUR/3Xt8YtFh/ZJuxkhheZkkHBlEMTCa0W54soCJzCc9PE4a3hsxx7ulwzmH1g93WGvXN0rIr2ekL721KhKD1Vjye4Of9xGtx3Q/Y8QpAM+uoP78DgV+3YFCu+Uw+rnMsZcoyALQBK/H1ij6xU95+c7H1/6RniMDg80IyvcLTzixPvonsiH4J4vG8CVI42Yrqo6xMYAqUDNQa3yPRkbwqMC58X7LdUlfzqXa7G2CU8hF4ufiLVJ2qBk9TbiBsoOnbI79tuuPhQs4a6SWZEFLFe6WMLfslVnhZeI4FTK6P8WTX8mBvtClAg22y/BN/KylrVomCjm48Iq7PW9h8mm+0sZNk3+zjHZg0yQXf1VXF8qpoBjJaCwM9za5G9NgWqgL31d9lR+spz7Gp7udKb0LiNmWFoGTHAhenZG/vlHk6BxxmslQ+Y9pvWJsyrYrISBtCl3zkJ1GO7QJrCaDYxhvPnggaYJOdqrK/cQKBC/oUz7XXseQteynq62NeZRkkrxbieQJKX9pRVZOeZzwHqPUZQkuZRHPBy3f+jMmqvbTD5rrb0iDiAmGduoL9o/bhOJeWo=
