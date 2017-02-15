@@ -33,6 +33,7 @@
     "valid-typeof": true,
     "ordered-imports": false,
     "no-var-requires": false,
-    "no-use-before-declare": true
+    "no-use-before-declare": true,
+    "object-literal-sort-keys": false
   }
 }
