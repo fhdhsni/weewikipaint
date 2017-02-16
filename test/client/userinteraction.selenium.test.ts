@@ -4,6 +4,7 @@ import { assert } from 'chai';
 import * as fs from 'fs';
 
 test.describe('userinteraction', function () {
+    this.timeout(30000);
     test.it('should respond to mouse events', function () {
         let top: number;
         let border: number;

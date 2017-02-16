@@ -1,3 +1,5 @@
 #!/bin/bash
 serve -p 8000 ./dist &> /dev/null &
-echo $!
+serverPID=$!
+sleep 3s
+echo $serverPID
