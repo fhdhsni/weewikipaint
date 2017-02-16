@@ -5,14 +5,11 @@ import { assert } from 'chai';
 import * as fs from 'fs';
 
 test.describe('userinteraction', function () {
-    this.timeout(30000);
     const By = webdriver.By;
     this.timeout(300000);
     test.beforeEach(function () {
         if (process.env.SAUCE_USERNAME != undefined) {
-            console.log('inside saucelabs...');
-            console.log(process.env.SAUCE_USERNAME);
-            console.log(process.env.SAUCE_ACCESS_KEY);
+            // if (process.env.SAUCE_USERNAME === 'just to make it falsy') {
             this.browser = new webdriver.Builder()
                 .usingServer('http://' + process.env.SAUCE_USERNAME + ':' + process.env.SAUCE_ACCESS_KEY + '@ondemand.saucelabs.com:80/wd/hub')
                 .withCapabilities({
@@ -20,15 +17,14 @@ test.describe('userinteraction', function () {
                     'build': process.env.TRAVIS_BUILD_NUMBER,
                     'username': process.env.SAUCE_USERNAME,
                     'accessKey': process.env.SAUCE_ACCESS_KEY,
-                    'platform': 'Windows 10',
-                    'browserName': 'chrome',
+                    'platform': 'Windows 7',
+                    'browserName': 'internet explorer',
+                    'version': '11',
                 }).build();
         } else {
-            console.log('inside phantomjs');
             this.browser = new webdriver.Builder()
-                .withCapabilities({
-                    browserName: 'phantomjs',
-                }).build();
+                .forBrowser('phantomjs')
+                .build();
         }
 
         return this.browser.get('http://localhost:8000/');
@@ -81,7 +77,7 @@ test.describe('userinteraction', function () {
             const start = values[0].replace(/\w/i, '');
             const end = values[1].replace(/\w/i, '');
 
-            assert.equal(Number(end) - Number(start), 50, 'a line with the length of 50 pixels should\'ve been drawn');
+            assert.equal(Number(end) - Number(start), 150, 'a line with the length of 50 pixels should\'ve been drawn');
         });
 
         this.browser.takeScreenshot()

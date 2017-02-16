@@ -20,9 +20,7 @@ test.describe('saucelabs test', function () {
     this.timeout(300000);
     test.beforeEach(function () {
         if (process.env.SAUCE_USERNAME != undefined) {
-            console.log('inside saucelabs...');
-            console.log(process.env.SAUCE_USERNAME);
-            console.log(process.env.SAUCE_ACCESS_KEY);
+            // if (process.env.SAUCE_USERNAME === 'just to make it falsy') {
             this.browser = new webdriver.Builder()
                 .usingServer('http://' + process.env.SAUCE_USERNAME + ':' + process.env.SAUCE_ACCESS_KEY + '@ondemand.saucelabs.com:80/wd/hub')
                 .withCapabilities({
@@ -30,11 +28,11 @@ test.describe('saucelabs test', function () {
                     'build': process.env.TRAVIS_BUILD_NUMBER,
                     'username': process.env.SAUCE_USERNAME,
                     'accessKey': process.env.SAUCE_ACCESS_KEY,
-                    'platform': 'Windows 10',
-                    'browserName': 'chrome',
+                    'platform': 'OS X 10.11',
+                    'browserName': 'safari',
+                    'version': '10.0',
                 }).build();
         } else {
-            console.log('inside phantomjs');
             this.browser = new webdriver.Builder()
                 .withCapabilities({
                     browserName: 'phantomjs',
