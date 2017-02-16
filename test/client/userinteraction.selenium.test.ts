@@ -3,13 +3,15 @@ import * as webdriver from 'selenium-webdriver';
 import * as test from 'selenium-webdriver/testing';
 import { assert } from 'chai';
 import * as fs from 'fs';
+import sendToSaucelab from '../sendToSaucelab';
+let inTravis = false;
 
 test.describe('userinteraction', function () {
     const By = webdriver.By;
     this.timeout(300000);
     test.beforeEach(function () {
         if (process.env.SAUCE_USERNAME != undefined) {
-            // if (process.env.SAUCE_USERNAME === 'just to make it falsy') {
+            inTravis = true;
             this.browser = new webdriver.Builder()
                 .usingServer('http://' + process.env.SAUCE_USERNAME + ':' + process.env.SAUCE_ACCESS_KEY + '@ondemand.saucelabs.com:80/wd/hub')
                 .withCapabilities({
@@ -38,6 +40,12 @@ test.describe('userinteraction', function () {
         let border: number;
         let padding: number;
         let left: number;
+        let sessionID: string;
+
+        this.browser.getSession()
+            .then((val: any) => {
+                sessionID = val.id_;
+            });
 
         this.browser.executeScript(function () {
             let div = document.getElementById('drawingArea') as HTMLElement;
@@ -71,7 +79,17 @@ test.describe('userinteraction', function () {
             const start = values[0].replace(/\w/i, '');
             const end = values[1].replace(/\w/i, '');
 
-            assert.equal(Number(end) - Number(start), 50, 'a line with the length of 50 pixels should\'ve been drawn');
+            if (inTravis) {
+                try {
+                    assert.equal(Number(end) - Number(start), 50, 'a line with the length of 50 pixels should\'ve been drawn');
+                } catch (e) {
+                    sendToSaucelab(false, process.env.SAUCE_USERNAME, process.env.SAUCE_ACCESS_KEY, sessionID);
+                    throw e;
+                }
+                sendToSaucelab(true, process.env.SAUCE_USERNAME, process.env.SAUCE_ACCESS_KEY, sessionID);
+            } else {
+                assert.equal(Number(end) - Number(start), 50, 'a line with the length of 50 pixels should\'ve been drawn');
+            }
         });
 
         this.browser.takeScreenshot()

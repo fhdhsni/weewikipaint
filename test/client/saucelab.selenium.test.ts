@@ -2,25 +2,15 @@
 import * as webdriver from 'selenium-webdriver';
 import * as test from 'selenium-webdriver/testing';
 import { assert } from 'chai';
-
-// const driver = new webdriver.Builder()
-//     .withCapabilities({
-//         browserName: 'chrome',
-//         platform: 'Windows 10',
-//         version: '56',
-//         username,
-//         accessKey,
-//     })
-//     .usingServer(`http://${username}:${accessKey}@ondemand.saucelabs.com:80/wd/hub`)
-//     .build();
-// const By = webdriver.By;
+import sendToSaucelab from '../sendToSaucelab';
+let inTravis = false;
 
 test.describe('saucelabs test', function () {
     const By = webdriver.By;
     this.timeout(300000);
     test.beforeEach(function () {
         if (process.env.SAUCE_USERNAME != undefined) {
-            // if (process.env.SAUCE_USERNAME === 'just to make it falsy') {
+            inTravis = true;
             this.browser = new webdriver.Builder()
                 .usingServer('http://' + process.env.SAUCE_USERNAME + ':' + process.env.SAUCE_ACCESS_KEY + '@ondemand.saucelabs.com:80/wd/hub')
                 .withCapabilities({
@@ -47,9 +37,25 @@ test.describe('saucelabs test', function () {
     });
 
     test.it('should respond to click', function () {
+        let sessionID: string;
+        this.browser.getSession()
+            .then((val: any) => {
+                sessionID = val.id_;
+            });
         this.browser.getTitle()
             .then((val: string) => {
-                assert.equal(val, 'WeeWikiPaint', 'titles didn\'t match');
+
+                if (inTravis) {
+                    try {
+                        assert.equal(val, 'WeeWikiPaint', 'titles didn\'t match');
+                    } catch (e) {
+                        sendToSaucelab(false, process.env.SAUCE_USERNAME, process.env.SAUCE_ACCESS_KEY, sessionID);
+                        throw e;
+                    }
+                    sendToSaucelab(true, process.env.SAUCE_USERNAME, process.env.SAUCE_ACCESS_KEY, sessionID);
+                } else {
+                    assert.equal(val, 'WeeWikiPaint', 'titles didn\'t match');
+                }
             });
     });
 });
