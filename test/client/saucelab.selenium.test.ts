@@ -17,7 +17,7 @@ import { assert } from 'chai';
 
 test.describe('userInteraction', function () {
     const By = webdriver.By;
-    this.timeout(90000);
+    this.timeout(300000);
     test.beforeEach(function () {
         if (process.env.SAUCE_USERNAME != undefined) {
             console.log('inside saucelabs...');
