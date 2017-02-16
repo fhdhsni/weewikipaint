@@ -1,5 +1,4 @@
 /node_modules
-/dist
 *.log
 /spikes/node_http_server.js
 /spikes/node_http_get.js
