@@ -18,8 +18,7 @@ test.describe('userinteraction', function () {
                     'username': process.env.SAUCE_USERNAME,
                     'accessKey': process.env.SAUCE_ACCESS_KEY,
                     'platform': 'OS X 10.11',
-                    'browserName': 'safari',
-                    'version': '10.0',
+                    'browserName': 'chrome',
                 }).build();
         } else {
             this.browser = new webdriver.Builder()
@@ -56,7 +55,7 @@ test.describe('userinteraction', function () {
             padding = parseInt(offset.paddingWidth, 10);
 
             this.browser.actions()
-                .mouseMove({ x: left + border + padding, y: top + border + padding })
+                .mouseMove({ x: left + border + padding + 250, y: top + border + padding + 150 })
                 .mouseDown()
                 .mouseMove({ x: 50, y: 50 }) // moving away 50 pixels from top left corner
                 .mouseUp()
