@@ -50,11 +50,11 @@ describe('Drawing area', function () {
 
         if (d.indexOf(',') !== -1) {
             assert.equal(d,
-                `M${coordinate.startX},${coordinate.startY}L${coordinate.endX},${coordinate.endY}`);
+                         `M${coordinate.startX},${coordinate.startY}L${coordinate.endX},${coordinate.endY}`);
         } else {
             // We are in IE which uses different formating for its d attribute in paths
             assert.equal(d,
-                `M ${coordinate.startX} ${coordinate.startY} L ${coordinate.endX} ${coordinate.endY}`);
+                         `M ${coordinate.startX} ${coordinate.startY} L ${coordinate.endX} ${coordinate.endY}`);
         }
     });
 });

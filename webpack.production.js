@@ -1,4 +1,4 @@
-const devConfig = require('./webpack.dev.config');
+const devConfig = require('./webpack.development');
 const webpack = require('webpack');
 const plugins = devConfig.plugins;
 const modules = devConfig.module;

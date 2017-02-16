@@ -13,6 +13,7 @@ const configuration = {
   ],
   exclude: [
     'test/compiled/test/client/*.selenium.test.js',
+    'test/compiled/test/client/foobar.js',
   ],
   preprocessors: {
     'test/**/*test.js': ['webpack', 'sourcemap'],

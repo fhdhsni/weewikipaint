@@ -47,6 +47,7 @@
     "procfile": "^0.1.1",
     "sass-loader": "^4.1.1",
     "selenium-webdriver": "^3.0.1",
+    "serve": "^3.3.1",
     "style-loader": "^0.13.1",
     "ts-node": "^2.1.0",
     "tslint": "^4.4.2",

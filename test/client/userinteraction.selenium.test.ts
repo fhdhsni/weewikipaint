@@ -13,7 +13,7 @@ test.describe('userinteraction', function () {
             .forBrowser('phantomjs')
             .build();
 
-        driver.get('http://192.168.1.100:8000/');
+        driver.get('http://localhost:8000/');
 
         driver.executeScript(function () {
             let div = document.getElementById('drawingArea') as HTMLElement;
@@ -33,7 +33,7 @@ test.describe('userinteraction', function () {
             driver.actions()
                 .mouseMove({ x: left + border + padding, y: top + border + padding })
                 .mouseDown()
-                .mouseMove({ x: 50, y: 50 }) // moving away 50 pixels from top right corner
+                .mouseMove({ x: 50, y: 50 }) // moving away 50 pixels from top left corner
                 .mouseUp()
                 .perform();
         });
