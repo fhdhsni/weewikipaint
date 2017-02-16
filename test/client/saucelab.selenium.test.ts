@@ -15,12 +15,14 @@ import { assert } from 'chai';
 //     .build();
 // const By = webdriver.By;
 
-test.describe('userInteraction', function () {
+test.describe('saucelabs test', function () {
     const By = webdriver.By;
     this.timeout(300000);
     test.beforeEach(function () {
         if (process.env.SAUCE_USERNAME != undefined) {
             console.log('inside saucelabs...');
+            console.log(process.env.SAUCE_USERNAME);
+            console.log(process.env.SAUCE_ACCESS_KEY);
             this.browser = new webdriver.Builder()
                 .usingServer('http://' + process.env.SAUCE_USERNAME + ':' + process.env.SAUCE_ACCESS_KEY + '@ondemand.saucelabs.com:80/wd/hub')
                 .withCapabilities({
@@ -28,6 +30,7 @@ test.describe('userInteraction', function () {
                     'build': process.env.TRAVIS_BUILD_NUMBER,
                     'username': process.env.SAUCE_USERNAME,
                     'accessKey': process.env.SAUCE_ACCESS_KEY,
+                    'platform': 'Windows 10',
                     'browserName': 'chrome',
                 }).build();
         } else {

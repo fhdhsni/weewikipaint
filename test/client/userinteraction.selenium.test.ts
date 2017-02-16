@@ -1,3 +1,4 @@
+/* tslint:disable triple-equals max-line-length */
 import * as webdriver from 'selenium-webdriver';
 import * as test from 'selenium-webdriver/testing';
 import { assert } from 'chai';
@@ -5,18 +6,50 @@ import * as fs from 'fs';
 
 test.describe('userinteraction', function () {
     this.timeout(30000);
+    const By = webdriver.By;
+    this.timeout(300000);
+    test.beforeEach(function () {
+        if (process.env.SAUCE_USERNAME != undefined) {
+            console.log('inside saucelabs...');
+            console.log(process.env.SAUCE_USERNAME);
+            console.log(process.env.SAUCE_ACCESS_KEY);
+            this.browser = new webdriver.Builder()
+                .usingServer('http://' + process.env.SAUCE_USERNAME + ':' + process.env.SAUCE_ACCESS_KEY + '@ondemand.saucelabs.com:80/wd/hub')
+                .withCapabilities({
+                    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+                    'build': process.env.TRAVIS_BUILD_NUMBER,
+                    'username': process.env.SAUCE_USERNAME,
+                    'accessKey': process.env.SAUCE_ACCESS_KEY,
+                    'platform': 'Windows 10',
+                    'browserName': 'chrome',
+                }).build();
+        } else {
+            console.log('inside phantomjs');
+            this.browser = new webdriver.Builder()
+                .withCapabilities({
+                    browserName: 'phantomjs',
+                }).build();
+        }
+
+        return this.browser.get('http://localhost:8000/');
+    });
+
+    test.afterEach(function () {
+        return this.browser.quit();
+    });
+
     test.it('should respond to mouse events', function () {
         let top: number;
         let border: number;
         let padding: number;
         let left: number;
-        const driver = new webdriver.Builder()
+        this.browser = new webdriver.Builder()
             .forBrowser('phantomjs')
             .build();
 
-        driver.get('http://localhost:8000/');
+        this.browser.get('http://localhost:8000/');
 
-        driver.executeScript(function () {
+        this.browser.executeScript(function () {
             let div = document.getElementById('drawingArea') as HTMLElement;
 
             return {
@@ -31,14 +64,14 @@ test.describe('userinteraction', function () {
             border = parseInt(offset.borderWidth, 10);
             padding = parseInt(offset.paddingWidth, 10);
 
-            driver.actions()
+            this.browser.actions()
                 .mouseMove({ x: left + border + padding, y: top + border + padding })
                 .mouseDown()
                 .mouseMove({ x: 50, y: 50 }) // moving away 50 pixels from top left corner
                 .mouseUp()
                 .perform();
         });
-        driver.executeScript(function () {
+        this.browser.executeScript(function () {
             let div = document.getElementById('drawingArea') as HTMLElement;
             let path = div.querySelector('path');
 
@@ -51,14 +84,13 @@ test.describe('userinteraction', function () {
             assert.equal(Number(end) - Number(start), 50, 'a line with the length of 50 pixels should\'ve been drawn');
         });
 
-        driver.takeScreenshot()
-            .then(photo => {
+        this.browser.takeScreenshot()
+            .then((photo: string) => {
                 fs.writeFile('generatedBySelenium.png', photo, 'base64', (err) => {
                     if (err) {
                         throw new Error(err.message);
                     }
                 });
             });
-        driver.quit();
     });
 });
