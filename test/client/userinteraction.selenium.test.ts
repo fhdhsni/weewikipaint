@@ -17,9 +17,9 @@ test.describe('userinteraction', function () {
                     'build': process.env.TRAVIS_BUILD_NUMBER,
                     'username': process.env.SAUCE_USERNAME,
                     'accessKey': process.env.SAUCE_ACCESS_KEY,
-                    'platform': 'Windows 7',
-                    'browserName': 'internet explorer',
-                    'version': '11',
+                    'platform': 'OS X 10.11',
+                    'browserName': 'safari',
+                    'version': '10.0',
                 }).build();
         } else {
             this.browser = new webdriver.Builder()
@@ -39,11 +39,6 @@ test.describe('userinteraction', function () {
         let border: number;
         let padding: number;
         let left: number;
-        this.browser = new webdriver.Builder()
-            .forBrowser('phantomjs')
-            .build();
-
-        this.browser.get('http://localhost:8000/');
 
         this.browser.executeScript(function () {
             let div = document.getElementById('drawingArea') as HTMLElement;
@@ -77,7 +72,7 @@ test.describe('userinteraction', function () {
             const start = values[0].replace(/\w/i, '');
             const end = values[1].replace(/\w/i, '');
 
-            assert.equal(Number(end) - Number(start), 150, 'a line with the length of 50 pixels should\'ve been drawn');
+            assert.equal(Number(end) - Number(start), 50, 'a line with the length of 50 pixels should\'ve been drawn');
         });
 
         this.browser.takeScreenshot()
