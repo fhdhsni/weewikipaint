@@ -25,7 +25,8 @@ module.exports = {
     },
     tswatch: 'nps -p tsc.watch.server,tsc.watch.test',
     test: {
-      default: 'servePort=$(./runServe.sh) && nps tsc,mocha && karma start --single-run; kill $servePort',
+      travis: 'nps tsc,mocha && karma start --single-run',
+      all: 'servePort=$(./runServe.sh) && nps tsc,mocha && karma start --single-run; kill $servePort',
       forBuild: 'nps tsc,mocha.server && karma start --single-run # | tee ./testOutput.txt && ./checkBrowsers.sh',
     },
     mocha: {

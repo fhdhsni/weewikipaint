@@ -13,7 +13,7 @@
   "license": "MIT",
   "scripts": {
     "start": "nps",
-    "test": "nps test"
+    "test": "nps test.travis"
   },
   "devDependencies": {
     "@types/chai": "^3.4.34",
