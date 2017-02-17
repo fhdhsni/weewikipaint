@@ -52,7 +52,6 @@
 //     version: '5.1',
 //   },
 // };
-// ;
 
 const customLaunchers = {
   sl_chrome: {
@@ -111,6 +110,7 @@ const configuration = {
   plugins: [
     require('karma-webpack'),
     require('karma-mocha'),
+    'karma-sauce-launcher',
   ],
 };
 
