@@ -94,13 +94,15 @@ test.describe('userinteraction', function () {
             }
         });
 
-        this.browser.takeScreenshot()
-            .then((photo: string) => {
-                fs.writeFile('generatedBySelenium.png', photo, 'base64', (err) => {
-                    if (err) {
-                        throw new Error(err.message);
-                    }
+        if (!inTravis) {
+            this.browser.takeScreenshot()
+                .then((photo: string) => {
+                    fs.writeFile('generatedBySelenium.png', photo, 'base64', (err) => {
+                        if (err) {
+                            throw new Error(err.message);
+                        }
+                    });
                 });
-            });
+        }
     });
 });
