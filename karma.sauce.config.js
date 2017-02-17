@@ -79,6 +79,7 @@ const configuration = {
     testName: 'weewikipaint unit tests',
     recordScreenshots: false,
     connectOptions: {
+      'no-ssl-bump-domains': 'all', // Ignore SSL error on Android emulator
       port: 5757,
       logfile: 'sauce_connect.log',
     },
