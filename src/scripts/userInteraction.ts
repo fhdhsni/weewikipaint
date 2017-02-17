@@ -1,6 +1,9 @@
+/**
+ * draws lines on drawingArea when user clicks drag
+ */
 export function userInteraction(
     paper: RaphaelPaper, drawingArea: HTMLElement, drawLine: (arg: DrawLineArgumentObject) => void) {
-    const drawingAreaPosition = drawingArea.getBoundingClientRect();
+    let drawingAreaPosition = drawingArea.getBoundingClientRect();
     let startX: number;
     let startY: number;
     let shouldWeDraw = false;
@@ -8,6 +11,10 @@ export function userInteraction(
     const border = parseInt(window.getComputedStyle(drawingArea).getPropertyValue('border-width'), 10);
 
     document.addEventListener('mouseup', () => shouldWeDraw = false);
+    window.addEventListener('resize', () => {
+        drawingAreaPosition = drawingArea.getBoundingClientRect();
+    });
+
     drawingArea.addEventListener('mouseleave', () => shouldWeDraw = false);
     drawingArea.addEventListener('mousedown', mouseDownHandler);
     drawingArea.addEventListener('mousemove', mouseMoveEvent => {
