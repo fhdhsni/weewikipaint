@@ -9,7 +9,10 @@ export default function sendToSaucelab(result: boolean, username: string, access
             pass: accessKey,
             sendImmediately: true,
         },
-        body: { passed: result },
+        body: {
+            passed: result,
+            name: 'weewikiPaint end to end test via selenium',
+        },
         json: true,
     }).then((data: string) => {
         console.log(data);

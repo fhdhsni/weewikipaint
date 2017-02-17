@@ -25,8 +25,9 @@ module.exports = {
     },
     tswatch: 'nps -p tsc.watch.server,tsc.watch.test',
     test: {
-      travis: 'nps tsc,mocha && karma start --single-run',
-      all: 'servePort=$(./runServe.sh) && nps tsc,mocha && karma start --single-run; kill $servePort',
+      // travis: 'nps tsc,mocha && karma start ./karma.sauce.config.js',
+      travis: 'nps tsc && karma start ./karma.sauce.config.js && nps mocha',
+      all: 'serverProcess=$(./runServe.sh) && nps tsc,mocha && karma start --single-run; kill $serverProcess',
       forBuild: 'nps tsc,mocha.server && karma start --single-run # | tee ./testOutput.txt && ./checkBrowsers.sh',
     },
     mocha: {
@@ -38,6 +39,17 @@ module.exports = {
       start: 'karma start',
       run: 'nps mocha && ./tscwatch.sh && karma run | tee ./testOutput.txt && ./checkBrowsers.sh',
       stop: 'karma stop',
+    },
+    WTF: {
+      default: `echo -e '\n
+      1. nps tswatch to watch typescript files. \n
+      2. nps ws.local to run webpack-dev-server in watch mode. \n
+      3. nps k.s to start karma server. \n
+      4. nps k.r to run client side tests. \n
+      5. nps mocha.server to run server side tests. \n
+      6. nps mocha.selenium to run selenium tests. \n
+      7. nps test.all to run all the tests. \n
+      8. nps build to build for production. \n'`,
     },
   },
   options: {
