@@ -38,10 +38,6 @@ test.describe('userinteraction', function () {
     });
 
     test.it('should respond to mouse events', function () {
-        let top: number;
-        let border: number;
-        let padding: number;
-        let left: number;
         let sessionID: string;
 
         this.browser.getSession()
@@ -57,17 +53,24 @@ test.describe('userinteraction', function () {
                 paddingWidth: window.getComputedStyle(div).padding,
                 top: div.offsetTop,
                 left: div.offsetLeft,
+                width: div.offsetWidth,
+                height: div.offsetHeight,
             };
-        }).then((offset: { top: string; left: string; borderWidth: string, paddingWidth: string }) => {
-            top = parseInt(offset.top, 10);
-            left = parseInt(offset.left, 10);
-            border = parseInt(offset.borderWidth, 10);
-            padding = parseInt(offset.paddingWidth, 10);
+        }).then((offset: { top: string; left: string; borderWidth: string, paddingWidth: string, width: string, height: string }) => {
+            // All this mess just to find the center of #drawingArea
+            const top = parseInt(offset.top, 10);
+            const left = parseInt(offset.left, 10);
+            const border = parseInt(offset.borderWidth, 10);
+            const padding = parseInt(offset.paddingWidth, 10);
+            const width = parseInt(offset.width, 10);
+            const height = parseInt(offset.height, 10);
+            const x = left + border + padding + (width / 2);
+            const y = top + border + padding + (height / 2);
 
             this.browser.actions()
-                .mouseMove({ x: left + border + padding + 250, y: top + border + padding + 150 })
+                .mouseMove({ x, y })
                 .mouseDown()
-                .mouseMove({ x: 50, y: 50 }) // moving away 50 pixels from top left corner
+                .mouseMove({ x: 50, y: 0 })
                 .mouseUp()
                 .perform();
         });
