@@ -2,19 +2,28 @@
  * draws lines on drawingArea when user clicks drag
  */
 export function userInteraction(
-    paper: RaphaelPaper, drawingArea: HTMLElement, drawLine: (arg: DrawLineArgumentObject) => void) {
+    paper: RaphaelPaper,
+    drawingArea: HTMLElement,
+    drawLine: (arg: DrawLineArgumentObject) => void) {
+
     let drawingAreaPosition = drawingArea.getBoundingClientRect();
     let startX: number;
     let startY: number;
     let shouldWeDraw = false;
-    const padding = parseInt(window.getComputedStyle(drawingArea).getPropertyValue('padding'), 10);
-    const border = parseInt(window.getComputedStyle(drawingArea).getPropertyValue('border-width'), 10);
+    const drawingAreaCSS = window.getComputedStyle(drawingArea);
+    const padding = parseInt(drawingAreaCSS.getPropertyValue('padding'), 10);
+    const border = parseInt(drawingAreaCSS.getPropertyValue('border-width'), 10);
+    let timer: any;
 
-    document.addEventListener('mouseup', () => shouldWeDraw = false);
     window.addEventListener('resize', () => {
-        drawingAreaPosition = drawingArea.getBoundingClientRect();
+        // we are doing this to only run getBoundingClientRect for once when resizing finished
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            drawingAreaPosition = drawingArea.getBoundingClientRect();
+        }, 100);
     });
-
+    document.addEventListener('mouseup', () => shouldWeDraw = false);
+    document.addEventListener('mouseup', () => shouldWeDraw = false);
     drawingArea.addEventListener('mouseleave', () => shouldWeDraw = false);
     drawingArea.addEventListener('mousedown', mouseDownHandler);
     drawingArea.addEventListener('mousemove', mouseMoveEvent => {
@@ -40,6 +49,4 @@ export function userInteraction(
         startX = mouseDownEvent.clientX - drawingAreaPosition.left - padding - border;
         startY = mouseDownEvent.clientY - drawingAreaPosition.top - padding - border;
     }
-
-    document.addEventListener('mouseup', () => shouldWeDraw = false);
 }
