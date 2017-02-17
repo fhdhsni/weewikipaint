@@ -22,13 +22,13 @@ test.describe('userinteraction', function () {
                     'platform': 'OS X 10.11',
                     'browserName': 'chrome',
                 }).build();
+            return this.browser.get('http://localhost:8000/');
         } else {
             this.browser = new webdriver.Builder()
                 .forBrowser('phantomjs')
                 .build();
+            return this.browser.get('http://localhost:8080/');
         }
-
-        return this.browser.get('http://localhost:8000/');
     });
 
     test.afterEach(function () {

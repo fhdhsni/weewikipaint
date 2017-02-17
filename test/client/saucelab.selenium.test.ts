@@ -22,14 +22,14 @@ test.describe('saucelabs test', function () {
                     'browserName': 'safari',
                     'version': '10.0',
                 }).build();
+            return this.browser.get('http://localhost:8000/');
         } else {
             this.browser = new webdriver.Builder()
                 .withCapabilities({
                     browserName: 'phantomjs',
                 }).build();
+            return this.browser.get('http://localhost:8080/');
         }
-
-        return this.browser.get('http://localhost:8000/');
     });
 
     test.afterEach(function () {
