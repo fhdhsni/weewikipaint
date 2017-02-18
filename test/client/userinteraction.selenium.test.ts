@@ -56,7 +56,7 @@ test.describe('userinteraction', function () {
                 width: div.offsetWidth,
                 height: div.offsetHeight,
             };
-        }).then((offset: { top: string; left: string; borderWidth: string, paddingWidth: string, width: string, height: string }) => {
+        }).then((offset: { top: string; left: string; borderWidth: string; paddingWidth: string; width: string; height: string }) => {
             // All this mess just to find the center of #drawingArea
             const top = parseInt(offset.top, 10);
             const left = parseInt(offset.left, 10);
