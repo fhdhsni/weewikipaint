@@ -49,8 +49,8 @@ test.describe('userinteraction', function () {
             let div = document.getElementById('drawingArea') as HTMLElement;
 
             return {
-                borderWidth: window.getComputedStyle(div).borderWidth,
-                paddingWidth: window.getComputedStyle(div).padding,
+                borderWidth: window.getComputedStyle(div).borderLeftWidth,
+                paddingWidth: window.getComputedStyle(div).paddingLeft,
                 top: div.offsetTop,
                 left: div.offsetLeft,
                 width: div.offsetWidth,
