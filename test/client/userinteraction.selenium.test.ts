@@ -29,7 +29,7 @@ test.describe('userinteraction', function () {
                 .build();
             const PORT = process.env.serverPort || 8080;
 
-            return this.browser.get(`http://localhost:${PORT}/`);
+            return this.browser.get(`http://${process.env.MYIP}:${PORT}/`);
         }
     });
 
