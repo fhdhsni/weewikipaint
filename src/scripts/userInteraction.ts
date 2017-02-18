@@ -1,5 +1,5 @@
 /**
- * draws lines on drawingArea when user clicks drag
+ * draws lines on drawingArea when user clicks and drags
  */
 export function userInteraction(
     paper: RaphaelPaper,
@@ -23,7 +23,6 @@ export function userInteraction(
         }, 100);
     });
     document.addEventListener('mouseup', () => shouldWeDraw = false);
-    document.addEventListener('mouseup', () => shouldWeDraw = false);
     drawingArea.addEventListener('mouseleave', () => shouldWeDraw = false);
     drawingArea.addEventListener('mousedown', mouseDownHandler);
     drawingArea.addEventListener('mousemove', mouseMoveEvent => {
@@ -44,7 +43,6 @@ export function userInteraction(
     });
 
     function mouseDownHandler(mouseDownEvent: MouseEvent) {
-        // tslint:disable-next-line
         shouldWeDraw = true;
         mouseDownEvent.preventDefault();
         startX = mouseDownEvent.clientX - drawingAreaPosition.left - padding - border;
