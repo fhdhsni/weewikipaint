@@ -13,7 +13,8 @@
   "license": "MIT",
   "scripts": {
     "start": "nps",
-    "test": "nps test.travis"
+    "test": "nps test.travis",
+    "prepush": "nps build"
   },
   "devDependencies": {
     "@types/chai": "^3.4.34",
@@ -27,6 +28,7 @@
     "extract-text-webpack-plugin": "beta",
     "html-webpack-inline-source-plugin": "^0.0.6",
     "html-webpack-plugin": "^2.26.0",
+    "husky": "^0.13.1",
     "karma": "^1.4.1",
     "karma-chrome-launcher": "^2.0.0",
     "karma-firefox-launcher": "^1.0.0",
