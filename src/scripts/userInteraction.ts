@@ -11,8 +11,8 @@ export function userInteraction(
     let startY: number;
     let shouldWeDraw = false;
     const drawingAreaCSS = window.getComputedStyle(drawingArea);
-    const padding = parseInt(drawingAreaCSS.getPropertyValue('padding'), 10);
-    const border = parseInt(drawingAreaCSS.getPropertyValue('border-width'), 10);
+    const padding = parseInt(drawingAreaCSS.paddingLeft, 10);
+    const border = parseInt(drawingAreaCSS.borderLeftWidth, 10);
     let timer: any;
 
     window.addEventListener('resize', () => {
@@ -44,6 +44,7 @@ export function userInteraction(
     });
 
     function mouseDownHandler(mouseDownEvent: MouseEvent) {
+        // tslint:disable-next-line
         shouldWeDraw = true;
         mouseDownEvent.preventDefault();
         startX = mouseDownEvent.clientX - drawingAreaPosition.left - padding - border;
