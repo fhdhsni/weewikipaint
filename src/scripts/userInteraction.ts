@@ -7,9 +7,11 @@ export function userInteraction(
     drawLine: (arg: DrawLineArgumentObject) => void) {
 
     let drawingAreaPosition = drawingArea.getBoundingClientRect();
-    let startX: number;
-    let startY: number;
     let shouldWeDraw = false;
+    let start: {
+        x: number;
+        y: number;
+    };
     const drawingAreaCSS = window.getComputedStyle(drawingArea);
     const padding = parseInt(drawingAreaCSS.paddingLeft, 10);
     const border = parseInt(drawingAreaCSS.borderLeftWidth, 10);
@@ -24,28 +26,32 @@ export function userInteraction(
     });
     document.addEventListener('mouseup', () => shouldWeDraw = false);
     drawingArea.addEventListener('mouseleave', () => shouldWeDraw = false);
-    drawingArea.addEventListener('mousedown', mouseDownHandler);
+    drawingArea.addEventListener('mousedown', (mouseDownEvent) => {
+        shouldWeDraw = true;
+        mouseDownEvent.preventDefault();
+        start = relativePosition(mouseDownEvent.clientX, mouseDownEvent.clientY);
+    });
     drawingArea.addEventListener('mousemove', mouseMoveEvent => {
         if (shouldWeDraw) {
-            const endX = mouseMoveEvent.clientX - drawingAreaPosition.left - padding - border;
-            const endY = mouseMoveEvent.clientY - drawingAreaPosition.top - padding - border;
+            const end = relativePosition(mouseMoveEvent.clientX, mouseMoveEvent.clientY);
 
             drawLine({
-                startX,
-                startY,
-                endX,
-                endY,
+                startX: start.x,
+                startY: start.y,
+                endX: end.x,
+                endY: end.y,
                 paper,
             });
-            startX = endX;
-            startY = endY;
+            start.x = end.x;
+            start.y = end.y;
         }
     });
 
-    function mouseDownHandler(mouseDownEvent: MouseEvent) {
-        shouldWeDraw = true;
-        mouseDownEvent.preventDefault();
-        startX = mouseDownEvent.clientX - drawingAreaPosition.left - padding - border;
-        startY = mouseDownEvent.clientY - drawingAreaPosition.top - padding - border;
+    function relativePosition(absuloteX: number, absoluteY: number) {
+
+        return {
+            x: absuloteX - drawingAreaPosition.left - padding - border,
+            y: absoluteY - drawingAreaPosition.top - padding - border,
+        };
     }
 }
