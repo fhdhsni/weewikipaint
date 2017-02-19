@@ -7,16 +7,15 @@ export function userInteraction(
     drawLine: (arg: DrawLineArgumentObject) => void) {
 
     let drawingAreaPosition = drawingArea.getBoundingClientRect();
-    let shouldWeDraw = false;
+    const drawingAreaCSS = window.getComputedStyle(drawingArea);
+    const padding = parseInt(drawingAreaCSS.paddingLeft, 10);
+    const border = parseInt(drawingAreaCSS.borderLeftWidth, 10);
     let start: {
         x: number;
         y: number;
     };
-    const drawingAreaCSS = window.getComputedStyle(drawingArea);
-    const padding = parseInt(drawingAreaCSS.paddingLeft, 10);
-    const border = parseInt(drawingAreaCSS.borderLeftWidth, 10);
-    let timer: any;
 
+    let timer: any;
     window.addEventListener('resize', () => {
         // we are doing this to only run getBoundingClientRect for once when resizing finished
         clearTimeout(timer);
@@ -24,16 +23,16 @@ export function userInteraction(
             drawingAreaPosition = drawingArea.getBoundingClientRect();
         }, 100);
     });
-    document.addEventListener('mouseup', () => shouldWeDraw = false);
-    drawingArea.addEventListener('mouseleave', () => shouldWeDraw = false);
+
+    document.addEventListener('mouseup', () => start = undefined);
+    drawingArea.addEventListener('mouseleave', () => start = undefined);
     drawingArea.addEventListener('mousedown', (mouseDownEvent) => {
-        shouldWeDraw = true;
         mouseDownEvent.preventDefault();
-        start = relativePosition(mouseDownEvent.clientX, mouseDownEvent.clientY);
+        start = relativeOffset(mouseDownEvent.clientX, mouseDownEvent.clientY);
     });
     drawingArea.addEventListener('mousemove', mouseMoveEvent => {
-        if (shouldWeDraw) {
-            const end = relativePosition(mouseMoveEvent.clientX, mouseMoveEvent.clientY);
+        if (start !== undefined) {
+            const end = relativeOffset(mouseMoveEvent.clientX, mouseMoveEvent.clientY);
 
             drawLine({
                 startX: start.x,
@@ -47,7 +46,7 @@ export function userInteraction(
         }
     });
 
-    function relativePosition(absuloteX: number, absoluteY: number) {
+    function relativeOffset(absuloteX: number, absoluteY: number) {
 
         return {
             x: absuloteX - drawingAreaPosition.left - padding - border,
