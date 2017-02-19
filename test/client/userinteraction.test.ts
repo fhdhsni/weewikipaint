@@ -7,6 +7,7 @@ describe('userinteraction', function () {
     const height = 400;
     const drawingArea = document.createElement('div');
     let paper: RaphaelPaper;
+    let drawingDiv: HTMLDivElement;
 
     drawingArea.setAttribute('id', 'wwp-drawingArea');
     drawingArea.style.height = `${height}px`;
@@ -14,21 +15,17 @@ describe('userinteraction', function () {
     drawingArea.style.border = '2px pink solid';
 
     beforeEach(function () {
-        const clonedDrawingArea = drawingArea.cloneNode(true) as HTMLDivElement;
+        drawingDiv = drawingArea.cloneNode(true) as HTMLDivElement;
 
-        document.body.appendChild(clonedDrawingArea); // so each time we have a clean slate
-        paper = initializeDrawingArea(clonedDrawingArea);
+        document.body.appendChild(drawingDiv); // so each time we have a clean slate
+        paper = initializeDrawingArea(drawingDiv);
     });
 
     afterEach('cleaning the DOM after assertion', function () {
-        const extractedDiv = document.getElementById('wwp-drawingArea');
-
-        extractedDiv.parentNode.removeChild(extractedDiv);
+        drawingDiv.parentNode.removeChild(drawingDiv);
     });
 
     it('should draw a line in response to mouse events', () => {
-        const drawingDiv = document.getElementById('wwp-drawingArea') as HTMLDivElement;
-
         userInteraction(paper, drawingDiv, drawLine);
         sendMouseEvent(100, 0, drawingDiv, 'mousedown');
         sendMouseEvent(100, 100, drawingDiv, 'mousemove');
@@ -42,7 +39,6 @@ describe('userinteraction', function () {
         });
     });
     it('should not draw a line after mouseup', () => {
-        const drawingDiv = document.getElementById('wwp-drawingArea') as HTMLDivElement;
         const raphaelElements: RaphaelElement[] = [];
 
         userInteraction(paper, drawingDiv, drawLine);
@@ -60,7 +56,6 @@ describe('userinteraction', function () {
     });
 
     it('should draw two lines.', () => {
-        const drawingDiv = document.getElementById('wwp-drawingArea') as HTMLDivElement;
         const raphaelElements: RaphaelElement[] = [];
 
         userInteraction(paper, drawingDiv, drawLine);
@@ -79,7 +74,6 @@ describe('userinteraction', function () {
     });
 
     it('should not draw a line when only mouse moves (i.e. without mouse down)', () => {
-        const drawingDiv = document.getElementById('wwp-drawingArea') as HTMLDivElement;
         let raphaelElements: RaphaelElement[] = [];
 
         userInteraction(paper, drawingDiv, drawLine);
@@ -93,7 +87,6 @@ describe('userinteraction', function () {
         assert.equal(raphaelElements.length, 0, 'Nothing should be drawn while mouse moves without mousedown');
     });
     it('should not draw a line when mouse move starts outside of drawingArea ', () => {
-        const drawingDiv = document.getElementById('wwp-drawingArea') as HTMLDivElement;
         let raphaelElements: RaphaelElement[] = [];
 
         userInteraction(paper, drawingDiv, drawLine);
@@ -111,7 +104,6 @@ describe('userinteraction', function () {
         assert.equal(raphaelElements.length, 0, 'Nothing should be drawn while mousedown happens outside drawingArea');
     });
     it('should draw a line when mouse down starts exactly at the edge of drawingArea ', () => {
-        const drawingDiv = document.getElementById('wwp-drawingArea') as HTMLDivElement;
         let raphaelElements: RaphaelElement[] = [];
 
         userInteraction(paper, drawingDiv, drawLine);
@@ -127,6 +119,25 @@ describe('userinteraction', function () {
         assert.equal(
             raphaelElements.length, 1,
             'when mouse down starts at the edge of drawing area a line should be drawn');
+    });
+    it('should stop drawing when mouse leaves drawing area and returns', () => {
+        let raphaelElements: RaphaelElement[] = [];
+
+        userInteraction(paper, drawingDiv, drawLine);
+
+        sendMouseEvent(300, 100, drawingDiv, 'mousedown');
+        sendMouseEvent(900, 100, drawingDiv, 'mousemove');
+        sendMouseEvent(900, 100, drawingDiv, 'mouseleave'); // mouseleave doesn't happen automatically like in real
+        sendMouseEvent(300, 300, drawingDiv, 'mousemove');
+
+        paper.forEach((el) => {
+            raphaelElements.push(el);
+
+            return true;
+        });
+        assert.equal(
+            raphaelElements.length, 1,
+            'when mouse leaves the drawing area, drawing should not happen when it returns to drawing area');
     });
 });
 
@@ -161,14 +172,14 @@ function sendMouseEvent(x: number, y: number, element: HTMLDocument | HTMLDivEle
 
 function findRelativePosition(position: number, el: HTMLElement, whatKind: 'x' | 'y'): number {
     let offset: number;
+    const borderWidth = window.getComputedStyle(el).borderLeftWidth;
+    const paddingWidth = window.getComputedStyle(el).paddingLeft;
 
     if (whatKind === 'x') {
         offset = el.offsetLeft;
     } else {
         offset = el.offsetTop;
     }
-    const borderWidth = window.getComputedStyle(el).borderLeftWidth;
-    const paddingWidth = window.getComputedStyle(el).paddingLeft;
 
     return position + parseInt(borderWidth, 10) + parseInt(paddingWidth, 10) + offset;
 }

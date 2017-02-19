@@ -17,7 +17,7 @@ export function userInteraction(
 
     document.addEventListener('mouseup', () => start = undefined);
     drawingArea.addEventListener('mouseleave', () => start = undefined);
-    drawingArea.addEventListener('mousedown', (mouseDownEvent) => {
+    drawingArea.addEventListener('mousedown', mouseDownEvent => {
         mouseDownEvent.preventDefault();
         start = relativeOffset(mouseDownEvent.clientX, mouseDownEvent.clientY);
     });
