@@ -9,6 +9,8 @@ describe('userinteraction', function () {
     let paper: RaphaelPaper;
 
     drawingArea.setAttribute('id', 'wwp-drawingArea');
+    drawingArea.style.height = `${height}px`;
+    drawingArea.style.width = `${width}px`;
     drawingArea.style.border = '2px pink solid';
 
     beforeEach(function () {
@@ -90,11 +92,54 @@ describe('userinteraction', function () {
         });
         assert.equal(raphaelElements.length, 0, 'Nothing should be drawn while mouse moves without mousedown');
     });
+    it('should not draw a line when mouse move starts outside of drawingArea ', () => {
+        const drawingDiv = document.getElementById('wwp-drawingArea') as HTMLDivElement;
+        let raphaelElements: RaphaelElement[] = [];
+
+        userInteraction(paper, drawingDiv, drawLine);
+        sendMouseEvent(700, 100, document, 'mousedown');
+        sendMouseEvent(100, 100, drawingDiv, 'mousemove');
+
+        sendMouseEvent(100, 500, document, 'mousedown');
+        sendMouseEvent(100, 100, drawingDiv, 'mousemove');
+
+        paper.forEach((el) => {
+            raphaelElements.push(el);
+
+            return true;
+        });
+        assert.equal(raphaelElements.length, 0, 'Nothing should be drawn while mousedown happens outside drawingArea');
+    });
+    it('should draw a line when mouse down starts exactly at the edge of drawingArea ', () => {
+        const drawingDiv = document.getElementById('wwp-drawingArea') as HTMLDivElement;
+        let raphaelElements: RaphaelElement[] = [];
+
+        userInteraction(paper, drawingDiv, drawLine);
+
+        sendMouseEvent(width, 100, drawingDiv, 'mousedown');
+        sendMouseEvent(100, 100, drawingDiv, 'mousemove');
+
+        paper.forEach((el) => {
+            raphaelElements.push(el);
+
+            return true;
+        });
+        assert.equal(
+            raphaelElements.length, 1,
+            'when mouse down starts at the edge of drawing area a line should be drawn');
+    });
 });
 
-function sendMouseEvent(x: number, y: number, el: HTMLDivElement, type: string) {
-    const relativeX = findRelativePosition(x, el);
-    const relativeY = findRelativePosition(y, el);
+function sendMouseEvent(x: number, y: number, element: HTMLDocument | HTMLDivElement, type: string) {
+    let relativeX: number;
+    let relativeY: number;
+    if (element instanceof HTMLDivElement) {
+        relativeX = findRelativePosition(x, element, 'x');
+        relativeY = findRelativePosition(y, element, 'y');
+    } else {
+        relativeX = x;
+        relativeY = y;
+    }
     const ev = document.createEvent('MouseEvent');
 
     ev.initMouseEvent(
@@ -107,15 +152,23 @@ function sendMouseEvent(x: number, y: number, el: HTMLDivElement, type: string) 
         relativeX,
         relativeY, /* coordinates */
         false, false, false, false, /* modifier keys */
-        0 /*left*/, null,
+        0 /*left click*/,
+        null,
     );
 
-    el.dispatchEvent(ev);
+    element.dispatchEvent(ev);
 }
 
-function findRelativePosition(position: number, el: HTMLElement): number {
+function findRelativePosition(position: number, el: HTMLElement, whatKind: 'x' | 'y'): number {
+    let offset: number;
+
+    if (whatKind === 'x') {
+        offset = el.offsetLeft;
+    } else {
+        offset = el.offsetTop;
+    }
     const borderWidth = window.getComputedStyle(el).borderLeftWidth;
     const paddingWidth = window.getComputedStyle(el).paddingLeft;
 
-    return position + parseInt(borderWidth, 10) + parseInt(paddingWidth, 10);
+    return position + parseInt(borderWidth, 10) + parseInt(paddingWidth, 10) + offset;
 }
