@@ -1,27 +1,38 @@
-/* tslint:disable triple-equals max-line-length */
+/* tslint:disable triple-equals */
 import * as webdriver from 'selenium-webdriver';
 import * as test from 'selenium-webdriver/testing';
 import { assert } from 'chai';
 import * as fs from 'fs';
 import sendToSaucelab from '../sendToSaucelab';
+
 let inTravis = false;
+let sessionID: string;
+let USERNAME: string;
+let PASSWORD: string;
 
 test.describe('userinteraction', function () {
     const By = webdriver.By;
     this.timeout(300000);
     test.beforeEach(function () {
         if (process.env.SAUCE_USERNAME != undefined) {
+            USERNAME = process.env.SAUCE_USERNAME;
+            PASSWORD = process.env.SAUCE_ACCESS_KEY;
             inTravis = true;
             this.browser = new webdriver.Builder()
-                .usingServer('http://' + process.env.SAUCE_USERNAME + ':' + process.env.SAUCE_ACCESS_KEY + '@ondemand.saucelabs.com:80/wd/hub')
+                .usingServer(`http://${USERNAME}:${PASSWORD}@ondemand.saucelabs.com:80/wd/hub`)
                 .withCapabilities({
                     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
                     'build': process.env.TRAVIS_BUILD_NUMBER,
-                    'username': process.env.SAUCE_USERNAME,
-                    'accessKey': process.env.SAUCE_ACCESS_KEY,
+                    'username': USERNAME,
+                    'accessKey': PASSWORD,
                     'platform': 'OS X 10.11',
                     'browserName': 'chrome',
                 }).build();
+            this.browser.getSession()
+                .then((val: any) => {
+                    sessionID = val.id_;
+                });
+
             return this.browser.get('http://localhost:8000/');
         } else {
             this.browser = new webdriver.Builder()
@@ -32,19 +43,10 @@ test.describe('userinteraction', function () {
             return this.browser.get(`http://${process.env.MYIP}:${PORT}/`);
         }
     });
-
     test.afterEach(function () {
         return this.browser.quit();
     });
-
     test.it('should respond to mouse events', function () {
-        let sessionID: string;
-
-        this.browser.getSession()
-            .then((val: any) => {
-                sessionID = val.id_;
-            });
-
         this.browser.executeScript(function () {
             let div = document.getElementById('drawingArea') as HTMLElement;
 
@@ -56,7 +58,7 @@ test.describe('userinteraction', function () {
                 width: div.offsetWidth,
                 height: div.offsetHeight,
             };
-        }).then((offset: { top: string; left: string; borderWidth: string; paddingWidth: string; width: string; height: string }) => {
+        }).then((offset: OffsetObject) => {
             // All this mess just to find the center of #drawingArea
             const top = parseInt(offset.top, 10);
             const left = parseInt(offset.left, 10);
@@ -86,14 +88,16 @@ test.describe('userinteraction', function () {
 
             if (inTravis) {
                 try {
-                    assert.equal(Number(end) - Number(start), 50, 'a line with the length of 50 pixels should\'ve been drawn');
+                    assert.equal(
+                        Number(end) - Number(start), 50, 'a line with the length of 50 pixels should\'ve been drawn');
                 } catch (e) {
-                    sendToSaucelab(false, process.env.SAUCE_USERNAME, process.env.SAUCE_ACCESS_KEY, sessionID);
+                    sendToSaucelab(false, USERNAME, PASSWORD, sessionID);
                     throw e;
                 }
-                sendToSaucelab(true, process.env.SAUCE_USERNAME, process.env.SAUCE_ACCESS_KEY, sessionID);
+                sendToSaucelab(true, USERNAME, PASSWORD, sessionID);
             } else {
-                assert.equal(Number(end) - Number(start), 50, 'a line with the length of 50 pixels should\'ve been drawn');
+                assert.equal(
+                    Number(end) - Number(start), 50, 'a line with the length of 50 pixels should\'ve been drawn');
             }
         });
 

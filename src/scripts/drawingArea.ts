@@ -1,13 +1,13 @@
 import * as raphael from 'raphael';
 
 export function initializeDrawingArea(drawingAreaElement: HTMLDivElement): RaphaelPaper {
-    const widthString = window.getComputedStyle(drawingAreaElement).getPropertyValue('width');
-    const widthNumber = parseInt(widthString, 10);
+    const widthStr = window.getComputedStyle(drawingAreaElement).getPropertyValue('width');
+    const width = parseInt(widthStr, 10);
 
-    const heightString = window.getComputedStyle(drawingAreaElement).getPropertyValue('height');
-    const heightNumber = parseInt(heightString, 10);
+    const heightStr = window.getComputedStyle(drawingAreaElement).getPropertyValue('height');
+    const height = parseInt(heightStr, 10);
 
-    const paper = raphael(drawingAreaElement, widthNumber, heightNumber);
+    const paper = raphael(drawingAreaElement, width, height);
 
     return paper;
 }

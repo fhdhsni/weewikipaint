@@ -28,8 +28,8 @@ describe('userinteraction', function () {
         const drawingDiv = document.getElementById('wwp-drawingArea') as HTMLDivElement;
 
         userInteraction(paper, drawingDiv, drawLine);
-        mouseDownAt(100, 0, drawingDiv);
-        mouseMove(100, 100, drawingDiv);
+        sendMouseEvent(100, 0, drawingDiv, 'mousedown');
+        sendMouseEvent(100, 100, drawingDiv, 'mousemove');
 
         paper.forEach((el) => {
             const boundingBox = el.getBBox();
@@ -44,10 +44,10 @@ describe('userinteraction', function () {
         const raphaelElements: RaphaelElement[] = [];
 
         userInteraction(paper, drawingDiv, drawLine);
-        mouseDownAt(100, 0, drawingDiv);
-        mouseMove(100, 100, drawingDiv);
-        mouseUp(100, 100, drawingDiv);
-        mouseMove(200, 200, drawingDiv);
+        sendMouseEvent(100, 0, drawingDiv, 'mousedown');
+        sendMouseEvent(100, 100, drawingDiv, 'mousemove');
+        sendMouseEvent(100, 100, drawingDiv, 'mouseup');
+        sendMouseEvent(200, 200, drawingDiv, 'mousemove');
 
         paper.forEach((el) => {
             raphaelElements.push(el);
@@ -62,9 +62,9 @@ describe('userinteraction', function () {
         const raphaelElements: RaphaelElement[] = [];
 
         userInteraction(paper, drawingDiv, drawLine);
-        mouseDownAt(100, 0, drawingDiv);
-        mouseMove(100, 100, drawingDiv);
-        mouseMove(200, 100, drawingDiv);
+        sendMouseEvent(100, 0, drawingDiv, 'mousedown');
+        sendMouseEvent(100, 100, drawingDiv, 'mousemove');
+        sendMouseEvent(200, 100, drawingDiv, 'mousemove');
         paper.forEach((el) => {
             raphaelElements.push(el);
 
@@ -81,7 +81,7 @@ describe('userinteraction', function () {
         let raphaelElements: RaphaelElement[] = [];
 
         userInteraction(paper, drawingDiv, drawLine);
-        mouseMove(100, 100, drawingDiv);
+        sendMouseEvent(100, 100, drawingDiv, 'mousemove');
 
         paper.forEach((el) => {
             raphaelElements.push(el);
@@ -92,13 +92,13 @@ describe('userinteraction', function () {
     });
 });
 
-function mouseDownAt(x: number, y: number, el: HTMLDivElement): void {
+function sendMouseEvent(x: number, y: number, el: HTMLDivElement, type: string) {
     const relativeX = findRelativePosition(x, el);
     const relativeY = findRelativePosition(y, el);
     const ev = document.createEvent('MouseEvent');
 
     ev.initMouseEvent(
-        'mousedown',
+        type,
         true /* bubble */,
         true /* cancelable */,
         window, null,
@@ -110,50 +110,6 @@ function mouseDownAt(x: number, y: number, el: HTMLDivElement): void {
         0 /*left*/, null,
     );
 
-    el.dispatchEvent(ev);
-}
-
-function mouseMove(x: number, y: number, el: HTMLDivElement) {
-    const relativeX = findRelativePosition(x, el);
-    const relativeY = findRelativePosition(y, el);
-
-    const ev = document.createEvent('MouseEvent');
-
-    ev.initMouseEvent(
-        'mousemove',
-        true /* bubble */,
-        true /* cancelable */,
-        window,
-        null,
-        null,
-        null,
-        relativeX,
-        relativeY, /* coordinates */
-        false, false, false, false, /* modifier keys */
-        0 /*left*/, null,
-    );
-    el.dispatchEvent(ev);
-}
-
-function mouseUp(x: number, y: number, el: HTMLDivElement) {
-    const relativeX = findRelativePosition(x, el);
-    const relativeY = findRelativePosition(y, el);
-
-    const ev = document.createEvent('MouseEvent');
-
-    ev.initMouseEvent(
-        'mouseup',
-        true /* bubble */,
-        true /* cancelable */,
-        window,
-        null,
-        null,
-        null,
-        relativeX,
-        relativeY, /* coordinates */
-        false, false, false, false, /* modifier keys */
-        0 /*left*/, null,
-    );
     el.dispatchEvent(ev);
 }
 

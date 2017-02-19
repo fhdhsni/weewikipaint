@@ -32,10 +32,10 @@ describe('Drawing area', function () {
     it('should draw a line', function () {
         let elements: RaphaelElement[] = [];
         const coordinate = {
-            endX: 300,
-            endY: 300,
             startX: 100,
             startY: 100,
+            endX: 300,
+            endY: 300,
             paper,
         };
 

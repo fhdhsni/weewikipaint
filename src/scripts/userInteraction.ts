@@ -13,16 +13,7 @@ export function userInteraction(
     let start: {
         x: number;
         y: number;
-    };
-
-    let timer: any;
-    window.addEventListener('resize', () => {
-        // we are doing this to only run getBoundingClientRect for once when resizing finished
-        clearTimeout(timer);
-        timer = setTimeout(() => {
-            drawingAreaPosition = drawingArea.getBoundingClientRect();
-        }, 100);
-    });
+    } = undefined;
 
     document.addEventListener('mouseup', () => start = undefined);
     drawingArea.addEventListener('mouseleave', () => start = undefined);
@@ -44,6 +35,15 @@ export function userInteraction(
             start.x = end.x;
             start.y = end.y;
         }
+    });
+
+    let timer: any;
+    window.addEventListener('resize', () => {
+        // we are doing this to only run getBoundingClientRect for once when resizing finished
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            drawingAreaPosition = drawingArea.getBoundingClientRect();
+        }, 100);
     });
 
     function relativeOffset(absuloteX: number, absoluteY: number) {

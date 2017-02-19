@@ -5,3 +5,12 @@ interface DrawLineArgumentObject {
     endY: number;
     paper: RaphaelPaper;
 }
+
+interface OffsetObject {
+    top: string;
+    left: string;
+    borderWidth: string;
+    paddingWidth: string;
+    width: string;
+    height: string;
+}
