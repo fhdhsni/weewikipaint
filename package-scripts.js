@@ -42,7 +42,7 @@ module.exports = {
     WTF: {
       default: `echo -e '\n
       1. tswatch to watch server and test typescript files. \n
-      2. ws.local to run webpack-dev-server in watch mode. \n
+      2. ws to run webpack-dev-server in watch mode. \n
       3. k.s to start karma server. \n
       4. k.r to run the tests. \n
       5. mocha.server to run server side tests. \n
