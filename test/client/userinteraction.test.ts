@@ -14,7 +14,7 @@ describe('userinteraction', function () {
     drawingArea.style.width = `${width}px`;
     drawingArea.style.border = '2px pink solid';
 
-    beforeEach(function () {
+    beforeEach('creating a clean slate before each test', function () {
         drawingDiv = drawingArea.cloneNode(true) as HTMLDivElement;
 
         document.body.appendChild(drawingDiv); // so each time we have a clean slate
@@ -55,7 +55,7 @@ describe('userinteraction', function () {
         assert.equal(raphaelElements.length, 1, 'mousemove following a mouseup shouldn\'t draw a line');
     });
 
-    it('should draw two lines.', () => {
+    it('should draw two line segments.', () => {
         const raphaelElements: RaphaelElement[] = [];
 
         userInteraction(paper, drawingDiv, drawLine);
@@ -73,7 +73,7 @@ describe('userinteraction', function () {
         assert.equal(raphaelElements[1].getBBox().width, 100, 'boundingBox width of second path should be 100');
     });
 
-    it('should not draw a line when only mouse moves (i.e. without mouse down)', () => {
+    it('should not draw a line when only mouse moves (i.e. without mousedown)', () => {
         let raphaelElements: RaphaelElement[] = [];
 
         userInteraction(paper, drawingDiv, drawLine);
@@ -86,7 +86,7 @@ describe('userinteraction', function () {
         });
         assert.equal(raphaelElements.length, 0, 'Nothing should be drawn while mouse moves without mousedown');
     });
-    it('should not draw a line when mouse move starts outside of drawingArea ', () => {
+    it('should not draw a line when mousemove starts outside of drawingDiv ', () => {
         let raphaelElements: RaphaelElement[] = [];
 
         userInteraction(paper, drawingDiv, drawLine);
@@ -101,9 +101,9 @@ describe('userinteraction', function () {
 
             return true;
         });
-        assert.equal(raphaelElements.length, 0, 'Nothing should be drawn while mousedown happens outside drawingArea');
+        assert.equal(raphaelElements.length, 0, 'Nothing should be drawn while mousedown happens outside drawingDiv');
     });
-    it('should draw a line when mouse down starts exactly at the edge of drawingArea ', () => {
+    it('should draw a line when mousedown starts exactly at the edge of drawingDiv', () => {
         let raphaelElements: RaphaelElement[] = [];
 
         userInteraction(paper, drawingDiv, drawLine);
@@ -118,16 +118,23 @@ describe('userinteraction', function () {
         });
         assert.equal(
             raphaelElements.length, 1,
-            'when mouse down starts at the edge of drawing area a line should be drawn');
+            'when mouse down starts at the edge of drawingDiv a line should be drawn');
     });
-    it('should stop drawing when mouse leaves drawing area and returns', () => {
+    it('should stop drawing when mouse leaves drawingDiv', () => {
         let raphaelElements: RaphaelElement[] = [];
 
         userInteraction(paper, drawingDiv, drawLine);
 
         sendMouseEvent(300, 100, drawingDiv, 'mousedown');
+
+        // NOTE: not 100% accurate, since in real world mousemove
+        // event doesnt' happen on drawingDiv once mouse leaves it
         sendMouseEvent(900, 100, drawingDiv, 'mousemove');
-        sendMouseEvent(900, 100, drawingDiv, 'mouseleave'); // mouseleave doesn't happen automatically like in real
+
+        // =mouseleave= doesn't happen automatically like in real
+        // situations when user actually moves out of drawingDiv; hence
+        // we simulate that manually
+        sendMouseEvent(900, 100, drawingDiv, 'mouseleave');
         sendMouseEvent(300, 300, drawingDiv, 'mousemove');
 
         paper.forEach((el) => {
@@ -137,11 +144,19 @@ describe('userinteraction', function () {
         });
         assert.equal(
             raphaelElements.length, 1,
-            'when mouse leaves the drawing area, drawing should not happen when it returns to drawing area');
+            'when mouse leaves the drawingDiv, drawing should not happen when it returns to drawingDiv');
     });
+    it('default behavior of mousedown event (i.e seleting texts or dragging imgs) should be prevented',
+        function () {
+            userInteraction(paper, drawingDiv, drawLine);
+            drawingDiv.addEventListener('mousedown', function (event) {
+                assert.ok(event.defaultPrevented, 'default behavior of mousedown should be prevented.');
+            });
+            sendMouseEvent(100, 150, drawingDiv, 'mousedown');
+        });
 });
 
-function sendMouseEvent(x: number, y: number, element: HTMLDocument | HTMLDivElement, type: string) {
+function sendMouseEvent(x: number, y: number, element: HTMLDocument | HTMLDivElement, eventType: string) {
     let relativeX: number;
     let relativeY: number;
     if (element instanceof HTMLDivElement) {
@@ -154,7 +169,7 @@ function sendMouseEvent(x: number, y: number, element: HTMLDocument | HTMLDivEle
     const ev = document.createEvent('MouseEvent');
 
     ev.initMouseEvent(
-        type,
+        eventType,
         true /* bubble */,
         true /* cancelable */,
         window, null,
