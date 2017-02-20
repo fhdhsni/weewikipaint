@@ -15,10 +15,10 @@ export function userInteraction(
         y: number;
     } = undefined;
 
-    document.addEventListener('mouseup', () => start = undefined);
+    drawingArea.addEventListener('mouseup', () => start = undefined);
     drawingArea.addEventListener('mouseleave', () => start = undefined);
     drawingArea.addEventListener('mousedown', mouseDownEvent => {
-        mouseDownEvent.preventDefault();
+        mouseDownEvent.preventDefault(); // to prevent text selection or other wierd behaviors
         start = relativeOffset(mouseDownEvent.clientX, mouseDownEvent.clientY);
     });
     drawingArea.addEventListener('mousemove', mouseMoveEvent => {
