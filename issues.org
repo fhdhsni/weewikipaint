@@ -1,3 +1,4 @@
 
 - [X] When resizing the browser position of drawing area needs
   recalculation
+- [ ] server tests doesn't test app.js request
