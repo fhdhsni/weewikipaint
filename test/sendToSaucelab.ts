@@ -15,6 +15,6 @@ export default function sendToSaucelab(result: boolean, username: string, access
         },
         json: true,
     }).then((data: string) => {
-        console.log(data);
+        // console.log(data);
     });
 }

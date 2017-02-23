@@ -26,6 +26,7 @@ test.describe('userinteraction', function () {
                     'username': USERNAME,
                     'accessKey': PASSWORD,
                     'browserName': 'android',
+                    'deviceName': 'Android Emulator',
                     'version': '5.1',
                 }).build();
             this.browser.getSession()
@@ -68,11 +69,12 @@ test.describe('userinteraction', function () {
             const height = parseInt(offset.height, 10);
             const x = left + border + padding + (width / 2);
             const y = top + border + padding + (height / 2);
-
+            console.log(`X IS ${x}`);
+            console.log(`Y IS ${y}`);
             this.browser.touchActions()
                 .tapAndHold({ x, y })
-                .move({ x: 50, y: 0 })
-                .release({ x: 50, y: 0 })
+                .move({ x: x + 50, y })
+                .release({ x: x + 50, y })
                 .perform();
         });
         this.browser.executeScript(function () {
@@ -81,6 +83,7 @@ test.describe('userinteraction', function () {
 
             return path.getAttribute('d');
         }).then((d: string) => {
+            console.log(d);
             const values = d.match(/[a-z](\d)*/gi);
             const start = values[0].replace(/\w/i, '');
             const end = values[1].replace(/\w/i, '');
