@@ -32,7 +32,7 @@ module.exports = {
     mocha: {
       default: 'nps mocha.server,mocha.selenium',
       server: 'mocha ./test/compiled/test/server/*.js',
-      selenium: 'export MYIP=$(./findLocalip.sh) && mocha ./test/compiled/test/client/*.selenium.test.js',
+      selenium: 'export MYIP=$(./findLocalip.sh); mocha ./test/compiled/test/client/*.selenium.test.js',
     },
     k: {
       start: 'karma start',
