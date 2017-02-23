@@ -15,7 +15,7 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: '[name].[hash].js',
+    filename: '[name].js',
   },
   module: {
     rules: [
@@ -48,9 +48,15 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src', 'index.html'),
       inlineSource: 'css$',
+      filename: 'index.html',
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, 'src', '404.html'),
+      filename: '404.html',
+      inject: false,
     }),
     new HtmlWebpackInlineSourcePlugin(),
-    new ExtractTextPlugin('styles.[hash:10].css'),
+    new ExtractTextPlugin('styles.css'),
     new LoaderOptionsPlugin({
       options: {
         tslint: {

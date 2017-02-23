@@ -11,12 +11,16 @@ function serveFile(res, file) {
         res.end();
     });
 }
-function start(htmlFileToSever, notFoundpage, port, cb) {
+function start(htmlFileToSever, notFoundpage, JSFile, port, cb) {
     server = http.createServer();
     server.on('request', (req, res) => {
         if (req.url === '/' || req.url === '/index.html') {
             res.statusCode = 200;
             serveFile(res, htmlFileToSever);
+        }
+        else if (req.url === '/app.js') {
+            res.statusCode = 200;
+            serveFile(res, JSFile);
         }
         else {
             res.statusCode = 404;

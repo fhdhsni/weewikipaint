@@ -56,7 +56,7 @@ describe('smoke testing server', function () {
                 httpGet(`http://localhost:${PORT}`)
                     .then(data => {
                         serverProcess.kill();
-                        assert.notEqual(data.responseData.indexOf('WeeWikiPaint home page'), -1,
+                        assert.notEqual(data.responseData.indexOf('WeeWikiPaint'), -1,
                             'home page should contain WeeWikiPaint home page');
                         done();
                     }).catch(e => {

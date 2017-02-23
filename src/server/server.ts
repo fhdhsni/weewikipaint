@@ -12,12 +12,15 @@ function serveFile(res: http.ServerResponse, file: string): void {
     });
 }
 
-export function start(htmlFileToSever: string, notFoundpage: string, port: number, cb?: () => void) {
+export function start(htmlFileToSever: string, notFoundpage: string, JSFile: string, port: number, cb?: () => void) {
     server = http.createServer();
     server.on('request', (req: http.ServerRequest, res: http.ServerResponse): void => {
         if (req.url === '/' || req.url === '/index.html') {
             res.statusCode = 200;
             serveFile(res, htmlFileToSever);
+        } else if (req.url === '/app.js') {
+            res.statusCode = 200;
+            serveFile(res, JSFile);
         } else {
             res.statusCode = 404;
             serveFile(res, notFoundpage);
