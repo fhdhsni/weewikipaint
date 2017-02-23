@@ -49,14 +49,14 @@ test.describe('saucelabs test', function () {
 
                 if (inTravis) {
                     try {
-                        assert.equal(val, 'WeeWikiPaint', 'titles didn\'t match');
+                        assert.equal(val, 'WeeWikiPaint home page', 'titles didn\'t match');
                     } catch (e) {
                         sendToSaucelab(false, process.env.SAUCE_USERNAME, process.env.SAUCE_ACCESS_KEY, sessionID);
                         throw e;
                     }
                     sendToSaucelab(true, process.env.SAUCE_USERNAME, process.env.SAUCE_ACCESS_KEY, sessionID);
                 } else {
-                    assert.equal(val, 'WeeWikiPaint', 'titles didn\'t match');
+                    assert.equal(val, 'WeeWikiPaint home page', 'titles didn\'t match');
                 }
             });
     });

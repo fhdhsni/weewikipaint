@@ -33,7 +33,8 @@ describe('userinteraction', function () {
         paper.forEach((el) => {
             const boundingBox = el.getBBox();
 
-            assert.equal(boundingBox.height, 100, 'height of drawed line should be 100');
+            assert.equal(boundingBox.height, 100,
+                'height of drawed line should be 100');
 
             return true;
         });
@@ -52,7 +53,8 @@ describe('userinteraction', function () {
             return true;
         });
 
-        assert.equal(raphaelElements.length, 1, 'mousemove following a mouseup shouldn\'t draw a line');
+        assert.equal(raphaelElements.length, 1,
+            'mousemove following a mouseup shouldn\'t draw a line');
     });
 
     it('should draw two line segments.', () => {
@@ -69,8 +71,10 @@ describe('userinteraction', function () {
         });
 
         assert.equal(raphaelElements.length, 2, 'should have drawn 2 paths');
-        assert.equal(raphaelElements[0].getBBox().height, 100, 'boundingBox height of first path should be 100');
-        assert.equal(raphaelElements[1].getBBox().width, 100, 'boundingBox width of second path should be 100');
+        assert.equal(raphaelElements[0].getBBox().height, 100,
+            'boundingBox height of first path should be 100');
+        assert.equal(raphaelElements[1].getBBox().width, 100,
+            'boundingBox width of second path should be 100');
     });
 
     it('should not draw a line when only mouse moves (i.e. without mousedown)', () => {
@@ -84,7 +88,8 @@ describe('userinteraction', function () {
 
             return true;
         });
-        assert.equal(raphaelElements.length, 0, 'Nothing should be drawn while mouse moves without mousedown');
+        assert.equal(raphaelElements.length, 0,
+            'Nothing should be drawn while mouse moves without mousedown');
     });
     it('should not draw a line when mousemove starts outside of drawingDiv ', () => {
         let raphaelElements: RaphaelElement[] = [];
@@ -101,7 +106,8 @@ describe('userinteraction', function () {
 
             return true;
         });
-        assert.equal(raphaelElements.length, 0, 'Nothing should be drawn while mousedown happens outside drawingDiv');
+        assert.equal(raphaelElements.length, 0,
+            'Nothing should be drawn while mousedown happens outside drawingDiv');
     });
     it('should draw a line when mousedown starts exactly at the edge of drawingDiv', () => {
         let raphaelElements: RaphaelElement[] = [];
@@ -147,7 +153,7 @@ describe('userinteraction', function () {
             'when mouse leaves the drawingDiv, drawing should not happen when it returns to drawingDiv');
     });
     it('default behavior of mousedown event (i.e seleting texts or dragging imgs) should be prevented',
-        function () {
+        () => {
             userInteraction(paper, drawingDiv, drawLine);
             drawingDiv.addEventListener('mousedown', function (event) {
                 assert.ok(event.defaultPrevented, 'default behavior of mousedown should be prevented.');
@@ -166,9 +172,9 @@ function sendMouseEvent(x: number, y: number, element: HTMLDocument | HTMLDivEle
         relativeX = x;
         relativeY = y;
     }
-    const ev = document.createEvent('MouseEvent');
+    const event = document.createEvent('MouseEvent');
 
-    ev.initMouseEvent(
+    event.initMouseEvent(
         eventType,
         true /* bubble */,
         true /* cancelable */,
@@ -182,7 +188,7 @@ function sendMouseEvent(x: number, y: number, element: HTMLDocument | HTMLDivEle
         null,
     );
 
-    element.dispatchEvent(ev);
+    element.dispatchEvent(event);
 }
 
 function findRelativePosition(position: number, el: HTMLElement, whatKind: 'x' | 'y'): number {

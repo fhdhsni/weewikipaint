@@ -1,5 +1,5 @@
 /**
- * draws lines on drawingArea when user clicks and drags
+ * draws lines on drawingArea when user clicks or touches and drags
  */
 export function userInteraction(
     paper: RaphaelPaper,
@@ -26,7 +26,7 @@ export function userInteraction(
         start = relativeOffset(event.clientX, event.clientY);
     });
     drawingArea.addEventListener('touchstart', event => {
-        event.preventDefault(); // to prevent text selection or other wierd behaviors
+        event.preventDefault(); // to prevent scroll or other wierd behaviors
         start = relativeOffset(event.touches[0].clientX, event.touches[0].clientY);
     });
 
