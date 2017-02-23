@@ -25,8 +25,7 @@ test.describe('userinteraction', function () {
                     'build': process.env.TRAVIS_BUILD_NUMBER,
                     'username': USERNAME,
                     'accessKey': PASSWORD,
-                    'platform': 'android',
-                    'browserName': 'chrome',
+                    'browserName': 'android',
                     'version': '5.1',
                 }).build();
             this.browser.getSession()
