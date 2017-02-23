@@ -5,44 +5,36 @@ import { assert } from 'chai';
 import * as fs from 'fs';
 import sendToSaucelab from '../sendToSaucelab';
 
-let inTravis = false;
 let sessionID: string;
 let USERNAME: string;
 let PASSWORD: string;
 
-test.describe('userinteraction', function () {
+test.describe('userinteraction', function (): any {
+    if (process.env.SAUCE_USERNAME == undefined) {
+        return undefined;
+    }
     const By = webdriver.By;
     this.timeout(300000);
     test.beforeEach(function () {
-        if (process.env.SAUCE_USERNAME != undefined) {
-            USERNAME = process.env.SAUCE_USERNAME;
-            PASSWORD = process.env.SAUCE_ACCESS_KEY;
-            inTravis = true;
-            this.browser = new webdriver.Builder()
-                .usingServer(`http://${USERNAME}:${PASSWORD}@ondemand.saucelabs.com:80/wd/hub`)
-                .withCapabilities({
-                    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-                    'build': process.env.TRAVIS_BUILD_NUMBER,
-                    'username': USERNAME,
-                    'accessKey': PASSWORD,
-                    'browserName': 'android',
-                    'deviceName': 'Android Emulator',
-                    'version': '5.1',
-                }).build();
-            this.browser.getSession()
-                .then((val: any) => {
-                    sessionID = val.id_;
-                });
+        USERNAME = process.env.SAUCE_USERNAME;
+        PASSWORD = process.env.SAUCE_ACCESS_KEY;
+        this.browser = new webdriver.Builder()
+            .usingServer(`http://${USERNAME}:${PASSWORD}@ondemand.saucelabs.com:80/wd/hub`)
+            .withCapabilities({
+                'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+                'build': process.env.TRAVIS_BUILD_NUMBER,
+                'username': USERNAME,
+                'accessKey': PASSWORD,
+                'browserName': 'android',
+                'deviceName': 'Android Emulator',
+                'version': '5.1',
+            }).build();
+        this.browser.getSession()
+            .then((val: any) => {
+                sessionID = val.id_;
+            });
 
-            return this.browser.get('http://localhost:8000/');
-        } else {
-            this.browser = new webdriver.Builder()
-                .forBrowser('phantomjs')
-                .build();
-            const PORT = process.env.serverPort || 8080;
-
-            return this.browser.get(`http://${process.env.MYIP}:${PORT}/`);
-        }
+        return this.browser.get('http://localhost:8000/');
     });
     test.afterEach(function () {
         return this.browser.quit();
@@ -69,8 +61,7 @@ test.describe('userinteraction', function () {
             const height = parseInt(offset.height, 10);
             const x = left + border + padding + (width / 2);
             const y = top + border + padding + (height / 2);
-            console.log(`X IS ${x}`);
-            console.log(`Y IS ${y}`);
+
             this.browser.touchActions()
                 .tapAndHold({ x, y })
                 .move({ x: x + 50, y })
@@ -83,26 +74,19 @@ test.describe('userinteraction', function () {
 
             return path.getAttribute('d');
         }).then((d: string) => {
-            console.log(d);
             const values = d.match(/[a-z](\d)*/gi);
             const start = values[0].replace(/\w/i, '');
             const end = values[1].replace(/\w/i, '');
 
-            if (inTravis) {
-                try {
-                    assert.equal(
-                        Number(end) - Number(start), 50,
-                        'a line with the length of 50 pixels should\'ve been drawn');
-                } catch (e) {
-                    sendToSaucelab(false, USERNAME, PASSWORD, sessionID);
-                    throw e;
-                }
-                sendToSaucelab(true, USERNAME, PASSWORD, sessionID);
-            } else {
+            try {
                 assert.equal(
                     Number(end) - Number(start), 50,
                     'a line with the length of 50 pixels should\'ve been drawn');
+            } catch (e) {
+                sendToSaucelab(false, USERNAME, PASSWORD, sessionID);
+                throw e;
             }
+            sendToSaucelab(true, USERNAME, PASSWORD, sessionID);
         });
     });
 });
