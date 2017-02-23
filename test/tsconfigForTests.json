@@ -2,7 +2,8 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "module": "commonjs",
-    "outDir": "./compiled"
+    "outDir": "./compiled",
+    "noEmitOnError": false
   },
   "include": [
     "./**/*.ts"
