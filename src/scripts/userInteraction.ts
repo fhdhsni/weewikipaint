@@ -46,7 +46,7 @@ export function userInteraction(
         }
     });
     drawingArea.addEventListener('touchmove', event => {
-        if (start !== undefined) {
+        if (start !== undefined && event.touches.length === 1) { // only when there's one finger on screen
             const end = relativeOffset(event.touches[0].clientX, event.touches[0].clientY);
 
             drawLine({
