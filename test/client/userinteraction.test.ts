@@ -162,66 +162,121 @@ describe('userinteraction', function () {
                 sendMouseEvent(100, 150, drawingDiv, 'mousedown');
             });
     });
-    if (typeof Touch !== 'undefined' &&
-        typeof TouchEvent !== 'undefined' &&
-        Touch.length === 1 &&
-        TouchEvent.length === 1) {
+    if (supportTouchEvent()) {
         describe('touch evetns', function () {
-            it('should response to touch events ', function () {
+            it('should respond to touch events ', function () {
                 const raphaelElements: RaphaelElement[] = [];
 
                 userInteraction(paper, drawingDiv, drawLine);
-                sendTouchEvent(150, 150, drawingDiv, 'touchstart');
-                sendTouchEvent(220, 200, drawingDiv, 'touchmove');
-                sendTouchEvent(220, 200, drawingDiv, 'touchend');
+                sendTouchEvent(drawingDiv, 'touchstart', [{ x: 150, y: 150 }]);
+                sendTouchEvent(drawingDiv, 'touchmove', [{ x: 220, y: 200 }]);
+                sendTouchEvent(drawingDiv, 'touchend', [{ x: 220, y: 200 }]);
 
                 paper.forEach((el) => {
                     raphaelElements.push(el);
 
                     return true;
                 });
-                assert.equal(raphaelElements.length, 1, 'should have drawn 1 path');
                 assert.equal(raphaelElements[0].getBBox().width, 70,
                     'boundingBox height of the path should be 100');
                 assert.equal(raphaelElements[0].getBBox().height, 50,
                     'boundingBox width of the path should be 100');
             });
+            it('should stop drawing on touch cancel', () => {
+                const raphaelElements: RaphaelElement[] = [];
+
+                userInteraction(paper, drawingDiv, drawLine);
+                sendTouchEvent(drawingDiv, 'touchstart', [{ x: 150, y: 150 }]);
+                sendTouchEvent(drawingDiv, 'touchmove', [{ x: 220, y: 200 }]);
+                sendTouchEvent(drawingDiv, 'touchcancel', [{ x: 220, y: 200 }]);
+
+                paper.forEach((el) => {
+                    raphaelElements.push(el);
+
+                    return true;
+                });
+                assert.equal(raphaelElements[0].getBBox().width, 70,
+                    'boundingBox height of the path should be 100');
+                assert.equal(raphaelElements[0].getBBox().height, 50,
+                    'boundingBox width of the path should be 100');
+            });
+            it('default behavior of touchdown event (i.e  scrolling) should be prevented',
+                () => {
+                    userInteraction(paper, drawingDiv, drawLine);
+                    drawingDiv.addEventListener('touchstart', function (event) {
+                        assert.ok(event.defaultPrevented, 'default behavior of touchdown event should be prevented.');
+                    });
+                    sendTouchEvent(drawingDiv, 'touchstart', [{ x: 150, y: 150 }]);
+                    sendTouchEvent(drawingDiv, 'touchmove', [{ x: 220, y: 200 }]);
+                    sendTouchEvent(drawingDiv, 'touchend', [{ x: 220, y: 200 }]);
+                });
+            it('should stop drawing on multi touch gestures', () => {
+                const raphaelElements: RaphaelElement[] = [];
+                userInteraction(paper, drawingDiv, drawLine);
+
+                sendTouchEvent(drawingDiv, 'touchstart', [{ x: 10, y: 10 }]);
+                sendTouchEvent(drawingDiv, 'touchmove', [{ x: 50, y: 70 }]);
+                sendTouchEvent(drawingDiv, 'touchstart', [{ x: 50, y: 70 }, { x: 150, y: 150 }]);
+                sendTouchEvent(drawingDiv, 'touchmove', [{ x: 150, y: 150 }, { x: 200, y: 200 }]);
+                sendTouchEvent(drawingDiv, 'touchend', [{ x: 150, y: 150 }, { x: 200, y: 200 }]);
+
+                paper.forEach((el) => {
+                    raphaelElements.push(el);
+
+                    return true;
+                });
+
+                debugger;
+                assert.equal(raphaelElements.length, 1, 'should be only one path');
+                assert.equal(raphaelElements[0].getBBox().width, 40, 'getBBox().width of path should be 40');
+                assert.equal(raphaelElements[0].getBBox().height, 60, 'getBBox().height of path should be 60');
+            });
         });
     }
 });
 
-function sendTouchEvent(x: number, y: number, element: HTMLDocument | HTMLDivElement, eventType: string) {
-    let relativeX: number;
-    let relativeY: number;
-    if (element instanceof HTMLDivElement) {
-        relativeX = findRelativePosition(x, element, 'x');
-        relativeY = findRelativePosition(y, element, 'y');
-    } else {
-        relativeX = x;
-        relativeY = y;
-    }
+function sendTouchEvent(element: HTMLDocument | HTMLDivElement, eventType: string, coordinates: coordinate[]) {
+    let relativeCoordinates: coordinate[] = [];
+    let touchObjects: Touch[] = [];
 
-    const touchObj = new Touch({
+    coordinates.forEach(coordinate => {
+        let relativeX: number;
+        let relativeY: number;
+
+        if (element instanceof HTMLDivElement) {
+            relativeX = findRelativePosition(coordinate.x, element, 'x');
+            relativeY = findRelativePosition(coordinate.y, element, 'y');
+        } else {
+            relativeX = coordinate.x;
+            relativeY = coordinate.y;
+        }
+
+        touchObjects.push(createTouchObject(relativeX, relativeY, element));
+    })
+
+    const touchEvent = new TouchEvent(eventType, {
+        cancelable: true,
+        bubbles: true,
+        touches: touchObjects,
+        targetTouches: [],
+        changedTouches: touchObjects,
+        shiftKey: true,
+    });
+
+    element.dispatchEvent(touchEvent);
+}
+
+function createTouchObject(x: number, y: number, element: HTMLDivElement | HTMLDocument): Touch {
+    return new Touch({
         identifier: Date.now(),
         target: element,
-        clientX: relativeX,
-        clientY: relativeY,
+        clientX: x,
+        clientY: y,
         radiusX: 2.5,
         radiusY: 2.5,
         rotationAngle: 10,
         force: 0.5,
     });
-
-    const touchEvent = new TouchEvent(eventType, {
-        cancelable: true,
-        bubbles: true,
-        touches: [touchObj],
-        targetTouches: [],
-        changedTouches: [touchObj],
-        shiftKey: true,
-    });
-
-    element.dispatchEvent(touchEvent);
 }
 
 function sendMouseEvent(x: number, y: number, element: HTMLDocument | HTMLDivElement, eventType: string) {
@@ -265,4 +320,15 @@ function findRelativePosition(position: number, el: HTMLElement, whatKind: 'x' |
     }
 
     return position + parseInt(borderWidth, 10) + parseInt(paddingWidth, 10) + offset;
+}
+
+function supportTouchEvent() {
+    if (typeof Touch !== 'undefined' &&
+        typeof TouchEvent !== 'undefined' &&
+        Touch.length === 1 &&
+        TouchEvent.length === 1) {
+        return true
+    }
+
+    return false
 }

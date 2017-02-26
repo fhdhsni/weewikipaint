@@ -14,3 +14,8 @@ interface OffsetObject {
     width: string;
     height: string;
 }
+
+interface coordinate {
+    x: number;
+    y: number;
+}
