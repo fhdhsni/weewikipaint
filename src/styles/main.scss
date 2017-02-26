@@ -4,6 +4,8 @@ body {
   align-items: center;
   display: flex;
   flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
 }
 
 h1 {
@@ -15,5 +17,5 @@ h1 {
 div {
   border: 2px solid yellowgreen;
   height: 400px;
-  width: 600px;
+  width: 80%;
 }
