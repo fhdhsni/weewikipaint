@@ -1,14 +1,16 @@
+/* eslint-disable */
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
+/* eslint-enable */
 
 module.exports = {
   devtool: 'source-map',
   context: path.join(__dirname, 'src'),
   resolve: {
-    extensions: ['*', '.ts', '.json', '.js'],
+    extensions: ['*', '.ts', '.json', '.js', '.scss', '.css'],
   },
   entry: {
     app: path.join(__dirname, 'src', 'scripts', 'app.ts'),
@@ -47,7 +49,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src', 'index.html'),
-      inlineSource: 'css$',
+      /* inlineSource: 'css$', */
       filename: 'index.html',
     }),
     new HtmlWebpackPlugin({
