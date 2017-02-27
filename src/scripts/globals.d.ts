@@ -15,7 +15,17 @@ interface OffsetObject {
     height: string;
 }
 
-interface coordinate {
+interface Coordinate {
     x: number;
     y: number;
+}
+
+interface TouchConstructor {
+    prototype: Touch;
+    new (arg: any): Touch;
+}
+
+interface TouchEventConstructor {
+    prototype: TouchEvent;
+    new (...arg: any[]): TouchEvent;
 }

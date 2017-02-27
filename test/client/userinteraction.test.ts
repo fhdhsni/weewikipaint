@@ -186,7 +186,7 @@ describe('userinteraction', function () {
                 assert.equal(raphaelElements[0].getBBox().width, 70,
                     'boundingBox height of the path should be 100');
                 assert.equal(raphaelElements[0].getBBox().height, 50,
-                             'boundingBox width of the path should be 100');
+                    'boundingBox width of the path should be 100');
             });
             it('should stop drawing on touchcancel event', () => {
                 const raphaelElements: RaphaelElement[] = [];
@@ -265,7 +265,8 @@ describe('userinteraction', function () {
     }
 });
 
-function sendTouchEvent(element: HTMLDocument | HTMLDivElement, eventType: string, coordinates: coordinate[]) {
+function sendTouchEvent(element: HTMLDocument | HTMLDivElement, eventType: string, coordinates: Coordinate[]) {
+    const newTouchEvent: TouchEventConstructor = TouchEvent;
     let touchList: Touch[] = [];
 
     coordinates.forEach(coordinate => {
@@ -283,7 +284,7 @@ function sendTouchEvent(element: HTMLDocument | HTMLDivElement, eventType: strin
         touchList.push(createTouchObject(relativeX, relativeY, element));
     });
 
-    const touchEvent = new TouchEvent(eventType, {
+    const touchEvent = new newTouchEvent(eventType, {
         cancelable: true,
         bubbles: true,
         touches: touchList,
@@ -296,7 +297,9 @@ function sendTouchEvent(element: HTMLDocument | HTMLDivElement, eventType: strin
 }
 
 function createTouchObject(x: number, y: number, element: HTMLDivElement | HTMLDocument): Touch {
-    return new Touch({
+    const NewTouch: TouchConstructor = Touch;
+
+    return new NewTouch({
         identifier: Date.now(),
         target: element,
         clientX: x,
