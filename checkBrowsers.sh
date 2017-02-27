@@ -10,7 +10,7 @@ checkForBrowser() {
 }
 
 checkForBrowser 'IE 10'
-# checkForBrowser 'IE 11'
+checkForBrowser 'IE 11'
 checkForBrowser 'Chrome'
 checkForBrowser 'Firefox'
-# checkForBrowser 'Edge'
+checkForBrowser 'Edge'

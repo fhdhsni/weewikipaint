@@ -89,6 +89,7 @@ describe('userinteraction', function () {
 
                 return true;
             });
+
             assert.equal(raphaelElements.length, 0,
                 'Nothing should be drawn while mouse moves without mousedown');
         });
@@ -107,6 +108,7 @@ describe('userinteraction', function () {
 
                 return true;
             });
+
             assert.equal(raphaelElements.length, 0,
                 'Nothing should be drawn while mousedown happens outside drawingDiv');
         });
@@ -123,6 +125,7 @@ describe('userinteraction', function () {
 
                 return true;
             });
+
             assert.equal(
                 raphaelElements.length, 1,
                 'when mouse down starts at the edge of drawingDiv a line should be drawn');
@@ -149,6 +152,7 @@ describe('userinteraction', function () {
 
                 return true;
             });
+
             assert.equal(
                 raphaelElements.length, 1,
                 'when mouse leaves the drawingDiv, drawing should not happen when it returns to drawingDiv');
@@ -157,6 +161,7 @@ describe('userinteraction', function () {
             () => {
                 userInteraction(paper, drawingDiv, drawLine);
                 drawingDiv.addEventListener('mousedown', function (event) {
+
                     assert.ok(event.defaultPrevented, 'default behavior of mousedown should be prevented.');
                 });
                 sendMouseEvent(100, 150, drawingDiv, 'mousedown');
@@ -177,24 +182,49 @@ describe('userinteraction', function () {
 
                     return true;
                 });
+
                 assert.equal(raphaelElements[0].getBBox().width, 70,
                     'boundingBox height of the path should be 100');
                 assert.equal(raphaelElements[0].getBBox().height, 50,
-                    'boundingBox width of the path should be 100');
+                             'boundingBox width of the path should be 100');
             });
-            it('should stop drawing on touch cancel', () => {
+            it('should stop drawing on touchcancel event', () => {
                 const raphaelElements: RaphaelElement[] = [];
 
                 userInteraction(paper, drawingDiv, drawLine);
                 sendTouchEvent(drawingDiv, 'touchstart', [{ x: 150, y: 150 }]);
                 sendTouchEvent(drawingDiv, 'touchmove', [{ x: 220, y: 200 }]);
                 sendTouchEvent(drawingDiv, 'touchcancel', [{ x: 220, y: 200 }]);
+                sendTouchEvent(drawingDiv, 'touchmove', [{ x: 250, y: 250 }]);
 
                 paper.forEach((el) => {
                     raphaelElements.push(el);
 
                     return true;
                 });
+
+                assert.equal(raphaelElements.length, 1, 'touchcancel should stop drawing');
+                assert.equal(raphaelElements[0].getBBox().width, 70,
+                    'boundingBox height of the path should be 100');
+                assert.equal(raphaelElements[0].getBBox().height, 50,
+                    'boundingBox width of the path should be 100');
+            });
+            it('should stop drawing on touchend event', () => {
+                const raphaelElements: RaphaelElement[] = [];
+
+                userInteraction(paper, drawingDiv, drawLine);
+                sendTouchEvent(drawingDiv, 'touchstart', [{ x: 150, y: 150 }]);
+                sendTouchEvent(drawingDiv, 'touchmove', [{ x: 220, y: 200 }]);
+                sendTouchEvent(drawingDiv, 'touchend', [{ x: 220, y: 200 }]);
+                sendTouchEvent(drawingDiv, 'touchmove', [{ x: 250, y: 250 }]);
+
+                paper.forEach((el) => {
+                    raphaelElements.push(el);
+
+                    return true;
+                });
+
+                assert.equal(raphaelElements.length, 1, 'touchend should stop drawing');
                 assert.equal(raphaelElements[0].getBBox().width, 70,
                     'boundingBox height of the path should be 100');
                 assert.equal(raphaelElements[0].getBBox().height, 50,
@@ -204,6 +234,7 @@ describe('userinteraction', function () {
                 () => {
                     userInteraction(paper, drawingDiv, drawLine);
                     drawingDiv.addEventListener('touchstart', function (event) {
+
                         assert.ok(event.defaultPrevented, 'default behavior of touchdown event should be prevented.');
                     });
                     sendTouchEvent(drawingDiv, 'touchstart', [{ x: 150, y: 150 }]);
@@ -226,7 +257,6 @@ describe('userinteraction', function () {
                     return true;
                 });
 
-                debugger;
                 assert.equal(raphaelElements.length, 1, 'should be only one path');
                 assert.equal(raphaelElements[0].getBBox().width, 40, 'getBBox().width of path should be 40');
                 assert.equal(raphaelElements[0].getBBox().height, 60, 'getBBox().height of path should be 60');
@@ -236,8 +266,7 @@ describe('userinteraction', function () {
 });
 
 function sendTouchEvent(element: HTMLDocument | HTMLDivElement, eventType: string, coordinates: coordinate[]) {
-    let relativeCoordinates: coordinate[] = [];
-    let touchObjects: Touch[] = [];
+    let touchList: Touch[] = [];
 
     coordinates.forEach(coordinate => {
         let relativeX: number;
@@ -251,15 +280,15 @@ function sendTouchEvent(element: HTMLDocument | HTMLDivElement, eventType: strin
             relativeY = coordinate.y;
         }
 
-        touchObjects.push(createTouchObject(relativeX, relativeY, element));
-    })
+        touchList.push(createTouchObject(relativeX, relativeY, element));
+    });
 
     const touchEvent = new TouchEvent(eventType, {
         cancelable: true,
         bubbles: true,
-        touches: touchObjects,
+        touches: touchList,
         targetTouches: [],
-        changedTouches: touchObjects,
+        changedTouches: touchList,
         shiftKey: true,
     });
 
@@ -327,8 +356,9 @@ function supportTouchEvent() {
         typeof TouchEvent !== 'undefined' &&
         Touch.length === 1 &&
         TouchEvent.length === 1) {
-        return true
+
+        return true;
     }
 
-    return false
+    return false;
 }

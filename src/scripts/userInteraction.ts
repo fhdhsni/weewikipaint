@@ -15,67 +15,43 @@ export function userInteraction(
         y: number;
     } = undefined;
 
-    drawingArea.addEventListener('mouseup', () => start = undefined);
-    drawingArea.addEventListener('touchend', () => start = undefined);
+    drawingArea.addEventListener('mouseup', () => stopDrawing());
+    drawingArea.addEventListener('touchend', () => stopDrawing());
 
-    drawingArea.addEventListener('mouseleave', () => start = undefined);
-    drawingArea.addEventListener('touchleave', () => start = undefined);
+    drawingArea.addEventListener('mouseleave', () => stopDrawing());
+    drawingArea.addEventListener('touchcancel', () => stopDrawing());
 
     drawingArea.addEventListener('mousedown', event => {
-        event.preventDefault(); // to prevent text selection or other wierd behaviors
+        event.preventDefault(); // to prevent text selection
         start = relativeOffset(event.clientX, event.clientY);
     });
     drawingArea.addEventListener('touchstart', event => {
-        event.preventDefault(); // to prevent scroll or other wierd behaviors
+        event.preventDefault(); // to prevent scroll
         start = relativeOffset(event.touches[0].clientX, event.touches[0].clientY);
     });
 
     drawingArea.addEventListener('mousemove', event => {
         if (start !== undefined) {
-            const end = relativeOffset(event.clientX, event.clientY);
-
-            drawLine({
-                startX: start.x,
-                startY: start.y,
-                endX: end.x,
-                endY: end.y,
-                paper,
-            });
-            start.x = end.x;
-            start.y = end.y;
+            handleDrang(event.clientX, event.clientY);
         }
     });
     drawingArea.addEventListener('touchmove', event => {
         if (start !== undefined && event.touches.length === 1) { // only when there's one finger on screen
-            const end = relativeOffset(event.touches[0].clientX, event.touches[0].clientY);
-
-            drawLine({
-                startX: start.x,
-                startY: start.y,
-                endX: end.x,
-                endY: end.y,
-                paper,
-            });
-            start.x = end.x;
-            start.y = end.y;
+            handleDrang(event.touches[0].clientX, event.touches[0].clientY);
         }
     });
 
     let timer: any;
-    window.addEventListener('resize', () => {
+    const calculateBoundingBox = () => {
         // we are doing this to only run getBoundingClientRect for once when resizing finished
         clearTimeout(timer);
         timer = setTimeout(() => {
             drawingAreaPosition = drawingArea.getBoundingClientRect();
         }, 100);
-    });
-    window.addEventListener('scroll', () => {
-        // we are doing this to only run getBoundingClientRect for once when scroll finished
-        clearTimeout(timer);
-        timer = setTimeout(() => {
-            drawingAreaPosition = drawingArea.getBoundingClientRect();
-        }, 100);
-    });
+    };
+
+    window.addEventListener('resize', calculateBoundingBox);
+    window.addEventListener('scroll', calculateBoundingBox);
 
     function relativeOffset(absuloteX: number, absoluteY: number) {
 
@@ -83,5 +59,21 @@ export function userInteraction(
             x: absuloteX - drawingAreaPosition.left - padding - border,
             y: absoluteY - drawingAreaPosition.top - padding - border,
         };
+    }
+    function handleDrang(x: number, y: number) {
+        const end = relativeOffset(x, y);
+
+        drawLine({
+            startX: start.x,
+            startY: start.y,
+            endX: end.x,
+            endY: end.y,
+            paper,
+        });
+        start.x = end.x;
+        start.y = end.y;
+    }
+    function stopDrawing() {
+        start = undefined;
     }
 }
