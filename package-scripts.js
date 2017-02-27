@@ -53,6 +53,6 @@ module.exports = {
     },
   },
   options: {
-    silent: false,
+    silent: true,
   },
 };

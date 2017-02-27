@@ -29,7 +29,7 @@ const configuration = {
   },
   reporters: ['progress'],
   port: 9876,
-  colors: true,
+  colors: false,
   autoWatch: false,
   browsers: ['PhantomJS'],
   singleRun: false,
