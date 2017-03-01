@@ -1,6 +1,5 @@
 -/node_modules
 -/dist
--/test/test
--/test/src
 -/src/server/server.js
 -/src/server/weewikipaint.js
+-/yarn.lock
