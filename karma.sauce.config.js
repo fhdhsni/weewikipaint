@@ -87,7 +87,7 @@ const configuration = {
   },
   frameworks: ['mocha'],
   files: [
-    'test/compiled/test/client/*.js',
+    'test/compiled/test/client/*.test.js',
   ],
   exclude: [
     'test/compiled/test/client/*.selenium.test.js',
