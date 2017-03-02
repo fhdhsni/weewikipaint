@@ -58,7 +58,6 @@ export class DOMElement implements DOMElementI {
     }
 
     public onMouseMove(cb: (x: number, y: number) => void) {
-        // this.originalElement.addEventListener('mousemove', cb);
         this.originalElement.addEventListener('mousemove', (event) => {
             let { x, y } = this.relativeOffset(event.clientX, event.clientY);
 
@@ -75,13 +74,14 @@ export class DOMElement implements DOMElementI {
     }
 
     public resized() {
-        clearTimeout(this.timer);
-        this.timer = setTimeout(() => {
-            this.calculateBoundingBox();
-        }, 100);
+        this.calculateBoundingBoxWithDelay();
     }
 
     public scrolled() {
+        this.calculateBoundingBoxWithDelay();
+    }
+
+    private calculateBoundingBoxWithDelay() {
         clearTimeout(this.timer);
         this.timer = setTimeout(() => {
             this.calculateBoundingBox();
