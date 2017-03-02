@@ -38,6 +38,7 @@ module.exports = {
     k: {
       start: 'karma start',
       run: 'nps mocha && ./tscwatch.sh && karma run | tee ./testOutput.txt && ./checkBrowsers.sh',
+      emacs: 'nps mocha && ./tscwatch.sh && karma run &> ./testOutput.txt; ./sed.sh && ./checkBrowsers.sh',
       stop: 'karma stop',
     },
     WTF: {
