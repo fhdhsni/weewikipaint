@@ -21,8 +21,11 @@ export class DOMElement implements DOMElementI {
         };
     }
 
-    public onTouchStart = function(cb: () => void) {
-        this.originalElement.addEventListener('touchstart', cb);
+    public onTouchStart = function(cb: (xy: Coordinate) => void) {
+        this.originalElement.addEventListener('touchstart', (event: TouchEvent) => {
+            event.preventDefault(); // to prevent scroll
+            cb(this.relativeOffset(event.touches[0].clientX, event.touches[0].clientY));
+        });
     };
 
     public onTouchMove(cb: (x: number, y: number) => void) {
@@ -43,8 +46,11 @@ export class DOMElement implements DOMElementI {
         this.originalElement.addEventListener('touchcancel', cb);
     };
 
-    public onMouseDown(cb: () => void) {
-        this.originalElement.addEventListener('mousedown', cb);
+    public onMouseDown(cb: (xy: Coordinate) => void) {
+        this.originalElement.addEventListener('mousedown', (event) => {
+            event.preventDefault();
+            cb(this.relativeOffset(event.clientX, event.clientY));
+        });
     }
 
     public onMouseLeave(cb: () => void) {

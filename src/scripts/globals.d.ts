@@ -35,12 +35,12 @@ interface DrawLine {
 }
 
 interface DOMElementI {
-    onMouseDown(cb: (event: MouseEvent) => void): void;
+    onMouseDown(cb: (xy: Coordinate) => void): void;
     onMouseUp(cb: (event: MouseEvent) => void): void;
     onMouseMove(cb: (x: number, y: number) => void): void;
     onMouseLeave(cb: (event: MouseEvent) => void): void;
 
-    onTouchStart(cb: (event: TouchEvent) => void): void;
+    onTouchStart(cb: (xy: Coordinate) => void): void;
     onTouchMove(cb: (x: number, y: number) => void): void;
     onTouchEnd(cb: (event: TouchEvent) => void): void;
     onTouchCancel(cb: (event: TouchEvent) => void): void;
