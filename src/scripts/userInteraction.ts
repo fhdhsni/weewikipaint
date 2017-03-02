@@ -19,15 +19,15 @@ export function userInteraction(paper: RaphaelPaper, drawingDOM: DOMElementI, dr
         start = drawingDOM.relativeOffset(event.touches[0].clientX, event.touches[0].clientY);
     });
 
-    drawingDOM.onMouseMove(event => {
+    drawingDOM.onMouseMove((x, y) => {
         if (start !== undefined) {
-            handleDrang(event.clientX, event.clientY);
+            handleDrang(x, y);
         }
     });
 
-    drawingDOM.onTouchMove(event => {
-        if (start !== undefined && event.touches.length === 1) { // only when there's one finger on screen
-            handleDrang(event.touches[0].clientX, event.touches[0].clientY);
+    drawingDOM.onTouchMove((x, y) => {
+        if (start !== undefined) {
+            handleDrang(x, y);
         }
     });
 
@@ -35,17 +35,15 @@ export function userInteraction(paper: RaphaelPaper, drawingDOM: DOMElementI, dr
     window.addEventListener('scroll', () => drawingDOM.scrolled());
 
     function handleDrang(x: number, y: number) {
-        const end = drawingDOM.relativeOffset(x, y);
-
         drawLine({
             startX: start.x,
             startY: start.y,
-            endX: end.x,
-            endY: end.y,
+            endX: x,
+            endY: y,
             paper,
         });
-        start.x = end.x;
-        start.y = end.y;
+        start.x = x;
+        start.y = y;
     }
 
     function stopDrawing() {

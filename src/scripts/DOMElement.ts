@@ -1,11 +1,10 @@
-let timer: any;
-
 export class DOMElement implements DOMElementI {
     private originalElement: HTMLElement;
     private drawingAreaPosition: ClientRect;
     private drawingAreaCSS: CSSStyleDeclaration;
     private padding: number;
     private border: number;
+    private timer: any;
 
     constructor(element: HTMLElement) {
         this.originalElement = element;
@@ -22,19 +21,25 @@ export class DOMElement implements DOMElementI {
         };
     }
 
-    public onTouchStart = function (cb: () => void) {
+    public onTouchStart = function(cb: () => void) {
         this.originalElement.addEventListener('touchstart', cb);
     };
 
-    public onTouchMove(cb: () => void) {
-        this.originalElement.addEventListener('touchmove', cb);
+    public onTouchMove(cb: (x: number, y: number) => void) {
+        this.originalElement.addEventListener('touchmove', (event) => {
+            if (event.touches.length === 1) {   // only when there's one finger on screen
+                let { x, y } = this.relativeOffset(event.touches[0].clientX, event.touches[0].clientY);
+
+                cb(x, y);
+            }
+        });
     }
 
     public onTouchEnd(cb: () => void) {
         this.originalElement.addEventListener('touchend', cb);
     }
 
-    public onTouchCancel = function (cb: () => void) {
+    public onTouchCancel = function(cb: () => void) {
         this.originalElement.addEventListener('touchcancel', cb);
     };
 
@@ -46,8 +51,13 @@ export class DOMElement implements DOMElementI {
         this.originalElement.addEventListener('mouseleave', cb);
     }
 
-    public onMouseMove(cb: () => void) {
-        this.originalElement.addEventListener('mousemove', cb);
+    public onMouseMove(cb: (x: number, y: number) => void) {
+        // this.originalElement.addEventListener('mousemove', cb);
+        this.originalElement.addEventListener('mousemove', (event) => {
+            let { x, y } = this.relativeOffset(event.clientX, event.clientY);
+
+            cb(x, y);
+        });
     }
 
     public onMouseUp(cb: () => void) {
@@ -59,15 +69,15 @@ export class DOMElement implements DOMElementI {
     }
 
     public resized() {
-        clearTimeout(timer);
-        timer = setTimeout(() => {
+        clearTimeout(this.timer);
+        this.timer = setTimeout(() => {
             this.calculateBoundingBox();
         }, 100);
     }
 
     public scrolled() {
-        clearTimeout(timer);
-        timer = setTimeout(() => {
+        clearTimeout(this.timer);
+        this.timer = setTimeout(() => {
             this.calculateBoundingBox();
         }, 100);
     }
