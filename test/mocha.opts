@@ -1,3 +1,2 @@
 --recursive
---no-colors
 --reporter dot

@@ -28,7 +28,7 @@ const configuration = {
   },
   reporters: ['progress'],
   port: 9876,
-  colors: false,
+  colors: true,
   autoWatch: false,
   browsers: ['PhantomJS'],
   singleRun: false,
