@@ -18,20 +18,33 @@ describe('mouse events', function () {
         } = preTest());
     });
 
-    afterEach('cleaning the DOM after assertion', function () {
+    afterEach('cleaning the DOM after assertions', function () {
         postTest();
     });
 
-    it('should draw a line in response to mouse events', () => {
+    it('should draw a line in response to mouse events at specified positions', () => {
         userInteraction(paper, drawingDOM, drawLine);
-        sendMouseEvent(100, 0, drawingDiv, 'mousedown');
+        sendMouseEvent(100, 10, drawingDiv, 'mousedown');
         sendMouseEvent(100, 100, drawingDiv, 'mousemove');
 
         paper.forEach((el) => {
             const boundingBox = el.getBBox();
+            // using toFixed because IE10 does wacky stuff like giving 10.0000006534 instead of 10
+            const x = boundingBox.x.toFixed(1);
+            const y = boundingBox.y.toFixed(1);
+            const x2 = boundingBox.x2.toFixed(1);
+            const y2 = boundingBox.y2.toFixed(1);
 
-            assert.equal(boundingBox.height, 100,
+            assert.equal(boundingBox.height, 90,
                 'height of drawed line should be 100');
+            assert.equal(x, 100,
+                'should start at x = 100');
+            assert.equal(y, 10,
+                'should start at y = 10');
+            assert.equal(x2, 100,
+                'should end at x2 = 100');
+            assert.equal(y2, 100,
+                'should end at y2 = 100');
 
             return true;
         });

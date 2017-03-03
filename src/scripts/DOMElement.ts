@@ -21,7 +21,7 @@ export class DOMElement implements DOMElementI {
         };
     }
 
-    public onTouchStart = function(cb: (xy: Coordinate) => void) {
+    public onTouchStart = function (cb: (xy: Coordinate) => void) {
         this.originalElement.addEventListener('touchstart', (event: TouchEvent) => {
             event.preventDefault(); // to prevent scroll
             cb(this.relativeOffset(event.touches[0].clientX, event.touches[0].clientY));
@@ -42,7 +42,7 @@ export class DOMElement implements DOMElementI {
         this.originalElement.addEventListener('touchend', cb);
     }
 
-    public onTouchCancel = function(cb: () => void) {
+    public onTouchCancel = function (cb: () => void) {
         this.originalElement.addEventListener('touchcancel', cb);
     };
 
