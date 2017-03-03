@@ -72,11 +72,11 @@ export class DOMElement implements DOMElementI {
     public calculateBoundingBox() {
         this.drawingAreaPosition = this.originalElement.getBoundingClientRect();
     }
-
+    // TODO: havn't been test
     public resized() {
         this.calculateBoundingBoxWithDelay();
     }
-
+    // TODO: havn't been test
     public scrolled() {
         this.calculateBoundingBoxWithDelay();
     }
