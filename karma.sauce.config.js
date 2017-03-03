@@ -106,6 +106,7 @@ const configuration = {
   reporters: ['dots', 'saucelabs'],
   singleRun: true,
   port: 9876,
+  concurrency: 5,
   captureTimeout: 300000,
   browserNoActivityTimeout: 300000,
   plugins: [
