@@ -5,8 +5,8 @@ import * as server from '../../src/server/server';
 
 const portNumber = 1337;
 const tempDir = 'generated';
-const generatedIndexHtml = `${tempDir}/testIndex.html`; // TODO: maybe use path module?
-const generated404Html = `${tempDir}/test404.html`;
+const generatedIndexHtml = `${tempDir}/index.html`; // TODO: maybe use path module?
+const generated404Html = `${tempDir}/404.html`;
 const sampleDataForIndexHtml = 'This is a sample data';
 const sampleDataFor404Html = 'Server responded with 404, page doesn\'t exest';
 const URL = 'http://localhost';
@@ -60,7 +60,7 @@ afterEach(() => {
 
 describe('serving files', function () {
     it('should serve a file', function (done) {
-        server.start(generatedIndexHtml, generated404Html, null, portNumber, function () {
+        server.start(tempDir, portNumber, function () {
             httpGet(`${URL}:${portNumber}`)
                 .then(data => {
                     assert.equal(data.response.statusCode, 200, 'server didn\'t responed with 200');
@@ -76,7 +76,7 @@ describe('serving files', function () {
 
 describe('404 page', function () {
     it('should return 404 for everything except homepage', function (done) {
-        server.start(generatedIndexHtml, generated404Html, null, portNumber, function () {
+        server.start(tempDir, portNumber, function () {
             httpGet(`${URL}:${portNumber}/foobar`)
                 .then(data => {
                     assert.equal(data.response.statusCode, 404, 'server didn\'t responed with 404');
@@ -91,7 +91,7 @@ describe('404 page', function () {
 
 describe('asking for index.html ', function () {
     it('should server index.html', function (done) {
-        server.start(generatedIndexHtml, generated404Html, null, portNumber, function () {
+        server.start(tempDir, portNumber, function () {
             httpGet(`${URL}:${portNumber}/index.html`)
                 .then(data => {
                     assert.equal(data.response.statusCode, 200, 'server didn\'t responed with 200');

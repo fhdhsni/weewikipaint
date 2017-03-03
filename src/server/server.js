@@ -2,29 +2,23 @@
 const fs = require("fs");
 const http = require("http");
 let server;
-function serveFile(res, file) {
-    fs.readFile(file, 'utf8', (error, data) => {
-        if (error) {
-            throw error;
-        }
-        res.write(data);
-        res.end();
-    });
-}
-function start(htmlFileToSever, notFoundpage, JSFile, port, cb) {
+function start(dir, port, cb) {
+    const files = ['/', '/index.html', '/app.js', '/styles.css'];
     server = http.createServer();
     server.on('request', (req, res) => {
-        if (req.url === '/' || req.url === '/index.html') {
+        const url = req.url;
+        if (files.indexOf(url) !== -1) {
             res.statusCode = 200;
-            serveFile(res, htmlFileToSever);
-        }
-        else if (req.url === '/app.js') {
-            res.statusCode = 200;
-            serveFile(res, JSFile);
+            if (url === '/') {
+                serveFile(res, `${dir}/index.html`);
+            }
+            else {
+                serveFile(res, `${dir}${url}`);
+            }
         }
         else {
             res.statusCode = 404;
-            serveFile(res, notFoundpage);
+            serveFile(res, `${dir}/404.html`);
         }
     });
     server.listen(port, cb);
@@ -37,3 +31,12 @@ function stop(cb) {
     }
 }
 exports.stop = stop;
+function serveFile(res, file) {
+    fs.readFile(file, 'utf8', (error, data) => {
+        if (error) {
+            throw error;
+        }
+        res.write(data);
+        res.end();
+    });
+}
