@@ -36,6 +36,7 @@ if (supportTouchEvent()) {
 
                 return true;
             });
+            console.log(JSON.stringify(raphaelElements[0].getBBox()));
             assert.equal(raphaelElements[0].getBBox().width, 70,
                 'boundingBox width of the path should be 70');
             assert.equal(raphaelElements[0].getBBox().height, 30,
