@@ -25,15 +25,17 @@ module.exports = {
     },
     tswatch: 'nps -p tsc.watch.server,tsc.watch.test',
     test: {
-      travis: 'nps tsc && karma start ./karma.sauce.config.js && nps mocha',
+      travis: 'nps tsc && karma start ./karma.sauce.config.js && nps mocha.travis',
       // travis: 'nps tsc && nps mocha',
       all: 'serverProcess=$(./runServe.sh) && export serverPort=8000 && nps tsc,mocha && karma start --single-run; kill $serverProcess',
       forBuild: 'nps tsc,mocha.server && karma start --single-run # | tee ./testOutput.txt && ./checkBrowsers.sh',
     },
     mocha: {
       default: 'nps mocha.server,mocha.selenium',
+      travis: 'nps mocha.server,mocha.TravisSelenium',
       server: 'mocha ./test/compiled/test/server/*.js',
       selenium: 'export MYIP=$(./findLocalip.sh); mocha ./test/compiled/test/client/*.selenium.test.js',
+      TravisSelenium: 'mocha ./test/compiled/test/client/*.selenium.test.js',
     },
     k: {
       start: 'karma start',
