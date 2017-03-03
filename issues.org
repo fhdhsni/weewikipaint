@@ -4,3 +4,4 @@
 - [ ] server tests don't test app.js request.
 - [ ] calculation of drawingArea boundingBox on 'resize' and 'scroll'
   event haven't been tested.
+- [ ] duplication of local karma config and karma saucelabs config
