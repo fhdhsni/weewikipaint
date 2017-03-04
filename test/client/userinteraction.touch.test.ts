@@ -6,7 +6,7 @@ import { postTest, preTest } from './userinteraction.BeforeAfterEach';
 import { assert } from 'chai';
 
 if (supportTouchEvent()) {
-    describe('touch evetns', function () {
+    describe('Touch Evetns', function () {
         let paper: RaphaelPaper;
         let drawingDOM: DOMElementI;
         let drawingDiv: HTMLDivElement;
@@ -23,7 +23,7 @@ if (supportTouchEvent()) {
             postTest();
         });
 
-        it('should respond to touch events ', function () {
+        it('Should respond to touch events ', function () {
             const raphaelElements: RaphaelElement[] = [];
 
             userInteraction(paper, drawingDOM, drawLine);
@@ -36,7 +36,6 @@ if (supportTouchEvent()) {
 
                 return true;
             });
-            console.log(JSON.stringify(raphaelElements[0].getBBox()));
             assert.equal(raphaelElements[0].getBBox().width, 70,
                 'boundingBox width of the path should be 70');
             assert.equal(raphaelElements[0].getBBox().height, 30,
@@ -50,7 +49,7 @@ if (supportTouchEvent()) {
             assert.equal(raphaelElements[0].getBBox().y2, 200,
                 'path should end at y2 = 200');
         });
-        it('should stop drawing on touchcancel event', () => {
+        it('Should stop drawing on touchcancel event', () => {
             const raphaelElements: RaphaelElement[] = [];
 
             userInteraction(paper, drawingDOM, drawLine);
@@ -71,7 +70,7 @@ if (supportTouchEvent()) {
             assert.equal(raphaelElements[0].getBBox().height, 50,
                 'boundingBox width of the path should be 100');
         });
-        it('should stop drawing on touchend event', () => {
+        it('Should stop drawing on touchend event', () => {
             const raphaelElements: RaphaelElement[] = [];
 
             userInteraction(paper, drawingDOM, drawLine);

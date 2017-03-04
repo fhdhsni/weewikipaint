@@ -49,8 +49,8 @@ function runServer(task: { command: string, options: string[] }): Promise<ps.Chi
 }
 
 const command = readProcfile();
-describe('smoke testing server', function () {
-    it('should get homepage', function (done) {
+describe('Server (smoke test)', function () {
+    it('Should return homepage', function (done) {
         runServer(command)
             .then(serverProcess => {
                 httpGet(`http://localhost:${PORT}`)
@@ -68,7 +68,7 @@ describe('smoke testing server', function () {
             });
     });
 
-    it('should get 404 page', function (done) {
+    it('Should return 404 page', function (done) {
         runServer(command)
             .then(serverProcess => {
                 httpGet(`http://localhost:${PORT}/foobar`)

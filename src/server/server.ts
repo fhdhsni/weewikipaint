@@ -4,7 +4,6 @@ import * as send from 'send';
 let server: http.Server;
 
 export function start(dir: string, port: number, cb?: () => void) {
-    // const files = ['/', '/index.html', '/app.js', '/styles.css'];
 
     server = http.createServer();
     server.on('request', (request: http.ServerRequest, response: http.ServerResponse): void => {

@@ -9,7 +9,7 @@ let sessionID: string;
 let USERNAME: string;
 let PASSWORD: string;
 
-test.describe('userinteraction', function (): any {
+test.describe('Userinteraction ', function (): any {
     if (process.env.SAUCE_USERNAME == undefined) {
         return undefined;
     }
@@ -39,7 +39,7 @@ test.describe('userinteraction', function (): any {
     test.afterEach(function () {
         return this.browser.quit();
     });
-    test.it('should respond to touch events', function () {
+    test.it('Should respond to touch events', function () {
         this.browser.executeScript(function () {
             let div = document.getElementById('drawingArea') as HTMLElement;
 

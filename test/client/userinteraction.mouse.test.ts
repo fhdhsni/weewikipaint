@@ -5,7 +5,7 @@ import { sendMouseEvent } from './sendEvent';
 import { postTest, preTest } from './userinteraction.BeforeAfterEach';
 import { assert } from 'chai';
 
-describe('mouse events', function () {
+describe('Mouse Events', function () {
     let paper: RaphaelPaper;
     let drawingDOM: DOMElementI;
     let drawingDiv: HTMLDivElement;
@@ -22,7 +22,7 @@ describe('mouse events', function () {
         postTest();
     });
 
-    it('should draw a line in response to mouse events at specified positions', () => {
+    it('Should draw a line in response to mouse events at specified positions', () => {
         userInteraction(paper, drawingDOM, drawLine);
         sendMouseEvent(100, 10, drawingDiv, 'mousedown');
         sendMouseEvent(100, 100, drawingDiv, 'mousemove');
@@ -49,7 +49,7 @@ describe('mouse events', function () {
             return true;
         });
     });
-    it('should not draw a line after mouseup', () => {
+    it('Should not draw a line after mouseup', () => {
         const raphaelElements: RaphaelElement[] = [];
 
         userInteraction(paper, drawingDOM, drawLine);
@@ -67,7 +67,7 @@ describe('mouse events', function () {
             'mousemove following a mouseup shouldn\'t draw a line');
     });
 
-    it('should draw two line segments.', () => {
+    it('Should draw two line segments.', () => {
         const raphaelElements: RaphaelElement[] = [];
 
         userInteraction(paper, drawingDOM, drawLine);
@@ -87,7 +87,7 @@ describe('mouse events', function () {
             'boundingBox width of second path should be 100');
     });
 
-    it('should not draw a line when only mouse moves (i.e. without mousedown)', () => {
+    it('Should not draw a line when only mouse moves (i.e. without mousedown)', () => {
         let raphaelElements: RaphaelElement[] = [];
 
         userInteraction(paper, drawingDOM, drawLine);
@@ -102,7 +102,7 @@ describe('mouse events', function () {
         assert.equal(raphaelElements.length, 0,
             'Nothing should be drawn while mouse moves without mousedown');
     });
-    it('should not draw a line when mousemove starts outside of drawingDiv ', () => {
+    it('Should not draw a line when mousemove starts outside of drawingDiv ', () => {
         let raphaelElements: RaphaelElement[] = [];
 
         userInteraction(paper, drawingDOM, drawLine);
@@ -121,7 +121,7 @@ describe('mouse events', function () {
         assert.equal(raphaelElements.length, 0,
             'Nothing should be drawn while mousedown happens outside drawingDiv');
     });
-    it('should draw a line when mousedown starts exactly at the edge of drawingDiv', () => {
+    it('Should draw a line when mousedown starts exactly at the edge of drawingDiv', () => {
         let raphaelElements: RaphaelElement[] = [];
 
         userInteraction(paper, drawingDOM, drawLine);
@@ -139,7 +139,7 @@ describe('mouse events', function () {
             raphaelElements.length, 1,
             'when mouse down starts at the edge of drawingDiv a line should be drawn');
     });
-    it('should stop drawing when mouse leaves drawingDiv', () => {
+    it('Should stop drawing when mouse leaves drawingDiv', () => {
         let raphaelElements: RaphaelElement[] = [];
 
         userInteraction(paper, drawingDOM, drawLine);

@@ -4,7 +4,6 @@ const http = require("http");
 const send = require("send");
 let server;
 function start(dir, port, cb) {
-    // const files = ['/', '/index.html', '/app.js', '/styles.css'];
     server = http.createServer();
     server.on('request', (request, response) => {
         send(request, request.url, { root: dir })

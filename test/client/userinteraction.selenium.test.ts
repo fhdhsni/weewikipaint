@@ -10,7 +10,7 @@ let sessionID: string;
 let USERNAME: string;
 let PASSWORD: string;
 
-test.describe('userinteraction', function () {
+test.describe('Userinteraction', function () {
     const By = webdriver.By;
     this.timeout(300000);
     test.beforeEach(function () {
@@ -46,7 +46,7 @@ test.describe('userinteraction', function () {
     test.afterEach(function () {
         return this.browser.quit();
     });
-    test.it('should respond to mouse events', function () {
+    test.it('Should respond to mouse events', function () {
         this.browser.executeScript(function () {
             let div = document.getElementById('drawingArea') as HTMLElement;
 

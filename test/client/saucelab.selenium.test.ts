@@ -5,7 +5,7 @@ import { assert } from 'chai';
 import sendToSaucelab from '../sendToSaucelab';
 let inTravis = false;
 
-test.describe('saucelabs test', function () {
+test.describe('Saucelabs Tests', function () {
     const By = webdriver.By;
     this.timeout(300000);
     test.beforeEach(function () {
@@ -38,7 +38,7 @@ test.describe('saucelabs test', function () {
         return this.browser.quit();
     });
 
-    test.it('should respond to click', function () {
+    test.it('Should respond to click', function () {
         let sessionID: string;
         this.browser.getSession()
             .then((val: any) => {
