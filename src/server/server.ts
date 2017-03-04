@@ -1,25 +1,19 @@
 import * as fs from 'fs';
 import * as http from 'http';
+import * as send from 'send';
 let server: http.Server;
 
 export function start(dir: string, port: number, cb?: () => void) {
-    const files = ['/', '/index.html', '/app.js', '/styles.css'];
+    // const files = ['/', '/index.html', '/app.js', '/styles.css'];
 
     server = http.createServer();
-    server.on('request', (req: http.ServerRequest, res: http.ServerResponse): void => {
-        const url = req.url;
-
-        if (files.indexOf(url) !== -1) {
-            res.statusCode = 200;
-            if (url === '/') {
-                serveFile(res, `${dir}/index.html`);
-            } else {
-                serveFile(res, `${dir}${url}`);
-            }
-        } else {
-            res.statusCode = 404;
-            serveFile(res, `${dir}/404.html`);
-        }
+    server.on('request', (request: http.ServerRequest, response: http.ServerResponse): void => {
+        send(request, request.url, { root: dir })
+            .on('error', (error: any) => {
+                response.statusCode = error.status || 500;
+                serveFile(response, `${dir}/404.html`);
+            })
+            .pipe(response);
     });
     server.listen(port, cb);
 }

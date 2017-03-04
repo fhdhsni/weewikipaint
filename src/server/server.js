@@ -1,25 +1,18 @@
 "use strict";
 const fs = require("fs");
 const http = require("http");
+const send = require("send");
 let server;
 function start(dir, port, cb) {
-    const files = ['/', '/index.html', '/app.js', '/styles.css'];
+    // const files = ['/', '/index.html', '/app.js', '/styles.css'];
     server = http.createServer();
-    server.on('request', (req, res) => {
-        const url = req.url;
-        if (files.indexOf(url) !== -1) {
-            res.statusCode = 200;
-            if (url === '/') {
-                serveFile(res, `${dir}/index.html`);
-            }
-            else {
-                serveFile(res, `${dir}${url}`);
-            }
-        }
-        else {
-            res.statusCode = 404;
-            serveFile(res, `${dir}/404.html`);
-        }
+    server.on('request', (request, response) => {
+        send(request, request.url, { root: dir })
+            .on('error', (error) => {
+            response.statusCode = error.status || 500;
+            serveFile(response, `${dir}/404.html`);
+        })
+            .pipe(response);
     });
     server.listen(port, cb);
 }

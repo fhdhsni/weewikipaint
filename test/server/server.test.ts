@@ -44,22 +44,23 @@ export function httpGet(url: string): Promise<ResolveArg> {
     });
 }
 
-beforeEach(() => {
-    fs.mkdirSync(tempDir);
-    fs.writeFileSync(generatedIndexHtml, sampleDataForIndexHtml);
-    fs.writeFileSync(generated404Html, sampleDataFor404Html);
-});
+describe('server', function () {
 
-afterEach(() => {
-    if (fs.existsSync(tempDir)) {
-        fs.unlinkSync(generatedIndexHtml);
-        fs.unlinkSync(generated404Html);
-        fs.rmdirSync(tempDir);
-    }
-});
+    beforeEach(() => {
+        fs.mkdirSync(tempDir);
+        fs.writeFileSync(generatedIndexHtml, sampleDataForIndexHtml);
+        fs.writeFileSync(generated404Html, sampleDataFor404Html);
+    });
 
-describe('serving files', function () {
-    it('should serve a file', function (done) {
+    afterEach(() => {
+        if (fs.existsSync(tempDir)) {
+            fs.unlinkSync(generatedIndexHtml);
+            fs.unlinkSync(generated404Html);
+            fs.rmdirSync(tempDir);
+        }
+    });
+
+    it('should serve index.html for URL=/', function (done) {
         server.start(tempDir, portNumber, function () {
             httpGet(`${URL}:${portNumber}`)
                 .then(data => {
@@ -72,10 +73,8 @@ describe('serving files', function () {
                 });
         });
     });
-});
 
-describe('404 page', function () {
-    it('should return 404 for everything except homepage', function (done) {
+    it('should return 404 for non-existent files', function (done) {
         server.start(tempDir, portNumber, function () {
             httpGet(`${URL}:${portNumber}/foobar`)
                 .then(data => {
@@ -87,10 +86,7 @@ describe('404 page', function () {
                 }).catch(e => assert.throw(e));
         });
     });
-});
-
-describe('asking for index.html ', function () {
-    it('should server index.html', function (done) {
+    it('should serve index.html for URL=/index.html', function (done) {
         server.start(tempDir, portNumber, function () {
             httpGet(`${URL}:${portNumber}/index.html`)
                 .then(data => {
