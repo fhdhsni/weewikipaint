@@ -10,7 +10,7 @@ module.exports = {
     },
     tslint: 'tslint ./src/**/*.ts ./test/**/*.ts',
     ws: {
-      script: 'webpack-dev-server --config ./webpack.development.js --host $(./findLocalip.sh) --port 8080',
+      script: 'webpack-dev-server --config ./webpack.development.js --host $(./findLocalIP.sh) --port 8080',
       local: 'webpack-dev-server --config ./webpack.development.js --port 8080',
       dist: 'serve -p 8000 ./dist/ ',
     },
@@ -34,7 +34,7 @@ module.exports = {
       default: 'nps mocha.server,mocha.selenium',
       travis: 'nps mocha.server,mocha.TravisSelenium',
       server: 'mocha ./test/compiled/test/server/*.js',
-      selenium: 'export MYIP=$(./findLocalip.sh); mocha ./test/compiled/test/client/*.selenium.test.js',
+      selenium: 'export MYIP=$(./findLocalIP.sh); mocha ./test/compiled/test/client/*.selenium.test.js',
       TravisSelenium: 'mocha ./test/compiled/test/client/*.selenium.test.js',
     },
     k: {
