@@ -20,7 +20,6 @@
     "@types/chai": "^3.4.34",
     "@types/mocha": "^2.2.39",
     "@types/node": "^7.0.4",
-    "@types/phantomjs": "^1.9.29",
     "@types/raphael": "^2.1.30",
     "@types/selenium-webdriver": "^2.53.39",
     "@types/send": "^0.14.2",

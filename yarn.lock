@@ -30,10 +30,6 @@
   version "7.0.4"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-7.0.4.tgz#9aabc135979ded383325749f508894c662948c8b"
 
-"@types/phantomjs@^1.9.29":
-  version "1.9.29"
-  resolved "https://registry.yarnpkg.com/@types/phantomjs/-/phantomjs-1.9.29.tgz#6bfa9ea746a2d6ac1d908d6c5cdd4a226c24e4dd"
-
 "@types/raphael@^2.1.30":
   version "2.1.30"
   resolved "https://registry.yarnpkg.com/@types/raphael/-/raphael-2.1.30.tgz#76cbea4a556ba25eb1c6d7fa5e71ac48e72f81cf"
