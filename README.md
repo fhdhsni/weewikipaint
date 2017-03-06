@@ -7,3 +7,6 @@
 [![Build Status](https://saucelabs.com/browser-matrix/fhdhsni.svg)](https://saucelabs.com/beta/builds/891eaa1d68524be7ba9f25aa573df580)
 
 [WeeWikiPaint](https://tdd-wwp.herokuapp.com) on heroku
+
+
+![browserStack logo](https://fhdhsni.github.io/calc/429ed218f860c209c4a2fe7653020480.svg)
