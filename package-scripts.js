@@ -31,10 +31,9 @@ module.exports = {
     },
     mocha: {
       default: 'export serverProcess=$(./start.sh) && nps mocha.server,mocha.selenium; kill $serverProcess',
-      travis: 'nps mocha.server,mocha.TravisSelenium',
+      travis: 'nps mocha.server,mocha.selenium',
       server: 'mocha ./test/compiled/test/server/*.js',
       selenium: 'mocha ./test/compiled/test/client/*.selenium.test.js',
-      TravisSelenium: 'mocha ./test/compiled/test/client/*.selenium.test.js',
     },
     k: {
       start: 'karma start',
