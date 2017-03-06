@@ -42,14 +42,14 @@ module.exports = {
     },
     WTF: {
       default: `echo -e '\n
-      1. tswatch to watch server and test typescript files. \n
-      2. ws to run webpack-dev-server in watch mode. \n
-      3. k.s to start karma server. \n
-      4. k.r to run the tests. \n
-      5. mocha.server to run server side tests. \n
-      6. mocha.selenium to run selenium tests. \n
-      7. test.all to run all the tests the way Travis do. \n
-      8. build to build for production. \n'`,
+      1. \\e[35mtswatch\\e[0m to watch server and test typescript files. \n
+      2. \\e[35mws\\e[0m to run webpack-dev-server in watch mode. \n
+      3. \\e[35mk.s\\e[0m to start karma server. \n
+      4. \\e[35mk.r\\e[0m to run the tests. \n
+      5. \\e[35mmocha.server\\e[0m to run server side tests. \n
+      6. \\e[35mmocha.selenium\\e[0m to run selenium tests. \n
+      7. \\e[35mtest.all\\e[0m to run all the tests the way Travis do. \n
+      8. \\e[35mbuild\\e[0m to build for production. \n'`,
     },
   },
   options: {
