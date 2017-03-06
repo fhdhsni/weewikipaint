@@ -10,10 +10,10 @@ let sessionID: string;
 let USERNAME: string;
 let PASSWORD: string;
 
-test.describe('Userinteraction Mouse Event (Smoke Test)', function() {
+test.describe('Userinteraction Mouse Event (Smoke Test)', function () {
     const By = webdriver.By;
     this.timeout(300000);
-    test.beforeEach(function() {
+    test.beforeEach(function () {
         if (process.env.SAUCE_USERNAME != undefined) {
             USERNAME = process.env.SAUCE_USERNAME;
             PASSWORD = process.env.SAUCE_ACCESS_KEY;
@@ -42,11 +42,11 @@ test.describe('Userinteraction Mouse Event (Smoke Test)', function() {
             return this.browser.get(`http://localhost:8000/`);
         }
     });
-    test.afterEach(function() {
+    test.afterEach(function () {
         return this.browser.quit();
     });
-    test.it('Should respond to mouse events', function() {
-        this.browser.executeScript(function() {
+    test.it('Should respond to mouse events', function () {
+        this.browser.executeScript(function () {
             let div = document.getElementById('drawingArea') as HTMLElement;
 
             return {
@@ -71,24 +71,29 @@ test.describe('Userinteraction Mouse Event (Smoke Test)', function() {
             this.browser.actions()
                 .mouseMove({ x, y })
                 .mouseDown()
-                .mouseMove({ x: 50, y: 0 })
+                .mouseMove({ x: 50, y: -20 })
                 .mouseUp()
                 .perform();
         });
-        this.browser.executeScript(function() {
+        this.browser.executeScript(function () {
             let div = document.getElementById('drawingArea') as HTMLElement;
             let path = div.querySelector('path');
 
             return path.getAttribute('d');
         }).then((d: string) => {
-            const values = d.match(/[a-z](\d)*/gi);
-            const start = values[0].replace(/\w/i, '');
-            const end = values[1].replace(/\w/i, '');
+            const x12 = d.match(/[a-z](\d)*/gi); // get the x1 and x2
+            const y12 = d.match(/,(\d)*/gi); // get the y1 and y2
+            const x1 = x12[0].replace(/\w/i, '');
+            const x2 = x12[1].replace(/\w/i, '');
+            const y1 = y12[0].replace(/,/i, '');
+            const y2 = y12[1].replace(/,/i, '');
 
             if (inTravis) {
                 try {
                     assert.equal(
-                        Number(end) - Number(start), 50, 'a line with the length of 50 pixels should\'ve been drawn');
+                        Number(x2) - Number(x1), 50, 'a line with the width of 50 pixels should\'ve been drawn');
+                    assert.equal(
+                        Number(y2) - Number(y1), -20, 'a line with the height of -20 pixels should\'ve been drawn');
                 } catch (e) {
                     sendToSaucelab(false, USERNAME, PASSWORD, sessionID);
                     throw e;
@@ -96,7 +101,9 @@ test.describe('Userinteraction Mouse Event (Smoke Test)', function() {
                 sendToSaucelab(true, USERNAME, PASSWORD, sessionID);
             } else {
                 assert.equal(
-                    Number(end) - Number(start), 50, 'a line with the length of 50 pixels should\'ve been drawn');
+                    Number(x2) - Number(x1), 50, 'a line with the width of 50 pixels should\'ve been drawn');
+                assert.equal(
+                    Number(y2) - Number(y1), -20, 'a line with the height of -20 pixels should\'ve been drawn');
             }
         });
 
