@@ -49,7 +49,7 @@ function runServer(task: { command: string, options: string[] }): Promise<ps.Chi
 }
 
 const command = readProcfile();
-describe('Server (smoke test)', function () {
+describe('Server (Smoke Test)', function () {
     it('Should return homepage', function (done) {
         runServer(command)
             .then(serverProcess => {

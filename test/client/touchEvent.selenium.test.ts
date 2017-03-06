@@ -9,7 +9,7 @@ let sessionID: string;
 let USERNAME: string;
 let PASSWORD: string;
 
-test.describe('Userinteraction ', function (): any {
+test.describe('Userinteraction Touch Event (Smoke Test) ', function (): any {
     if (process.env.SAUCE_USERNAME == undefined) {
         return undefined;
     }

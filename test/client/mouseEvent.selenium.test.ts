@@ -10,7 +10,7 @@ let sessionID: string;
 let USERNAME: string;
 let PASSWORD: string;
 
-test.describe('Userinteraction', function() {
+test.describe('Userinteraction Mouse Event (Smoke Test)', function() {
     const By = webdriver.By;
     this.timeout(300000);
     test.beforeEach(function() {
