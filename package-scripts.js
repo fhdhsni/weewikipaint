@@ -12,7 +12,6 @@ module.exports = {
     ws: {
       script: 'webpack-dev-server --config ./webpack.development.js --host $(./findLocalIP.sh) --port 8080',
       local: 'webpack-dev-server --config ./webpack.development.js --port 8080',
-      dist: 'serve -p 8000 ./dist/ ',
     },
     tsc: {
       default: 'nps rm.test,tsc.server,tsc.test',
