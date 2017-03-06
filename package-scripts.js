@@ -26,7 +26,7 @@ module.exports = {
     tswatch: 'nps -p tsc.watch.server,tsc.watch.test',
     test: {
       travis: 'nps tsc && karma start ./karma.sauce.config.js && nps mocha.travis',
-      all: 'serverProcess=$(./start.sh) && nps tsc,mocha && karma start --single-run; kill $serverProcess',
+      all: 'nps tsc,mocha && karma start --single-run',
       forBuild: 'nps tsc,mocha.server && karma start --single-run # | tee ./testOutput.txt && ./checkBrowsers.sh',
     },
     mocha: {
