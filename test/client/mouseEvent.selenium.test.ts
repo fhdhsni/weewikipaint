@@ -10,10 +10,10 @@ let sessionID: string;
 let USERNAME: string;
 let PASSWORD: string;
 
-test.describe('Userinteraction', function () {
+test.describe('Userinteraction', function() {
     const By = webdriver.By;
     this.timeout(300000);
-    test.beforeEach(function () {
+    test.beforeEach(function() {
         if (process.env.SAUCE_USERNAME != undefined) {
             USERNAME = process.env.SAUCE_USERNAME;
             PASSWORD = process.env.SAUCE_ACCESS_KEY;
@@ -38,16 +38,15 @@ test.describe('Userinteraction', function () {
             this.browser = new webdriver.Builder()
                 .forBrowser('phantomjs')
                 .build();
-            const PORT = process.env.serverPort || 8080;
 
-            return this.browser.get(`http://${process.env.MYIP}:${PORT}/`);
+            return this.browser.get(`http://localhost:8000/`);
         }
     });
-    test.afterEach(function () {
+    test.afterEach(function() {
         return this.browser.quit();
     });
-    test.it('Should respond to mouse events', function () {
-        this.browser.executeScript(function () {
+    test.it('Should respond to mouse events', function() {
+        this.browser.executeScript(function() {
             let div = document.getElementById('drawingArea') as HTMLElement;
 
             return {
@@ -76,7 +75,7 @@ test.describe('Userinteraction', function () {
                 .mouseUp()
                 .perform();
         });
-        this.browser.executeScript(function () {
+        this.browser.executeScript(function() {
             let div = document.getElementById('drawingArea') as HTMLElement;
             let path = div.querySelector('path');
 

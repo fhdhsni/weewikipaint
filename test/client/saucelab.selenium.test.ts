@@ -28,9 +28,8 @@ test.describe('Saucelabs Tests', function () {
                 .withCapabilities({
                     browserName: 'phantomjs',
                 }).build();
-            const PORT = process.env.serverPort || 8080;
 
-            return this.browser.get(`http://${process.env.MYIP}:${PORT}/`);
+            return this.browser.get(`http://localhost:8000/`);
         }
     });
 

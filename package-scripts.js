@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 module.exports = {
   scripts: {
-    default: 'PORT=5000 && node ./src/server/weewikipaint.js $PORT',
+    default: './start.sh',
     build: 'nps test.forBuild && webpack --config ./webpack.production.js -p',
     rm: {
       script: 'nps rm.test,rm.dist',
@@ -26,15 +26,14 @@ module.exports = {
     tswatch: 'nps -p tsc.watch.server,tsc.watch.test',
     test: {
       travis: 'nps tsc && karma start ./karma.sauce.config.js && nps mocha.travis',
-      // travis: 'nps tsc && nps mocha',
-      all: 'serverProcess=$(./runServe.sh) && export serverPort=8000 && nps tsc,mocha && karma start --single-run; kill $serverProcess',
+      all: 'serverProcess=$(./start.sh) && nps tsc,mocha && karma start --single-run; kill $serverProcess',
       forBuild: 'nps tsc,mocha.server && karma start --single-run # | tee ./testOutput.txt && ./checkBrowsers.sh',
     },
     mocha: {
-      default: 'nps mocha.server,mocha.selenium',
+      default: 'export serverProcess=$(./start.sh) && nps mocha.server,mocha.selenium; kill $serverProcess',
       travis: 'nps mocha.server,mocha.TravisSelenium',
       server: 'mocha ./test/compiled/test/server/*.js',
-      selenium: 'export MYIP=$(./findLocalIP.sh); mocha ./test/compiled/test/client/*.selenium.test.js',
+      selenium: 'mocha ./test/compiled/test/client/*.selenium.test.js',
       TravisSelenium: 'mocha ./test/compiled/test/client/*.selenium.test.js',
     },
     k: {
