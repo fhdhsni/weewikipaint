@@ -13,5 +13,5 @@ page.open(url, function (status) {
         console.log('HI');
     });
     page.render('wwp.png');
-    phantom.exit();
+    phantom.exit(94);
 });

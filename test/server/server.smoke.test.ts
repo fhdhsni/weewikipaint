@@ -12,43 +12,8 @@ import { httpGet } from './server.test';
 const procfile = require('procfile');
 
 let PORT = '';
-
-function readProcfile() {
-    let i: number;
-    const file = fs.readFileSync('Procfile').toString();
-    const web: {
-        command: string;
-        options: string[];
-    } = procfile.parse(file).web;
-
-    if (!process.env.PORT) {
-        web.options = web.options.map((element) => {
-            if (element === '$PORT') {
-                PORT = '5000';
-                return PORT;
-            }
-            return element;
-        });
-    }
-
-    return web;
-}
-
-function runServer(task: { command: string, options: string[] }): Promise<ps.ChildProcess> {
-    return new Promise((resolve, reject) => {
-        const proc = ps.spawn(task.command, task.options);
-        proc.stdout.setEncoding('utf8');
-        proc.stdout.on('data', (data) => {
-            if (data.toString().trim() === 'Server started') {
-                resolve(proc);
-            } else {
-                console.log('no match');
-            }
-        });
-    });
-}
-
 const command = readProcfile();
+
 describe('Server (Smoke Test)', function () {
     it('Should return homepage', function (done) {
         runServer(command)
@@ -86,3 +51,38 @@ describe('Server (Smoke Test)', function () {
             });
     });
 });
+
+function readProcfile() {
+    let i: number;
+    const file = fs.readFileSync('Procfile').toString();
+    const web: {
+        command: string;
+        options: string[];
+    } = procfile.parse(file).web;
+
+    if (!process.env.PORT) {
+        web.options = web.options.map((element) => {
+            if (element === '$PORT') {
+                PORT = '5000';
+                return PORT;
+            }
+            return element;
+        });
+    }
+
+    return web;
+}
+
+function runServer(task: { command: string, options: string[] }): Promise<ps.ChildProcess> {
+    return new Promise((resolve, reject) => {
+        const proc = ps.spawn(task.command, task.options);
+        proc.stdout.setEncoding('utf8');
+        proc.stdout.on('data', (data) => {
+            if (data.toString().trim() === 'Server started') {
+                resolve(proc);
+            } else {
+                console.log('no match');
+            }
+        });
+    });
+}
