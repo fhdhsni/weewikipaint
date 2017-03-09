@@ -2,7 +2,7 @@
 module.exports = {
   scripts: {
     default: './start.sh',
-    build: 'nps test.forBuild && webpack --config ./webpack.production.js -p',
+    build: 'karma run && webpack --config ./webpack.production.js -p && nps mocha',
     rm: {
       script: 'nps rm.test,rm.dist',
       test: 'rm -rf ./test/compiled',
@@ -26,13 +26,12 @@ module.exports = {
     test: {
       travis: 'nps tsc && karma start ./karma.sauce.config.js && nps mocha.travis',
       all: 'nps tsc,mocha && karma start --single-run',
-      forBuild: 'nps tsc,mocha.server && karma start --single-run # | tee ./testOutput.txt && ./checkBrowsers.sh',
     },
     mocha: {
-      default: 'export serverProcess=$(./start.sh) && nps mocha.server,mocha.selenium; kill $serverProcess',
+      default: 'nps mocha.server,mocha.selenium',
       travis: 'nps mocha.server,mocha.selenium',
       server: 'mocha ./test/compiled/test/server/*.js',
-      selenium: 'mocha ./test/compiled/test/client/*.selenium.test.js',
+      selenium: 'export serverProcess=$(./start.sh) && mocha ./test/compiled/test/client/*.selenium.test.js; kill $serverProcess',
     },
     k: {
       start: 'karma start',
