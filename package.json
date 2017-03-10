@@ -47,7 +47,6 @@
     "request-promise": "^4.1.1",
     "sass-loader": "^4.1.1",
     "selenium-webdriver": "^3.0.1",
-    "send": "^0.15.0",
     "style-loader": "^0.13.1",
     "tslint": "^4.4.2",
     "tslint-eslint-rules": "^3.3.0",
@@ -58,6 +57,7 @@
     "webpack-dev-server": "beta"
   },
   "dependencies": {
+    "send": "^0.15.0",
     "raphael": "^2.2.7"
   }
 }
