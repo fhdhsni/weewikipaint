@@ -36,17 +36,19 @@ if (supportTouchEvent()) {
 
                 return true;
             });
-            assert.equal(raphaelElements[0].getBBox().width, 70,
+            const { x, x2, y, y2, width, height } = raphaelElements[0].getBBox();
+
+            assert.equal(width, 70,
                 'boundingBox width of the path should be 70');
-            assert.equal(raphaelElements[0].getBBox().height, 30,
+            assert.equal(height, 30,
                 'boundingBox height of the path should be 30');
-            assert.equal(raphaelElements[0].getBBox().x, 150,
+            assert.approximately(x, 150, 0.02,
                 'path should start at x = 150');
-            assert.equal(raphaelElements[0].getBBox().y, 170,
+            assert.approximately(y, 170, 0.02,
                 'path should start at y = 170');
-            assert.equal(raphaelElements[0].getBBox().x2, 220,
+            assert.approximately(x2, 220, 0.02,
                 'path should end at x2 = 200');
-            assert.equal(raphaelElements[0].getBBox().y2, 200,
+            assert.approximately(y2, 200, 0.02,
                 'path should end at y2 = 200');
         });
         it('Should stop drawing on touchcancel event', () => {
