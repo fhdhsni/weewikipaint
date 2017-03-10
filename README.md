@@ -9,4 +9,4 @@
 [WeeWikiPaint](https://tdd-wwp.herokuapp.com) on heroku
 
 
-<img alt="browserStack logo" src="https://fhdhsni.github.io/calc/429ed218f860c209c4a2fe7653020480.svg" width="100">
+<img alt="browserStack logo" src="https://fhdhsni.github.io/calc/429ed218f860c209c4a2fe7653020480.svg" width="400">
