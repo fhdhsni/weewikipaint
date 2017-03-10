@@ -25,25 +25,20 @@ describe('Mouse Events', function () {
     it('Should draw a line in response to mouse events at specified positions', () => {
         userInteraction(paper, drawingDOM, drawLine);
         sendMouseEvent(100, 10, drawingDiv, 'mousedown');
-        sendMouseEvent(100, 100, drawingDiv, 'mousemove');
+        sendMouseEvent(150, 100, drawingDiv, 'mousemove');
 
         paper.forEach((el) => {
-            const boundingBox = el.getBBox();
-            // using toFixed because IE10 does wacky stuff like giving 10.0000006534 instead of 10
-            const x = boundingBox.x.toFixed(1);
-            const y = boundingBox.y.toFixed(1);
-            const x2 = boundingBox.x2.toFixed(1);
-            const y2 = boundingBox.y2.toFixed(1);
+            const { x, x2, y, y2, height } = el.getBBox();
 
-            assert.equal(boundingBox.height, 90,
-                'height of drawed line should be 100');
-            assert.equal(x, 100,
+            assert.equal(height, 90,
+                'height of drawn line should be 90');
+            assert.approximately(x, 100, 0.02,
                 'should start at x = 100');
-            assert.equal(y, 10,
+            assert.approximately(y, 10, 0.02,
                 'should start at y = 10');
-            assert.equal(x2, 100,
-                'should end at x2 = 100');
-            assert.equal(y2, 100,
+            assert.approximately(x2, 150, 0.02,
+                'should end at x2 = 150');
+            assert.approximately(y2, 100, 0.02,
                 'should end at y2 = 100');
 
             return true;
@@ -139,21 +134,15 @@ describe('Mouse Events', function () {
             raphaelElements.length, 1,
             'when mouse down starts at the edge of drawingDiv a line should be drawn');
     });
-    it('Should stop drawing when mouse leaves drawingDiv', () => {
+    it('Should continue drawing when mouse leaves drawingDiv and comes back in', () => {
         let raphaelElements: RaphaelElement[] = [];
 
         userInteraction(paper, drawingDOM, drawLine);
-
         sendMouseEvent(300, 100, drawingDiv, 'mousedown');
 
         // NOTE: not 100% accurate, since in real world mousemove
         // event doesnt' happen on drawingDiv once mouse leaves it
         sendMouseEvent(900, 100, drawingDiv, 'mousemove');
-
-        // =mouseleave= doesn't happen automatically like in real
-        // situations when user actually moves out of drawingDiv; hence
-        // we simulate that manually
-        sendMouseEvent(900, 100, drawingDiv, 'mouseleave');
         sendMouseEvent(300, 300, drawingDiv, 'mousemove');
 
         paper.forEach((el) => {
@@ -163,8 +152,8 @@ describe('Mouse Events', function () {
         });
 
         assert.equal(
-            raphaelElements.length, 1,
-            'when mouse leaves the drawingDiv, drawing should not happen when it returns to drawingDiv');
+            raphaelElements.length, 2,
+            'when mouse leaves the drawingDiv, drawing should start again from where it comes in');
     });
     it('default behavior of mousedown event (i.e seleting texts or dragging imgs) should be prevented',
         () => {
@@ -175,4 +164,50 @@ describe('Mouse Events', function () {
             });
             sendMouseEvent(100, 150, drawingDiv, 'mousedown');
         });
+
+    it('should stop drawing when mouse leaves drawingDiv and mouse button is released.',
+        () => {
+            let raphaelElements: RaphaelElement[] = [];
+
+            userInteraction(paper, drawingDOM, drawLine);
+
+            sendMouseEvent(100, 150, drawingDiv, 'mousedown');
+            sendMouseEvent(700, 250, drawingDiv, 'mousemove');
+            sendMouseEvent(700, 250, document.body, 'mouseup');
+            sendMouseEvent(700, 300, document.body, 'mousedown');
+            sendMouseEvent(150, 250, drawingDiv, 'mousemove');
+
+            paper.forEach((el) => {
+                raphaelElements.push(el);
+
+                return true;
+            });
+
+            assert.equal(
+                raphaelElements.length, 1,
+                'when mouse button is released outside drawingDiv, on its return, no line should be drawn');
+        });
+    it('should stop drawing when mouse button is released outside browser',
+        () => {
+            let raphaelElements: RaphaelElement[] = [];
+
+            userInteraction(paper, drawingDOM, drawLine);
+
+            sendMouseEvent(100, 150, drawingDiv, 'mousedown');
+            sendMouseEvent(700, 250, drawingDiv, 'mousemove');
+            sendMouseEvent(null, null, document, 'mouseleave');
+            sendMouseEvent(null, null, document, 'mouseup');
+            sendMouseEvent(150, 250, drawingDiv, 'mousemove');
+
+            paper.forEach((el) => {
+                raphaelElements.push(el);
+
+                return true;
+            });
+
+            assert.equal(
+                raphaelElements.length, 1,
+                'when mouse button is released outside browser window, on its return, no line should be drawn');
+        });
+
 });

@@ -1,4 +1,5 @@
 export class DOMElement implements DOMElementI {
+    public mouseOrTouchIsDown: Boolean;
     private originalElement: HTMLElement;
     private drawingAreaPosition: ClientRect;
     private drawingAreaCSS: CSSStyleDeclaration;
@@ -12,6 +13,7 @@ export class DOMElement implements DOMElementI {
         this.drawingAreaCSS = window.getComputedStyle(element);
         this.padding = parseInt(this.drawingAreaCSS.paddingLeft, 10);
         this.border = parseInt(this.drawingAreaCSS.borderLeftWidth, 10);
+        this.mouseOrTouchIsDown = false;
     }
 
     public relativeOffset(absuloteX: number, absoluteY: number): Coordinate {
@@ -23,6 +25,7 @@ export class DOMElement implements DOMElementI {
 
     public onTouchStart = function (cb: (xy: Coordinate) => void) {
         this.originalElement.addEventListener('touchstart', (event: TouchEvent) => {
+            this.mouseOrTouchIsDown = true;
             event.preventDefault(); // to prevent scroll
             cb(this.relativeOffset(event.touches[0].clientX, event.touches[0].clientY));
         });
@@ -48,39 +51,26 @@ export class DOMElement implements DOMElementI {
 
     public onMouseDown(cb: (xy: Coordinate) => void) {
         this.originalElement.addEventListener('mousedown', (event) => {
+            this.mouseOrTouchIsDown = true;
             event.preventDefault();
             cb(this.relativeOffset(event.clientX, event.clientY));
         });
     }
 
-    public onMouseLeave(cb: () => void) {
-        this.originalElement.addEventListener('mouseleave', cb);
-    }
-
-    public onMouseMove(cb: (x: number, y: number) => void) {
-        this.originalElement.addEventListener('mousemove', (event) => {
-            let { x, y } = this.relativeOffset(event.clientX, event.clientY);
-
-            cb(x, y);
-        });
-    }
-
-    public onMouseUp(cb: () => void) {
-        this.originalElement.addEventListener('mouseup', cb);
-    }
-
+    // TODO: havn't been tested
     public calculateBoundingBox() {
         this.drawingAreaPosition = this.originalElement.getBoundingClientRect();
     }
-    // TODO: havn't been test
+    // TODO: havn't been tested
     public resized() {
         this.calculateBoundingBoxWithDelay();
     }
-    // TODO: havn't been test
+    // TODO: havn't been tested
     public scrolled() {
         this.calculateBoundingBoxWithDelay();
     }
 
+    // TODO: havn't been tested
     private calculateBoundingBoxWithDelay() {
         clearTimeout(this.timer);
         this.timer = setTimeout(() => {

@@ -4,22 +4,28 @@
 export function userInteraction(paper: RaphaelPaper, drawingDOM: DOMElementI, drawLine: DrawLine) {
     let start: Coordinate = undefined;
 
-    drawingDOM.onMouseUp(stopDrawing);
-    drawingDOM.onMouseLeave(stopDrawing);
+    document.body.addEventListener('mousemove', (event) => {
+        if (drawingDOM.mouseOrTouchIsDown) {
+            const coordinate = drawingDOM.relativeOffset(event.clientX, event.clientY);
+
+            handleDrang(coordinate.x, coordinate.y);
+        }
+    });
+    document.addEventListener('mouseup', () => drawingDOM.mouseOrTouchIsDown = false);
+
     drawingDOM.onTouchEnd(stopDrawing);
     drawingDOM.onTouchCancel(stopDrawing);
 
     drawingDOM.onMouseDown(xy => start = xy);
     drawingDOM.onTouchStart(xy => start = xy);
 
-    drawingDOM.onMouseMove(handleDrang);
     drawingDOM.onTouchMove(handleDrang);
 
     window.addEventListener('resize', () => drawingDOM.resized());
     window.addEventListener('scroll', () => drawingDOM.scrolled());
 
     function handleDrang(x: number, y: number) {
-        if (start !== undefined) {
+        if (drawingDOM.mouseOrTouchIsDown) {
             drawLine({
                 startX: start.x,
                 startY: start.y,
@@ -33,6 +39,6 @@ export function userInteraction(paper: RaphaelPaper, drawingDOM: DOMElementI, dr
     }
 
     function stopDrawing() {
-        start = undefined;
+        drawingDOM.mouseOrTouchIsDown = false;
     }
 }

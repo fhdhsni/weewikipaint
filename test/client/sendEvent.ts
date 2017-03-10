@@ -44,7 +44,7 @@ function createTouchObject(x: number, y: number, element: HTMLDivElement | HTMLD
     });
 }
 
-export function sendMouseEvent(x: number, y: number, element: HTMLDocument | HTMLDivElement, eventType: string) {
+export function sendMouseEvent(x: number, y: number, element: Element | HTMLDocument, eventType: string) {
     let relativeX: number;
     let relativeY: number;
     if (element instanceof HTMLDivElement) {
