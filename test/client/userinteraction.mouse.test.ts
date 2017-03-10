@@ -116,23 +116,28 @@ describe('Mouse Events', function () {
         assert.equal(raphaelElements.length, 0,
             'Nothing should be drawn while mousedown happens outside drawingDiv');
     });
-    it('Should draw a line when mousedown starts exactly at the edge of drawingDiv', () => {
+    it.only('Should draw a line when mousedown starts exactly at the edge of drawingDiv', () => {
         let raphaelElements: RaphaelElement[] = [];
 
         userInteraction(paper, drawingDOM, drawLine);
 
-        sendMouseEvent(600, 100, drawingDiv, 'mousedown');
-        sendMouseEvent(100, 100, drawingDiv, 'mousemove');
+        sendMouseEvent(0, 100, drawingDiv, 'mousedown');
+        sendMouseEvent(110, 150, drawingDiv, 'mousemove');
 
         paper.forEach((el) => {
             raphaelElements.push(el);
 
             return true;
         });
+        const { x, x2, y, y2, width, height } = raphaelElements[0].getBBox();
 
         assert.equal(
             raphaelElements.length, 1,
             'when mouse down starts at the edge of drawingDiv a line should be drawn');
+        assert.equal(x, 0, 'drawing should start at x = 0');
+        assert.equal(x2, 110, 'drawing should end at x = 110');
+        assert.equal(y, 100, 'drawing should start at y = 100');
+        assert.equal(y2, 150, 'drawing should end at y = 150');
     });
     it('Should continue drawing when mouse leaves drawingDiv and comes back in', () => {
         let raphaelElements: RaphaelElement[] = [];
