@@ -28,10 +28,10 @@ module.exports = {
       all: 'nps tsc,mocha && karma start --single-run',
     },
     mocha: {
-      default: 'nps mocha.server,mocha.selenium',
+      default: 'nps mocha.server && export serverProcess=$(./start.sh) && nps mocha.selenium; kill $serverProcess',
       travis: 'nps mocha.server,mocha.selenium',
       server: 'mocha ./test/compiled/test/server/*.js',
-      selenium: 'export serverProcess=$(./start.sh) && mocha ./test/compiled/test/client/*.selenium.test.js; kill $serverProcess',
+      selenium: 'mocha ./test/compiled/test/client/*.selenium.test.js',
     },
     k: {
       start: 'karma start',
