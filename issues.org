@@ -1,7 +1,8 @@
 
 - [X] When resizing the browser position of drawing area needs
-  recalculation
-- [ ] server tests don't test app.js request.
-- [ ] calculation of drawingArea boundingBox on 'resize' and 'scroll'
+  recalculation.
+- [X] Server tests don't test app.js request.
+- [ ] Calculation of drawingArea boundingBox on 'resize' and 'scroll'
   event haven't been tested.
-- [ ] duplication of local karma config and karma saucelabs config
+- [ ] Duplication of local karma config and karma saucelabs config.
+- [ ] Microsoft Edge seems a bit sluggish and non-responsive.

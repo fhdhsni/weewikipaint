@@ -116,7 +116,7 @@ describe('Mouse Events', function () {
         assert.equal(raphaelElements.length, 0,
             'Nothing should be drawn while mousedown happens outside drawingDiv');
     });
-    it.only('Should draw a line when mousedown starts exactly at the edge of drawingDiv', () => {
+    it('Should draw a line when mousedown starts exactly at the edge of drawingDiv', () => {
         let raphaelElements: RaphaelElement[] = [];
 
         userInteraction(paper, drawingDOM, drawLine);
