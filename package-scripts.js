@@ -29,7 +29,7 @@ module.exports = {
     },
     mocha: {
       default: 'nps mocha.server && export serverProcess=$(./start.sh) && nps mocha.selenium; kill $serverProcess',
-      travis: 'nps mocha.server,mocha.selenium',
+      travis: 'nps mocha.server,mocha.selenium && nps coverage',
       server: 'mocha ./test/compiled/test/server/*.js',
       selenium: 'mocha ./test/compiled/test/client/*.selenium.test.js',
     },
@@ -38,6 +38,9 @@ module.exports = {
       run: 'nps mocha && ./tscwatch.sh && karma run | tee ./testOutput.txt && ./checkBrowsers.sh',
       emacs: 'nps mocha && ./tscwatch.sh && karma run &> ./testOutput.txt; ./sed.sh && ./checkBrowsers.sh',
       stop: 'karma stop',
+    },
+    coverage: {
+      default: 'remap-istanbul -i ./coverage/report-json/coverage-final.json --type lcovonly | coveralls',
     },
     WTF: {
       default: `echo -e '\n

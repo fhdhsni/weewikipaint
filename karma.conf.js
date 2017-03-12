@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies, global-require */
 const configuration = {
   basePath: '',
   hostname: '127.0.0.1',
@@ -16,17 +17,38 @@ const configuration = {
   ],
   preprocessors: {
     'test/**/*test.js': ['webpack', 'sourcemap'],
+    './test/compiled/src/scripts/*.js': ['coverage'],
+  },
+  coverageReporter: {
+    dir: 'coverage/',
+    reporters: [
+      { type: 'json', subdir: 'report-json' },
+    ],
   },
   webpack: {
     resolve: {
       extensions: ['.js'],
+    },
+    module: {
+      rules: [
+        {
+          test: /\.js$/,
+          include: /test\/compiled\/src/,
+          exclude: /node_modules/,
+          loader: 'istanbul-instrumenter-loader',
+        },
+      ],
     },
     devtool: 'inline-source-map',
   },
   webpackMiddleware: {
     stats: 'errors-only',
   },
-  reporters: ['progress'],
+  reporters: ['progress', 'coverage'],
+  coverageIstanbulReporter: {
+    reports: ['text-summary'],
+    fixWebpackSourcePaths: true,
+  },
   port: 9876,
   colors: true,
   autoWatch: false,
@@ -38,6 +60,8 @@ const configuration = {
     require('karma-webpack'),
     require('karma-mocha'),
     require('karma-mocha-reporter'),
+    require('karma-coverage'),
+    require('istanbul-instrumenter-loader'),
     'karma-chrome-launcher',
     'karma-phantomjs-launcher',
     'karma-firefox-launcher',
@@ -50,6 +74,6 @@ if (process.env.USER === 'farhad') {
 if (process.env.TRAVIS) {
   configuration.browsers = ['Chrome_travis_ci'];
 }
-module.exports = function (config) {
+module.exports = (config) => {
   config.set(configuration);
 };

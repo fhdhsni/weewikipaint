@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies, global-require */
 const customLaunchers = {
   sl_chrome: {
     base: 'SauceLabs',
@@ -53,24 +54,6 @@ const customLaunchers = {
   },
 };
 
-// const customLaunchers = {
-//   sl_chrome: {
-//     base: 'SauceLabs',
-//     browserName: 'chrome',
-//     platform: 'Windows 7',
-//   },
-//   sl_firefox: {
-//     base: 'SauceLabs',
-//     browserName: 'firefox',
-//   },
-//   sl_ie_11: {
-//     base: 'SauceLabs',
-//     browserName: 'internet explorer',
-//     platform: 'Windows 8.1',
-//     version: '11',
-//   },
-// };
-
 const configuration = {
   basePath: '',
   customLaunchers,
@@ -93,29 +76,54 @@ const configuration = {
     'test/compiled/test/client/*.selenium.test.js',
   ],
   preprocessors: {
-    'test/**/*test.js': ['webpack'],
+    'test/**/*test.js': ['webpack', 'sourcemap'],
+    './test/compiled/src/scripts/*.js': ['coverage'],
+  },
+  coverageReporter: {
+    dir: 'coverage/',
+    reporters: [
+      { type: 'json', subdir: 'report-json' },
+    ],
   },
   webpack: {
     resolve: {
       extensions: ['.js'],
     },
+    module: {
+      rules: [
+        {
+          test: /\.js$/,
+          include: /test\/compiled\/src/,
+          exclude: /node_modules/,
+          loader: 'istanbul-instrumenter-loader',
+        },
+      ],
+    },
+    devtool: 'inline-source-map',
   },
   webpackMiddleware: {
     stats: 'errors-only',
   },
-  reporters: ['dots', 'saucelabs'],
+  reporters: ['dots', 'saucelabs', 'coverage'],
+  coverageIstanbulReporter: {
+    reports: ['text-summary'],
+    fixWebpackSourcePaths: true,
+  },
   singleRun: true,
   port: 9876,
   concurrency: 5,
   captureTimeout: 300000,
   browserNoActivityTimeout: 300000,
   plugins: [
+    require('karma-sourcemap-loader'),
+    require('karma-coverage'),
+    require('istanbul-instrumenter-loader'),
     require('karma-webpack'),
     require('karma-mocha'),
     'karma-sauce-launcher',
   ],
 };
 
-module.exports = function (config) {
+module.exports = (config) => {
   config.set(configuration);
 };
