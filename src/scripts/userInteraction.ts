@@ -21,8 +21,8 @@ export function userInteraction(paper: RaphaelPaper, drawingDOM: DOMElementI, dr
 
     drawingDOM.onTouchMove(handleDrang);
 
-    document.addEventListener('resize', () => drawingDOM.resized());
-    document.addEventListener('scroll', () => drawingDOM.scrolled());
+    window.addEventListener('resize', () => drawingDOM.resized());
+    window.addEventListener('scroll', () => drawingDOM.scrolled());
 
     function handleDrang(x: number, y: number) {
         if (drawingDOM.mouseOrTouchIsDown) {
