@@ -28,11 +28,11 @@ describe('Miscellaneous: ', function () {
                 const afterChange = drawingDOM.drawingAreaPosition;
 
                 document.getElementById('wwp-drawingArea').removeAttribute('style');
-                postTest();
                 assert.notEqual(beforeChange.height, afterChange.height,
                     'Resize event should trigger getBoundingClientRect which calculates new ClientRect drawingDOM');
                 assert.equal(afterChange.height, 800,
                     'Resize event should trigger getBoundingClientRect which calculates new ClientRect for drawingDOM');
+                postTest();
                 done();
             }, 120);
         });
