@@ -25,7 +25,8 @@ const configuration = {
   port: 9876,
   colors: true,
   autoWatch: false,
-  browsers: ['PhantomJS'],
+  // browsers: ['PhantomJS'],
+  browsers: [],
   singleRun: false,
   concurrency: Infinity,
   plugins: [
@@ -33,7 +34,7 @@ const configuration = {
     require('karma-webpack'),
     require('karma-mocha'),
     require('karma-mocha-reporter'),
-    'karma-phantomjs-launcher',
+    // 'karma-phantomjs-launcher',
   ],
 };
 
