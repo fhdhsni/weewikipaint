@@ -6,7 +6,7 @@ import { postTest, preTest } from './userinteraction.BeforeAfterEach';
 import { assert } from 'chai';
 
 if (supportTouchEvent()) {
-    describe('Touch Evetns', function () {
+    describe('Touch Evetns: ', function () {
         let paper: RaphaelPaper;
         let drawingDOM: DOMElementI;
         let drawingDiv: HTMLDivElement;

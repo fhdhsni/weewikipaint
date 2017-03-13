@@ -1,7 +1,7 @@
 export class DOMElement implements DOMElementI {
     public mouseOrTouchIsDown: Boolean;
+    public drawingAreaPosition: ClientRect;
     private originalElement: HTMLElement;
-    private drawingAreaPosition: ClientRect;
     private drawingAreaCSS: CSSStyleDeclaration;
     private padding: number;
     private border: number;
@@ -57,11 +57,10 @@ export class DOMElement implements DOMElementI {
         });
     }
 
-    // TODO: havn't been tested
     public calculateBoundingBox() {
         this.drawingAreaPosition = this.originalElement.getBoundingClientRect();
     }
-    // TODO: havn't been tested
+
     public resized() {
         this.calculateBoundingBoxWithDelay();
     }
@@ -70,7 +69,6 @@ export class DOMElement implements DOMElementI {
         this.calculateBoundingBoxWithDelay();
     }
 
-    // TODO: havn't been tested
     private calculateBoundingBoxWithDelay() {
         clearTimeout(this.timer);
         this.timer = setTimeout(() => {

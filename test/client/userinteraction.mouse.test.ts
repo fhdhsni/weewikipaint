@@ -5,7 +5,7 @@ import { sendMouseEvent } from './sendEvent';
 import { postTest, preTest } from './userinteraction.BeforeAfterEach';
 import { assert } from 'chai';
 
-describe('Mouse Events', function () {
+describe('Mouse Events: ', function () {
     let paper: RaphaelPaper;
     let drawingDOM: DOMElementI;
     let drawingDiv: HTMLDivElement;
@@ -214,5 +214,4 @@ describe('Mouse Events', function () {
                 raphaelElements.length, 1,
                 'when mouse button is released outside browser window, on its return, no line should be drawn');
         });
-
 });
