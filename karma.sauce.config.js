@@ -77,38 +77,17 @@ const configuration = {
   ],
   preprocessors: {
     'test/**/*test.js': ['webpack', 'sourcemap'],
-    './test/compiled/src/scripts/*.js': ['coverage'],
-  },
-  coverageReporter: {
-    dir: 'coverage/',
-    reporters: [
-      { type: 'json', subdir: 'report-json' },
-    ],
   },
   webpack: {
     resolve: {
       extensions: ['.js'],
-    },
-    module: {
-      rules: [
-        {
-          test: /\.js$/,
-          include: /test\/compiled\/src/,
-          exclude: /node_modules/,
-          loader: 'istanbul-instrumenter-loader',
-        },
-      ],
     },
     devtool: 'inline-source-map',
   },
   webpackMiddleware: {
     stats: 'errors-only',
   },
-  reporters: ['dots', 'saucelabs', 'coverage'],
-  coverageIstanbulReporter: {
-    reports: ['text-summary'],
-    fixWebpackSourcePaths: true,
-  },
+  reporters: ['dots', 'saucelabs'],
   singleRun: true,
   port: 9876,
   concurrency: 5,
@@ -116,8 +95,6 @@ const configuration = {
   browserNoActivityTimeout: 300000,
   plugins: [
     require('karma-sourcemap-loader'),
-    require('karma-coverage'),
-    require('istanbul-instrumenter-loader'),
     require('karma-webpack'),
     require('karma-mocha'),
     'karma-sauce-launcher',

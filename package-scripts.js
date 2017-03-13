@@ -24,12 +24,12 @@ module.exports = {
     },
     tswatch: 'nps -p tsc.watch.server,tsc.watch.test',
     test: {
-      travis: 'nps tsc && karma start ./karma.sauce.config.js && nps mocha.travis',
+      travis: 'nps tsc && karma start ./karma.sauce.config.js && nps mocha.travis && nps coverage',
       all: 'nps tsc,mocha && karma start --single-run',
     },
     mocha: {
       default: 'nps mocha.server && export serverProcess=$(./start.sh) && nps mocha.selenium; kill $serverProcess',
-      travis: 'nps mocha.server,mocha.selenium && nps coverage',
+      travis: 'nps mocha.server,mocha.selenium',
       server: 'mocha ./test/compiled/test/server/*.js',
       selenium: 'mocha ./test/compiled/test/client/*.selenium.test.js',
     },
@@ -40,7 +40,10 @@ module.exports = {
       stop: 'karma stop',
     },
     coverage: {
-      default: 'remap-istanbul -i ./coverage/report-json/coverage-final.json --type lcovonly | coveralls',
+      default: 'nps coverage.karma && nps coverage.remap && nps coverage.send',
+      karma: 'karma start ./karma.conf.coverage.js',
+      remap: 'remap-istanbul -i ./coverage/report-json/coverage-final.json --type lcovonly > coverage-remaped',
+      send: 'cat coverage-remaped | tee coveralls',
     },
     WTF: {
       default: `echo -e '\n
@@ -55,6 +58,6 @@ module.exports = {
     },
   },
   options: {
-    silent: true,
+    silent: false,
   },
 };
