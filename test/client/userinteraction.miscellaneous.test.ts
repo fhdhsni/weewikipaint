@@ -23,7 +23,14 @@ describe('Miscellaneous: ', function () {
         const beforeChange = drawingDOM.drawingAreaPosition;
 
         document.getElementById('wwp-drawingArea').setAttribute('style', 'height: 800px');
-        window.addEventListener('resize', function () {
+        window.addEventListener('resize', resizeListener);
+
+        const evt = window.document.createEvent('UIEvents');
+
+        evt.initUIEvent('resize', true, false, window, 0);
+        window.dispatchEvent(evt);
+
+        function resizeListener() {
             setTimeout(function () {
                 const afterChange = drawingDOM.drawingAreaPosition;
 
@@ -33,12 +40,9 @@ describe('Miscellaneous: ', function () {
                 assert.equal(afterChange.height, 800,
                     'Resize event should trigger getBoundingClientRect which calculates new ClientRect for drawingDOM');
                 postTest();
+                window.removeEventListener('resize', resizeListener);
                 done();
             }, 120);
-        });
-        const evt = window.document.createEvent('UIEvents');
-
-        evt.initUIEvent('resize', true, false, window, 0);
-        window.dispatchEvent(evt);
+        }
     });
 });
