@@ -21,6 +21,47 @@ describe('Mouse Events: ', function () {
     afterEach('cleaning the DOM after assertions', function () {
         postTest();
     });
+    it('Should draw a dot in response to mouse click', () => {
+        const raphaelElements: RaphaelElement[] = [];
+
+        userInteraction(paper, drawingDOM, drawLine);
+        sendMouseEvent(200, 100, drawingDiv, 'click');
+
+        paper.forEach((el) => {
+            raphaelElements.push(el);
+            return true;
+        });
+
+        assert.equal(raphaelElements.length, 1,
+            'click should draw a dot');
+        const { x, x2, y, y2, height, width } = raphaelElements[0].getBBox();
+        assert.equal(height, 0,
+            'height of drawn dot should be, well, 0');
+        assert.equal(width, 0,
+            'width of drawn dot should be, well, 0');
+        assert.equal(x, 200,
+            'drawn dot should happen at x = 200');
+        assert.equal(y, 100,
+            'drawn dot should happen at y = 100');
+        assert.equal(x, x2, 'drawn thing(!) should be a dot i.e x = x1');
+        assert.equal(y, y2, 'drawn thing(!) should be a dot i.e y = y1');
+    });
+
+    it('Should have stroke-width of at least 2 and stroke-linecap of round for a dot to visually appear', () => {
+        const raphaelElements: RaphaelElement[] = [];
+
+        userInteraction(paper, drawingDOM, drawLine);
+        sendMouseEvent(200, 100, drawingDiv, 'click');
+
+        paper.forEach((el) => {
+            raphaelElements.push(el);
+            const sWidth = el.node.getAttribute('stroke-width');
+            const linecap = el.node.getAttribute('stroke-linecap');
+            assert.equal(sWidth, 2);
+            assert.equal(linecap, 'round');
+            return true;
+        });
+    });
 
     it('Should draw a line in response to mouse events at specified positions', () => {
         userInteraction(paper, drawingDOM, drawLine);

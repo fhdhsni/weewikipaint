@@ -57,6 +57,10 @@ export class DOMElement implements DOMElementI {
         });
     }
 
+    public onClick(cb: (xy: Coordinate) => void) {
+        this.originalElement.addEventListener('click', event => cb(this.relativeOffset(event.clientX, event.clientY)));
+    }
+
     public calculateBoundingBox() {
         this.drawingAreaPosition = this.originalElement.getBoundingClientRect();
     }

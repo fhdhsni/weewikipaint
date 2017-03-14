@@ -13,5 +13,12 @@ export function initializeDrawingArea(drawingAreaElement: HTMLDivElement): Rapha
 }
 
 export function drawLine(coordinate: DrawLineArgumentObject) {
-    coordinate.paper.path(`M${coordinate.startX},${coordinate.startY}L${coordinate.endX},${coordinate.endY}`);
+    coordinate
+        .paper
+        .path(`M${coordinate.startX},${coordinate.startY}L${coordinate.endX},${coordinate.endY}`)
+        .attr({
+            'stroke-width': 2,
+            'stroke': 'rebeccapurple',
+            'stroke-linecap': 'round',
+        });
 }

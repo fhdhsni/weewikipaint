@@ -23,6 +23,7 @@ export function userInteraction(paper: RaphaelPaper, drawingDOM: DOMElementI, dr
 
     window.addEventListener('resize', () => drawingDOM.resized());
     window.addEventListener('scroll', () => drawingDOM.scrolled());
+    drawingDOM.onClick(xy => handleDot(xy));
 
     function handleDrang(x: number, y: number) {
         if (drawingDOM.mouseOrTouchIsDown) {
@@ -38,6 +39,16 @@ export function userInteraction(paper: RaphaelPaper, drawingDOM: DOMElementI, dr
         }
     }
 
+    function handleDot(spot: Coordinate) {
+        drawLine({
+            startX: spot.x,
+            startY: spot.y,
+            endX: spot.x,
+            endY: spot.y,
+            paper,
+        });
+        stopDrawing();
+    }
     function stopDrawing() {
         drawingDOM.mouseOrTouchIsDown = false;
     }
