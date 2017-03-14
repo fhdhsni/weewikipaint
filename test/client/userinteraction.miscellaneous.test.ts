@@ -45,4 +45,43 @@ describe('Miscellaneous: ', function () {
             }, 120);
         }
     });
+
+    // TODO: Doesn't pass in Travis-CI :(
+    it.skip('should call calculateBoundingBox when scroll is triggered', function (done) {
+        this.timeout(5000);
+        userInteraction(paper, drawingDOM, drawLine);
+        let alreadyDone = false;
+        const beforeChange = drawingDOM.drawingAreaPosition;
+
+        const helperDiv = document.createElement('div'); // to help us make window scrollable
+        helperDiv.setAttribute('id', 'helper');
+        helperDiv.style.backgroundColor = 'red';
+        helperDiv.style.height = '1em';
+        helperDiv.style.width = '1em';
+        helperDiv.style.marginTop = '100em';
+        document.body.appendChild(helperDiv);
+
+        document.getElementById('wwp-drawingArea').setAttribute('style', 'height: 800px');
+
+        document.addEventListener('scroll', function () {
+            setTimeout(function () {
+                if (alreadyDone) {
+                    return undefined;
+                }
+                alreadyDone = true;
+                const afterChange = drawingDOM.drawingAreaPosition;
+                helperDiv.parentNode.removeChild(helperDiv);
+                document.getElementById('wwp-drawingArea').removeAttribute('style');
+                postTest();
+                assert.notEqual(beforeChange.height, afterChange.height,
+                    'Scroll event should trigger getBoundingClientRect');
+                assert.equal(afterChange.height, 800,
+                    'Scroll event should trigger getBoundingClientRect');
+                window.scroll(0, 0);
+                done();
+            }, 120);
+
+        });
+        window.scroll(0, 1000);
+    });
 });

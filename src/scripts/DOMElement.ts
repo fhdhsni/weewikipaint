@@ -65,10 +65,11 @@ export class DOMElement implements DOMElementI {
         this.drawingAreaPosition = this.originalElement.getBoundingClientRect();
     }
 
+    // TODO: test is written but skipped because of travis-ci
     public resized() {
         this.calculateBoundingBoxWithDelay();
     }
-    // TODO: havn't been tested
+    // TODO: test is written but skipped because of travis-ci
     public scrolled() {
         this.calculateBoundingBoxWithDelay();
     }
