@@ -1,5 +1,8 @@
 import * as raphael from 'raphael';
 
+const color = '#663399';
+const strokeWidth = 2;
+
 export function initializeDrawingArea(drawingAreaElement: HTMLDivElement): RaphaelPaper {
     const widthStr = window.getComputedStyle(drawingAreaElement).getPropertyValue('width');
     const width = parseInt(widthStr, 10);
@@ -12,13 +15,22 @@ export function initializeDrawingArea(drawingAreaElement: HTMLDivElement): Rapha
     return paper;
 }
 
-export function drawLine(coordinate: DrawLineArgumentObject) {
-    coordinate
-        .paper
-        .path(`M${coordinate.startX},${coordinate.startY}L${coordinate.endX},${coordinate.endY}`)
+export function drawLine(o: DrawLineArgumentObject) {
+    const endX = o.endX ? o.endX : o.startX;
+    const endY = o.endY ? o.endY : o.startY;
+
+    o.paper
+        .path(`M${o.startX},${o.startY}L${endX},${endY}`)
         .attr({
-            'stroke-width': 2,
-            'stroke': 'rebeccapurple',
+            'stroke-width': strokeWidth,
+            'stroke': `${color}`,
             'stroke-linecap': 'round',
         });
 }
+
+// export function circle(x: number, y: number, paper: RaphaelPaper) {
+//     paper.circle(x, y, 1).attr({
+//         'fill': `${color}`,
+//         'stroke-width': 0,
+//     });
+// }

@@ -8,7 +8,7 @@ export function userInteraction(paper: RaphaelPaper, drawingDOM: DOMElementI, dr
         if (drawingDOM.mouseOrTouchIsDown) {
             const coordinate = drawingDOM.relativeOffset(event.clientX, event.clientY);
 
-            handleDrang(coordinate.x, coordinate.y);
+            drag(coordinate.x, coordinate.y);
         }
     });
     document.addEventListener('mouseup', () => drawingDOM.mouseOrTouchIsDown = false);
@@ -16,17 +16,19 @@ export function userInteraction(paper: RaphaelPaper, drawingDOM: DOMElementI, dr
     drawingDOM.onTouchEnd(stopDrawing);
     drawingDOM.onTouchCancel(stopDrawing);
 
-    drawingDOM.onMouseDown(xy => start = xy);
-    drawingDOM.onTouchStart(xy => start = xy);
+    drawingDOM.onMouseDown(drawAdot);
+    drawingDOM.onTouchStart(drawAdot);
 
-    drawingDOM.onTouchMove(handleDrang);
+    drawingDOM.onTouchMove(drag);
 
     window.addEventListener('resize', () => drawingDOM.resized());
     window.addEventListener('scroll', () => drawingDOM.scrolled());
-    drawingDOM.onClick(xy => handleDot(xy));
 
-    function handleDrang(x: number, y: number) {
+    function drag(x: number, y: number) {
         if (drawingDOM.mouseOrTouchIsDown) {
+            if (start.x === x && start.y === y) {
+                return;
+            }
             drawLine({
                 startX: start.x,
                 startY: start.y,
@@ -39,15 +41,13 @@ export function userInteraction(paper: RaphaelPaper, drawingDOM: DOMElementI, dr
         }
     }
 
-    function handleDot(spot: Coordinate) {
+    function drawAdot(spot: Coordinate) {
         drawLine({
             startX: spot.x,
             startY: spot.y,
-            endX: spot.x,
-            endY: spot.y,
             paper,
         });
-        stopDrawing();
+        start = spot;
     }
     function stopDrawing() {
         drawingDOM.mouseOrTouchIsDown = false;

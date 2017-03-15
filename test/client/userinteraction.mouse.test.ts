@@ -21,14 +21,15 @@ describe('Mouse Events: ', function () {
     afterEach('cleaning the DOM after assertions', function () {
         postTest();
     });
-    it('Should draw a dot in response to mouse click', () => {
+    it('Should draw a dot in response to mouse down', () => {
         const raphaelElements: RaphaelElement[] = [];
 
         userInteraction(paper, drawingDOM, drawLine);
-        sendMouseEvent(200, 100, drawingDiv, 'click');
+        sendMouseEvent(200, 100, drawingDiv, 'mousedown');
 
         paper.forEach((el) => {
             raphaelElements.push(el);
+
             return true;
         });
 
@@ -51,39 +52,49 @@ describe('Mouse Events: ', function () {
         const raphaelElements: RaphaelElement[] = [];
 
         userInteraction(paper, drawingDOM, drawLine);
-        sendMouseEvent(200, 100, drawingDiv, 'click');
+        sendMouseEvent(200, 100, drawingDiv, 'mousedown');
 
         paper.forEach((el) => {
             raphaelElements.push(el);
-            const sWidth = el.node.getAttribute('stroke-width');
-            const linecap = el.node.getAttribute('stroke-linecap');
-            assert.equal(sWidth, 2);
-            assert.equal(linecap, 'round');
+
             return true;
         });
+
+        const sWidth = raphaelElements[0].node.getAttribute('stroke-width');
+        const linecap = raphaelElements[0].node.getAttribute('stroke-linecap');
+        const color = raphaelElements[0].node.getAttribute('stroke');
+
+        assert.equal(raphaelElements.length, 1, 'a dot should have been drawn by mousedown event');
+        assert.equal(sWidth, 2, 'width should be at least 2');
+        assert.equal(linecap, 'round', 'stroke-linecap: round is need for the dots to be drawn');
+        assert.equal(color, '#663399', 'desired color haven\'t been set');
     });
 
-    it('Should draw a line in response to mouse events at specified positions', () => {
+    it('Should draw a line in response to mouse move from start to the end positions', () => {
+        const raphaelElements: RaphaelElement[] = [];
+
         userInteraction(paper, drawingDOM, drawLine);
         sendMouseEvent(100, 10, drawingDiv, 'mousedown');
         sendMouseEvent(150, 100, drawingDiv, 'mousemove');
 
         paper.forEach((el) => {
-            const { x, x2, y, y2, height } = el.getBBox();
-
-            assert.equal(height, 90,
-                'height of drawn line should be 90');
-            assert.approximately(x, 100, 0.02,
-                'should start at x = 100');
-            assert.approximately(y, 10, 0.02,
-                'should start at y = 10');
-            assert.approximately(x2, 150, 0.02,
-                'should end at x2 = 150');
-            assert.approximately(y2, 100, 0.02,
-                'should end at y2 = 100');
+            raphaelElements.push(el);
 
             return true;
         });
+
+        const { x, x2, y, y2, height } = raphaelElements[1].getBBox();
+
+        assert.equal(height, 90,
+            'height of drawn line should be 90');
+        assert.approximately(x, 100, 0.02,
+            'should start at x = 100');
+        assert.approximately(y, 10, 0.02,
+            'should start at y = 10');
+        assert.approximately(x2, 150, 0.02,
+            'should end at x2 = 150');
+        assert.approximately(y2, 100, 0.02,
+            'should end at y2 = 100');
     });
     it('Should not draw a line after mouseup', () => {
         const raphaelElements: RaphaelElement[] = [];
@@ -96,10 +107,11 @@ describe('Mouse Events: ', function () {
 
         paper.forEach((el) => {
             raphaelElements.push(el);
+
             return true;
         });
 
-        assert.equal(raphaelElements.length, 1,
+        assert.equal(raphaelElements.length, 2,
             'mousemove following a mouseup shouldn\'t draw a line');
     });
 
@@ -116,10 +128,10 @@ describe('Mouse Events: ', function () {
             return true;
         });
 
-        assert.equal(raphaelElements.length, 2, 'should have drawn 2 paths');
-        assert.equal(raphaelElements[0].getBBox().height, 100,
+        assert.equal(raphaelElements.length, 3, 'should have drawn one dot and 2 lines');
+        assert.equal(raphaelElements[1].getBBox().height, 100,
             'boundingBox height of first path should be 100');
-        assert.equal(raphaelElements[1].getBBox().width, 100,
+        assert.equal(raphaelElements[2].getBBox().width, 100,
             'boundingBox width of second path should be 100');
     });
 
@@ -170,11 +182,11 @@ describe('Mouse Events: ', function () {
 
             return true;
         });
-        const { x, x2, y, y2, width, height } = raphaelElements[0].getBBox();
+        const { x, x2, y, y2, width, height } = raphaelElements[1].getBBox();
 
         assert.equal(
-            raphaelElements.length, 1,
-            'when mouse down starts at the edge of drawingDiv a line should be drawn');
+            raphaelElements.length, 2,
+            'when mouse down starts at the edge of drawingDiv a dot and a line should be drawn');
         assert.equal(x, 0, 'drawing should start at x = 0');
         assert.equal(x2, 110, 'drawing should end at x = 110');
         assert.equal(y, 100, 'drawing should start at y = 100');
@@ -196,9 +208,8 @@ describe('Mouse Events: ', function () {
 
             return true;
         });
-
         assert.equal(
-            raphaelElements.length, 2,
+            raphaelElements.length, 3,
             'when mouse leaves the drawingDiv, drawing should start again from where it comes in');
     });
     it('default behavior of mousedown event (i.e seleting texts or dragging imgs) should be prevented',
@@ -230,7 +241,7 @@ describe('Mouse Events: ', function () {
             });
 
             assert.equal(
-                raphaelElements.length, 1,
+                raphaelElements.length, 2,
                 'when mouse button is released outside drawingDiv, on its return, no line should be drawn');
         });
     it('should stop drawing when mouse button is released outside browser',
@@ -252,7 +263,7 @@ describe('Mouse Events: ', function () {
             });
 
             assert.equal(
-                raphaelElements.length, 1,
+                raphaelElements.length, 2,
                 'when mouse button is released outside browser window, on its return, no line should be drawn');
         });
 });

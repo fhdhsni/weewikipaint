@@ -36,8 +36,12 @@ if (supportTouchEvent()) {
 
                 return true;
             });
-            const { x, x2, y, y2, width, height } = raphaelElements[0].getBBox();
 
+            // only asserting the line because I'm lazy
+            const { x, x2, y, y2, width, height } = raphaelElements[1].getBBox();
+
+            assert.equal(raphaelElements.length, 2,
+                'should be 2 path, that is one dot and one line');
             assert.equal(width, 70,
                 'boundingBox width of the path should be 70');
             assert.equal(height, 30,
@@ -51,6 +55,22 @@ if (supportTouchEvent()) {
             assert.approximately(y2, 200, 0.02,
                 'path should end at y2 = 200');
         });
+        it('should draw a dot', () => {
+            const raphaelElements: RaphaelElement[] = [];
+
+            userInteraction(paper, drawingDOM, drawLine);
+            sendTouchEvent(drawingDiv, 'touchstart', [{ x: 150, y: 150 }]);
+            sendTouchEvent(drawingDiv, 'touchend', [{ x: 150, y: 150 }]);
+
+            paper.forEach((el) => {
+                raphaelElements.push(el);
+
+                return true;
+            });
+
+            assert.equal(raphaelElements.length, 1, 'touchstart should draw a dot');
+        });
+
         it('Should stop drawing on touchcancel event', () => {
             const raphaelElements: RaphaelElement[] = [];
 
@@ -66,10 +86,10 @@ if (supportTouchEvent()) {
                 return true;
             });
 
-            assert.equal(raphaelElements.length, 1, 'touchcancel should stop drawing');
-            assert.equal(raphaelElements[0].getBBox().width, 70,
+            assert.equal(raphaelElements.length, 2, 'touchcancel should stop drawing');
+            assert.equal(raphaelElements[1].getBBox().width, 70,
                 'boundingBox height of the path should be 100');
-            assert.equal(raphaelElements[0].getBBox().height, 50,
+            assert.equal(raphaelElements[1].getBBox().height, 50,
                 'boundingBox width of the path should be 100');
         });
         it('Should stop drawing on touchend event', () => {
@@ -87,10 +107,10 @@ if (supportTouchEvent()) {
                 return true;
             });
 
-            assert.equal(raphaelElements.length, 1, 'touchend should stop drawing');
-            assert.equal(raphaelElements[0].getBBox().width, 70,
+            assert.equal(raphaelElements.length, 2, 'touchend should stop drawing');
+            assert.equal(raphaelElements[1].getBBox().width, 70,
                 'boundingBox height of the path should be 100');
-            assert.equal(raphaelElements[0].getBBox().height, 50,
+            assert.equal(raphaelElements[1].getBBox().height, 50,
                 'boundingBox width of the path should be 100');
         });
         it('default behavior of touchdown event (i.e  scrolling) should be prevented',
@@ -120,9 +140,9 @@ if (supportTouchEvent()) {
                 return true;
             });
 
-            assert.equal(raphaelElements.length, 1, 'should be only one path');
-            assert.equal(raphaelElements[0].getBBox().width, 40, 'getBBox().width of path should be 40');
-            assert.equal(raphaelElements[0].getBBox().height, 60, 'getBBox().height of path should be 60');
+            assert.equal(raphaelElements.length, 2, 'should be only one path');
+            assert.equal(raphaelElements[1].getBBox().width, 40, 'getBBox().width of path should be 40');
+            assert.equal(raphaelElements[1].getBBox().height, 60, 'getBBox().height of path should be 60');
         });
     });
 }

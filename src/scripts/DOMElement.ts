@@ -25,15 +25,17 @@ export class DOMElement implements DOMElementI {
 
     public onTouchStart = function (cb: (xy: Coordinate) => void) {
         this.originalElement.addEventListener('touchstart', (event: TouchEvent) => {
-            this.mouseOrTouchIsDown = true;
-            event.preventDefault(); // to prevent scroll
-            cb(this.relativeOffset(event.touches[0].clientX, event.touches[0].clientY));
+            if (this.howManyFingersOnScreen(event) === 1) {
+                this.mouseOrTouchIsDown = true;
+                event.preventDefault(); // to prevent scroll
+                cb(this.relativeOffset(event.touches[0].clientX, event.touches[0].clientY));
+            }
         });
     };
 
     public onTouchMove(cb: (x: number, y: number) => void) {
         this.originalElement.addEventListener('touchmove', (event) => {
-            if (event.touches.length === 1) {   // only when there's one finger on screen
+            if (this.howManyFingersOnScreen(event) === 1) {   // only when there's one finger on screen
                 let { x, y } = this.relativeOffset(event.touches[0].clientX, event.touches[0].clientY);
 
                 cb(x, y);
@@ -79,5 +81,8 @@ export class DOMElement implements DOMElementI {
         this.timer = setTimeout(() => {
             this.calculateBoundingBox();
         }, 100);
+    }
+    private howManyFingersOnScreen(event: TouchEvent) {
+        return event.touches.length;
     }
 }
