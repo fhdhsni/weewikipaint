@@ -70,7 +70,7 @@ test.describe('Userinteraction Touch Event (Smoke Test) ', function (): any {
         });
         this.browser.executeScript(function () {
             let div = document.getElementById('drawingArea') as HTMLElement;
-            let path = div.querySelector('path');
+            let path = div.querySelectorAll('path')[1]; // selecting the line instead of the dot
 
             return path.getAttribute('d');
         }).then((d: string) => {
