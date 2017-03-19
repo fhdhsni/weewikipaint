@@ -18,6 +18,7 @@ interface OffsetObject {
 interface Coordinate {
     x: number;
     y: number;
+    dottable?: boolean;
 }
 
 interface TouchConstructor {
@@ -38,6 +39,7 @@ interface DOMElementI {
     mouseOrTouchIsDown: Boolean;
     drawingAreaPosition: ClientRect;
     onMouseDown(cb: (xy: Coordinate) => void): void;
+    onMouseUp(cb: (xy: Coordinate) => void): void;
     onTouchStart(cb: (xy: Coordinate) => void): void;
     onTouchMove(cb: (x: number, y: number) => void): void;
     onTouchEnd(cb: (event: TouchEvent) => void): void;

@@ -64,6 +64,13 @@ export class DOMElement implements DOMElementI {
         });
     }
 
+    public onMouseUp(cb: (xy: Coordinate) => void) {
+        this.originalElement.addEventListener('mouseup', (event) => {
+            this.mouseOrTouchIsDown = false;
+            cb(this.relativeOffset(event.clientX, event.clientY));
+        });
+    }
+
     public calculateBoundingBox() {
         this.drawingAreaPosition = this.originalElement.getBoundingClientRect();
     }

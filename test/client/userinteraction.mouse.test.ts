@@ -26,6 +26,7 @@ describe('Mouse Events: ', function () {
 
         userInteraction(paper, drawingDOM, drawLine);
         sendMouseEvent(200, 100, drawingDiv, 'mousedown');
+        sendMouseEvent(200, 100, drawingDiv, 'mouseup');
 
         paper.forEach((el) => {
             raphaelElements.push(el);
@@ -36,6 +37,7 @@ describe('Mouse Events: ', function () {
         assert.equal(raphaelElements.length, 1,
             'click should draw a dot');
         const { x, x2, y, y2, height, width } = raphaelElements[0].getBBox();
+
         assert.equal(height, 0,
             'height of drawn dot should be, well, 0');
         assert.equal(width, 0,
@@ -53,6 +55,7 @@ describe('Mouse Events: ', function () {
 
         userInteraction(paper, drawingDOM, drawLine);
         sendMouseEvent(200, 100, drawingDiv, 'mousedown');
+        sendMouseEvent(200, 100, drawingDiv, 'mouseup');
 
         paper.forEach((el) => {
             raphaelElements.push(el);
@@ -65,8 +68,8 @@ describe('Mouse Events: ', function () {
         const color = raphaelElements[0].node.getAttribute('stroke');
 
         assert.equal(raphaelElements.length, 1, 'a dot should have been drawn by mousedown event');
-        assert.equal(sWidth, 2, 'width should be at least 2');
-        assert.equal(linecap, 'round', 'stroke-linecap: round is need for the dots to be drawn');
+        assert.equal(sWidth, 2, 'stroke-width should be at least 2');
+        assert.equal(linecap, 'round', 'stroke-linecap: round is needed for the dots to be drawn');
         assert.equal(color, '#663399', 'desired color haven\'t been set');
     });
 
@@ -83,7 +86,7 @@ describe('Mouse Events: ', function () {
             return true;
         });
 
-        const { x, x2, y, y2, height } = raphaelElements[1].getBBox();
+        const { x, x2, y, y2, height } = raphaelElements[0].getBBox();
 
         assert.equal(height, 90,
             'height of drawn line should be 90');
@@ -111,8 +114,8 @@ describe('Mouse Events: ', function () {
             return true;
         });
 
-        assert.equal(raphaelElements.length, 2,
-            'mousemove following a mouseup shouldn\'t draw a line');
+        assert.equal(raphaelElements.length, 1,
+            'mousemove after a mouseup shouldn\'t draw a line');
     });
 
     it('Should draw two line segments.', () => {
@@ -128,11 +131,11 @@ describe('Mouse Events: ', function () {
             return true;
         });
 
-        assert.equal(raphaelElements.length, 3, 'should have drawn one dot and 2 lines');
-        assert.equal(raphaelElements[1].getBBox().height, 100,
-            'boundingBox height of first path should be 100');
-        assert.equal(raphaelElements[2].getBBox().width, 100,
-            'boundingBox width of second path should be 100');
+        assert.equal(raphaelElements.length, 2, 'should have drawn 2 lines');
+        assert.equal(raphaelElements[0].getBBox().height, 100,
+            'height of first line should be 100');
+        assert.equal(raphaelElements[1].getBBox().width, 100,
+            'width of second line should be 100');
     });
 
     it('Should not draw a line when only mouse moves (i.e. without mousedown)', () => {
@@ -182,11 +185,11 @@ describe('Mouse Events: ', function () {
 
             return true;
         });
-        const { x, x2, y, y2, width, height } = raphaelElements[1].getBBox();
+        const { x, x2, y, y2, width, height } = raphaelElements[0].getBBox();
 
         assert.equal(
-            raphaelElements.length, 2,
-            'when mouse down starts at the edge of drawingDiv a dot and a line should be drawn');
+            raphaelElements.length, 1,
+            'when mouse down starts at the edge of drawingDiv a line should be drawn');
         assert.equal(x, 0, 'drawing should start at x = 0');
         assert.equal(x2, 110, 'drawing should end at x = 110');
         assert.equal(y, 100, 'drawing should start at y = 100');
@@ -209,7 +212,7 @@ describe('Mouse Events: ', function () {
             return true;
         });
         assert.equal(
-            raphaelElements.length, 3,
+            raphaelElements.length, 2,
             'when mouse leaves the drawingDiv, drawing should start again from where it comes in');
     });
     it('default behavior of mousedown event (i.e seleting texts or dragging imgs) should be prevented',
@@ -241,7 +244,7 @@ describe('Mouse Events: ', function () {
             });
 
             assert.equal(
-                raphaelElements.length, 2,
+                raphaelElements.length, 1,
                 'when mouse button is released outside drawingDiv, on its return, no line should be drawn');
         });
     it('should stop drawing when mouse button is released outside browser',
@@ -263,7 +266,7 @@ describe('Mouse Events: ', function () {
             });
 
             assert.equal(
-                raphaelElements.length, 2,
+                raphaelElements.length, 1,
                 'when mouse button is released outside browser window, on its return, no line should be drawn');
         });
 });

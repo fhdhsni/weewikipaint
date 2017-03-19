@@ -77,7 +77,7 @@ test.describe('Userinteraction Mouse Event (Smoke Test)', function () {
         });
         this.browser.executeScript(function () {
             let div = document.getElementById('drawingArea') as HTMLElement;
-            let path = div.querySelectorAll('path')[1]; // selecet the line not the dot
+            let path = div.querySelector('path');
 
             return path.getAttribute('d');
         }).then((d: string) => {
