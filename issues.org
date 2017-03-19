@@ -7,3 +7,4 @@
 - [ ] Duplication of local karma config and karma saucelabs config.
 - [ ] Microsoft Edge seems a bit sluggish and non-responsive.
 - [X] Color doesn't work on IE10
+- [ ] Should smoke test drawing dot (by both touch and mouse)

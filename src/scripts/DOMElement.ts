@@ -22,7 +22,9 @@ export class DOMElement implements DOMElementI {
             y: absoluteY - this.drawingAreaPosition.top - this.padding - this.border,
         };
     }
-
+    /*****************************************************************
+     * Touch
+     *****************************************************************/
     public onTouchStart = function (cb: (xy: Coordinate) => void) {
         this.originalElement.addEventListener('touchstart', (event: TouchEvent) => {
             if (this.howManyFingersOnScreen(event) === 1) {
@@ -51,16 +53,15 @@ export class DOMElement implements DOMElementI {
         this.originalElement.addEventListener('touchcancel', cb);
     };
 
+    /*****************************************************************
+     * Mouse
+     *****************************************************************/
     public onMouseDown(cb: (xy: Coordinate) => void) {
         this.originalElement.addEventListener('mousedown', (event) => {
             this.mouseOrTouchIsDown = true;
             event.preventDefault();
             cb(this.relativeOffset(event.clientX, event.clientY));
         });
-    }
-
-    public onClick(cb: (xy: Coordinate) => void) {
-        this.originalElement.addEventListener('click', event => cb(this.relativeOffset(event.clientX, event.clientY)));
     }
 
     public calculateBoundingBox() {

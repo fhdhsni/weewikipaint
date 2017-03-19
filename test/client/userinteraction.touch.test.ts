@@ -55,20 +55,26 @@ if (supportTouchEvent()) {
             assert.approximately(y2, 200, 0.02,
                 'path should end at y2 = 200');
         });
-        it('should draw a dot', () => {
+        it('should draw a dot when screen is tapped', () => {
             const raphaelElements: RaphaelElement[] = [];
 
             userInteraction(paper, drawingDOM, drawLine);
-            sendTouchEvent(drawingDiv, 'touchstart', [{ x: 150, y: 150 }]);
-            sendTouchEvent(drawingDiv, 'touchend', [{ x: 150, y: 150 }]);
+            sendTouchEvent(drawingDiv, 'touchstart', [{ x: 150, y: 160 }]);
+            sendTouchEvent(drawingDiv, 'touchend', [{ x: 150, y: 160 }]);
 
             paper.forEach((el) => {
                 raphaelElements.push(el);
 
                 return true;
             });
+            const bBox = raphaelElements[0].getBBox();
 
             assert.equal(raphaelElements.length, 1, 'touchstart should draw a dot');
+            assert.equal(bBox.x, 150, 'should\'ve drawn a dot at specified position');
+            assert.equal(bBox.y, 160, 'should\'ve drawn a dot at specified position');
+            assert.equal(bBox.x2, 150, 'should\'ve drawn a dot at specified position');
+            assert.equal(bBox.y2, 160, 'should\'ve drawn a dot at specified position');
+
         });
 
         it('Should stop drawing on touchcancel event', () => {

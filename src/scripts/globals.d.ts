@@ -38,7 +38,6 @@ interface DOMElementI {
     mouseOrTouchIsDown: Boolean;
     drawingAreaPosition: ClientRect;
     onMouseDown(cb: (xy: Coordinate) => void): void;
-    onClick(cb: (xy: Coordinate) => void): void;
     onTouchStart(cb: (xy: Coordinate) => void): void;
     onTouchMove(cb: (x: number, y: number) => void): void;
     onTouchEnd(cb: (event: TouchEvent) => void): void;

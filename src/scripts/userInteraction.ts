@@ -1,5 +1,5 @@
 /**
- * draws lines on drawingArea when user clicks or touches and drags
+ * draws lines on drawingArea when user clicks/touches and drags
  */
 export function userInteraction(paper: RaphaelPaper, drawingDOM: DOMElementI, drawLine: DrawLine) {
     let start: Coordinate = undefined;
@@ -13,8 +13,8 @@ export function userInteraction(paper: RaphaelPaper, drawingDOM: DOMElementI, dr
     });
     document.addEventListener('mouseup', () => drawingDOM.mouseOrTouchIsDown = false);
 
-    drawingDOM.onTouchEnd(stopDrawing);
-    drawingDOM.onTouchCancel(stopDrawing);
+    drawingDOM.onTouchEnd(() => drawingDOM.mouseOrTouchIsDown = false);
+    drawingDOM.onTouchCancel(() => drawingDOM.mouseOrTouchIsDown = false);
 
     drawingDOM.onMouseDown(drawAdot);
     drawingDOM.onTouchStart(drawAdot);
@@ -48,8 +48,5 @@ export function userInteraction(paper: RaphaelPaper, drawingDOM: DOMElementI, dr
             paper,
         });
         start = spot;
-    }
-    function stopDrawing() {
-        drawingDOM.mouseOrTouchIsDown = false;
     }
 }
